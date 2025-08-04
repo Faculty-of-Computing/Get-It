@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Get-It | Your Trusted E-commerce Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Add your CSS links here -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="{{ url_for('home') }}" class="logo">Get-It</a>
+                <ul class="nav-links">
+                    <li><a href="{{ url_for('shop') }}">Shop</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                    <li><a href="{{ url_for('cart') }}">Cart</a></li>
+                    <li><a href="{{ url_for('account') }}">Account</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Page-specific content goes here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="{{ url_for('about') }}">About Us</a>
+                <a href="{{ url_for('terms') }}">Terms &amp; Conditions</a>
+                <a href="{{ url_for('privacy') }}">Privacy Policy</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="{{ url_for('faq') }}">FAQ</a>
+            </div>
+            <div class="footer-copy">
+                &copy; {{ current_year }} Get-It. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

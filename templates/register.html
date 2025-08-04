@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Register</h2>
+{% if error %}<p class="error-message">{{ error }}</p>{% endif %}
+<form method="post">
+    <label for="first_name">First Name:</label>
+    <input type="text" id="first_name" name="first_name" required title="Enter your first name"
+        placeholder="First Name"><br>
+    <label for="last_name">Last Name:</label>
+    <input type="text" id="last_name" name="last_name" required title="Enter your last name"
+        placeholder="Last Name"><br>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required title="Enter your username" placeholder="Username"><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required title="Enter your password"
+        placeholder="Password"><br>
+    <button type="submit">Register</button>
+</form>
+<p>Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
+{% endblock %}

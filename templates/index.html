@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Welcome to Get-It</h1>
+<h2>Products</h2>
+<ul>
+    {% for product in products %}
+    <li>{{ product.name }} - ${{ product.price }}
+        <form method="post" action="{{ url_for('add_to_cart', product_id=product.id) }}" class="inline-form">
+            <button type="submit">Add to Cart</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+<p><a href="/">View Cart</a></p>
+{% endblock %}
