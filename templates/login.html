@@ -3,13 +3,18 @@
 {% block content %}
 <h2>Login</h2>
 {% if error %}<p class="error-message">{{ error }}</p>{% endif %}
+
 <form method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required title="Enter your username" placeholder="Username"><br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required title="Enter your password"
-        placeholder="Password"><br>
+    {{ form.hidden_tag() }}
+
+    <label for="username">{{ form.username.label }}</label>
+    {{ form.username(size=32, placeholder="Username", title="Enter your username") }}<br>
+
+    <label for="password">{{ form.password.label }}</label>
+    {{ form.password(size=32, placeholder="Password", title="Enter your password") }}<br>
+
     <button type="submit">Login</button>
 </form>
+
 <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
 {% endblock %}

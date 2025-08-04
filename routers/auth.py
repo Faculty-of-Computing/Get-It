@@ -9,37 +9,49 @@ from flask import (
 from services.user import register_user
 from models.users import User
 from sqlalchemy.exc import IntegrityError
-router = Blueprint('user', __name__, url_prefix='/auth')
+from core.configs import logger,bycrypt
+from services.loginform import LoginForm
+from flask_login import login_user
+from flask import request, redirect, url_for, render_template, flash, abort
+from utils.utils import url_has_allowed_host_and_scheme
+
+router = Blueprint('auth', __name__, url_prefix='/auth')
 
 @router.route('/login', methods=['GET', 'POST'])
 def login():
-    error = None
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        # user = users.get(username)
-        # if user and user['password'] == password:
-        #     session['username'] = username
-        #     return redirect(url_for('home'))
-        # else:
-        #     error = 'Invalid username or password.'
-    return render_template('login.html', error=error)
+    form = LoginForm()
+    if form.validate_on_submit():
+        user:User = User.query.filter_by(username=form.username.data).first() # type: ignore
+
+        if user and bycrypt.check_password_hash(user.password, form.password.data):
+            logger.info("User authenticated succesfully")
+            login_user(user)
+            flash('Logged in successfully.')
+            
+            next_url = request.args.get('next')
+            if next_url and url_has_allowed_host_and_scheme(next_url, request.host):
+                return redirect(next_url)
+            return redirect(url_for('home'))
+        else:
+            flash('Invalid username or password.')
+
+    return render_template('login.html', form=form)
+
 
 @router.route('/signup', methods=['GET', 'POST']) # type: ignore
 def register():
     error = None
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
         new_user = User(**request.form.to_dict())
         try:
             register_user(new_user)
-            return redirect(url_for('login'))
-        except IntegrityError:
+            logger.info("Redirecting to auth/login")
+            return redirect(url_for('auth.login'))
+        except IntegrityError as e:
+            logger.error(f"An error occurred {e}")
             flash("User already exists please try a different mail or username")
+            return render_template('register.html',)
         except Exception as e:
             flash(e.__str__())
-            return render_template('register.html', error=error)
+            return render_template('register.html')
     return render_template('register.html')

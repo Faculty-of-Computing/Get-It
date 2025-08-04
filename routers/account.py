@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template
 
-account = Blueprint('account', __name__, url_prefix='/account')
+router = Blueprint('account', __name__, url_prefix='/account')
 
-@account.route('/')
-def account_page():
+@router.route('/')
+def account():
     # Pass user info from session/db here
     return render_template('account.html')
