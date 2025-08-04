@@ -16,6 +16,7 @@
           "image-rendering: crisp-edges"
         ]
       }
-    ]
+    ],
+    "no-inline-styles": "off"
   }
 }

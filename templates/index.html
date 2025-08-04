@@ -1,16 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Welcome to Get-It</h1>
-<h2>Products</h2>
-<ul>
-    {% for product in products %}
-    <li>{{ product.name }} - ${{ product.price }}
-        <form method="post" action="{{ url_for('add_to_cart', product_id=product.id) }}" class="inline-form">
-            <button type="submit">Add to Cart</button>
-        </form>
-    </li>
-    {% endfor %}
-</ul>
-<p><a href="/">View Cart</a></p>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Welcome to Get-It</h1>
+        <p>Your one-stop shop for everything.</p>
+    </div>
+</section>
+
+<!-- Categories -->
+<section class="categories-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured Categories</h2>
+        </div>
+        <div class="categories-grid">
+            {% for category in categories %}
+            <div class="category-card">
+                <a href="{{ url_for('shop.category', category=category.value) }}">
+                    <div class="category-name">{{ category.name.replace('_', ' ').title() }}</div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="featured-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured Products</h2>
+        </div>
+        <div class="products-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <h3>{{ product.name }}</h3>
+                <p>${{ "%.2f"|format(product.price) }}</p>
+                <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 {% endblock %}

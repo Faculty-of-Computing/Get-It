@@ -1,5 +1,4 @@
-from sqlalchemy import Integer, String,Float,DateTime,Boolean,Enum
-from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy import Integer, String,Float,DateTime,Boolean,Enum,JSON
 from sqlalchemy.orm import Mapped, mapped_column
 from core.database import db
 from datetime import datetime 
@@ -11,7 +10,7 @@ class Products(db.Model):
     id:Mapped[int] = mapped_column(Integer,primary_key=True,index=True,nullable=False,autoincrement=True)
     name:Mapped[str] = mapped_column(String(255), nullable= False)
     price:Mapped[float] = mapped_column(Float,nullable=False)
-    images:Mapped[List[str]] = mapped_column(JSONB, nullable=True)  #NOTE- Assuming images are stored as a comma-separated string
+    images:Mapped[List[str]] = mapped_column(JSON, nullable=True)  #NOTE- Assuming images are stored as a comma-separated string
     category:Mapped[ProductCategory] = mapped_column(Enum(ProductCategory), nullable=False)  # Using Enum for category
     description:Mapped[str] = mapped_column(String(500), nullable=True)
     stock:Mapped[int] = mapped_column(Integer, nullable=False, default=0)

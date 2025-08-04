@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template
 
-cart = Blueprint('cart', __name__, url_prefix='/cart')
+router = Blueprint('cart', __name__, url_prefix='/cart')
 
-@cart.route('/')
-def cart_page():
+@router.route('/')
+def cart():
     # Pass cart items from session/db here
     return render_template('cart.html')

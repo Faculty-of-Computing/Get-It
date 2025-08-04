@@ -1,25 +1,25 @@
 from flask import Blueprint, render_template
 
 
-router = Blueprint('about', __name__, url_prefix='/public')
+router = Blueprint('public', __name__, url_prefix='/public')
 
 @router.route('/')
-def about_page():
+def about():
     return render_template('about.html')
 
 @router.route('/')
-def privacy_page():
+def privacy():
     return render_template('privacy.html')
 
 @router.route('/')
-def terms_page():
+def terms():
     return render_template('terms.html')
 
 @router.route('/')
-def faq_page():
+def faq():
     return render_template('faq.html')
 
 
 @router.route('/')
-def contact_page():
+def contact():
     return render_template('contact.html')
