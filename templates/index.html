@@ -46,7 +46,7 @@
                     <h3>{{ product.name }}</h3>
                     <p>${{ "%.2f"|format(product.price) }}</p>
                     <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
-                        <button type="submit">Add to Cart</button>
+                        <button type="submit" class="btn-2">Add to Cart</button>
                     </form>
                 </div>
                 {% endfor %}
