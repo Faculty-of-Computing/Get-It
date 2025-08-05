@@ -3,13 +3,13 @@
 {% block content %}
 <!-- Hero Section -->
 <section class="hero">
-    <div class="container">
+    <div class="container overlay">
         {% if category_name %}
             <h1>{{ category_name.replace('_', ' ').title() }}</h1>
             <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
         {% else %}
-            <h1>Welcome to Get-It</h1>
-            <p>Your one-stop shop for everything.</p>
+            <h1 class="title">Welcome to Get-It</h1>
+            <p class="tline">Your one-stop shop for everything.</p>
         {% endif %}
     </div>
 </section>
@@ -24,7 +24,7 @@
             {% for category in categories %}
             <div class="category-card {% if active_category == category.name %}active{% endif %}">
                 <a href="{{ url_for('product.category', category=category.value) }}">
-                    <div class="category-name">{{ category.name.replace('_', ' ').title() }}</div>
+                    <div class="category-name btn-2">{{ category.name.replace('_', ' ').title() }}</div>
                 </a>
             </div>
             {% endfor %}

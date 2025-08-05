@@ -44,3 +44,4 @@ logger.addHandler(handler)
 
 bycrypt = Bcrypt()
 
+print("Configs Loaded Successfully: ", DATABASE_URL)

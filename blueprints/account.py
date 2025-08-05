@@ -3,6 +3,9 @@ from flask_login import login_required,current_user
 from models.order import Order
 from forms.edit_account_form import EditAccountForm
 from core.database import db
+from flask import Blueprint, render_template
+from flask_login import login_required
+# from models.or
 
 blueprint = Blueprint('account', __name__, url_prefix='/account')
 
@@ -16,6 +19,7 @@ def account():
         .order_by(Order.created_at.desc())
         .all()
     )
+    # user_orders = Order.query.filter_by(user_id=current_user.id).order_by(Order.date.desc()).all()
     
     return render_template('account/account.html',orders=user_orders)
 
@@ -38,3 +42,5 @@ def edit_account():
     return render_template("account/edit_account.html", form=form)
 
 
+
+    return render_template('account.html')

@@ -7,10 +7,12 @@ body {
 }
 
 header {
-    background: #222;
-    color: #fff;
-    padding: 0.5em 0;
+    background: #fff;
+    color: #000;
+    /* padding: 0.2em 0; */
+    /* width: 100%; */
 }
+
 .navbar .container {
     display: flex;
     align-items: center;
@@ -19,7 +21,7 @@ header {
 .logo {
     font-size: 2em;
     font-weight: bold;
-    color: #fff;
+    color: #000;
     text-decoration: none;
 }
 .nav-links {
@@ -30,18 +32,254 @@ header {
     padding: 0;
 }
 .nav-links a {
-    color: #fff;
+    color: #000;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s;
 }
 .nav-links a:hover {
     color: #ff9800;
+} 
+
+.sm {
+ display: none;
 }
-main {
+
+@media only screen and (max-width: 768px){
+    .sm {
+        display: block;
+    }
+
+     nav.sm .container .mobile-nav {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: 0.5s;
+    animation-delay: 1s;
+   }
+
+   nav.sm .container .mobile-nav span {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: rotate(45deg);
+        transition: 0.5s;
+    }
+    
+   nav.sm .container .mobile-nav.active span {
+     transform: rotate(135deg);
+     transition-delay: 0.5s;
+    }
+    
+   nav.sm .container .mobile-nav span::before {
+     content: '';
+     position: absolute;
+     width: 40px;
+     height: 3px;
+     background: #222;
+     border-radius: 3px;
+     transition: 0.5s;
+    }
+    
+   nav.sm .container .mobile-nav.active span::before {
+     transform: rotate(-270deg);
+     transition-delay: .5s;
+    }
+    
+   nav.sm .container .mobile-nav span::after {
+     content: '';
+     position: absolute;
+     width: 25px;
+     height: 3px;
+     background: #222;
+     border-radius: 3px;
+     transition: 0.5s;
+     transform: translateY(-12px);
+     box-shadow: 0 24px #222;
+    }
+    
+   nav.sm .container .mobile-nav.active span::after {
+     width: 40px;
+     transform: translateY(0px);
+     box-shadow: 0 0 #222;
+    }
+
+    header .mobile-menu {
+        position:absolute;
+        top:15%;
+        bottom:0;
+        /* left:0; */
+        right:0;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto;
+        z-index: 900;
+        /* transform: scale(0); */
+        transition: 0.5s;
+        width: 50%;
+    }
+    
+    header .mobile-menu.show {
+        transform: scale(1);
+    }
+    
+    header .mobile-menu ul {
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     gap: 50px;
+     justify-content: center;
+     align-items: center;
+     /* margin-top: 2em; */
+    }
+    
+    header .mobile-menu ul li {
+     position: relative;
+     list-style-type: none;
+     text-align: center;
+     display: block;
+     /* margin: 3em auto; */
+    }
+    
+    header .mobile-menu ul li a {
+     position: relative;
+     text-decoration: none;
+     font-size: 2rem;
+     color: #fff;
+     font-weight: 700;
+     text-transform: uppercase;
+     display: inline-block;
+    }
+
+    .lg {
+        display: none;
+    }
+
+    section.categories-section .container .categories-grid{
+    display: grid;
+    grid-template-rows:  29px  29px 29px 29px 29px!important;
+    grid-template-columns:  160px  160px !important;
+    gap: 30px !important;
+    margin-top: 3em;
+}
+}
+
+section.hero {
+    background: url('./imgs/header.jpg') no-repeat center center/cover;
+    color: #fff;
+    /* padding: 4em 0; */
+    text-align: center;
+    height:90vh;
+    width: 100%;
+    position:relative;
+}
+section.hero div.overlay {
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    /* transform: translateY(-50%); */
+    background: rgba(0, 0, 0, 0.5);
+    max-width: 100% !important;
+    height: 100%;
+    background-size: cover;
+      display: flex;        /* Optional: center content */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+section.hero div.container h1.title {
+    font-size: 3em;
+    margin-bottom: 0;
+}
+/* section.hero div.container h1.tline {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+} */
+/* main {
     min-height: 60vh;
-    padding: 2em 1em;
+    padding: 0em 0em;
+} */
+
+section.categories-section {
+    margin-top: 3em !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin:auto;
 }
+
+section.categories-section .container .section-header h2 {
+    text-align: center;
+    font-size: 2em;
+}
+section.categories-section .container .categories-grid{
+    display: grid;
+    grid-template-rows:  29px  29px 29px;
+    grid-template-columns:  160px  160px 160px ;
+    gap: 38px;
+    margin-top: 3em;
+}
+
+section.categories-section .container .categories-grid .category-card a{
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+        display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+section.categories-section .container .categories-grid .category-card a div{
+    background: #333;
+    /* height: 100% !important; */
+    width: 100%;
+    /* margin: 1rem; */
+    padding: 0.5rem;
+    border-radius: 30px;
+    /* scale: 0.5; */
+  position: absolute;
+  z-index: 1;
+  overflow: hidden;
+    /* width: 60px; */
+  /* height: 34px; */
+  outline: none;
+  border: 1px solid #333;
+}
+
+.btn-2:hover {
+  color: black;
+}
+
+.btn-2:after {
+  content: "";
+  background: white;
+  position: absolute;
+  z-index: -1;
+  left: -20%;
+  right: -20%;
+  top: 0;
+  bottom: 0;
+  transform: skewX(-45deg) scale(0, 1);
+  transition: all 0.5s;
+}
+
+.btn-2:hover:after {
+  transform: skewX(-45deg) scale(1, 1);
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
 footer {
     background: #222;
     color: #fff;
@@ -115,7 +353,7 @@ footer {
 }
 .prev { left: 5px; }
 .next { right: 5px; }
-.container {
+.navbar {
     max-width: 900px;
     margin: auto;
     padding: 1rem;
