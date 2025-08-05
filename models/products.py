@@ -1,5 +1,5 @@
 from sqlalchemy import Integer, String,Float,DateTime,Boolean,Enum,JSON
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column,relationship
 from core.database import db
 from datetime import datetime 
 from typing import List
@@ -18,6 +18,7 @@ class Products(db.Model):
     is_featured:Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     is_deleted:Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     created_at:Mapped[datetime]= mapped_column(DateTime,nullable=False,default=datetime.now())
-    updated_at:Mapped[datetime] = mapped_column(DateTime,nullable=False,default=datetime.now(),onupdate=datetime.now())
+    updated_at:Mapped[datetime] = mapped_column(DateTime,nullable=False,default=datetime.now(),onupdate=datetime.now)
+    cart_items = relationship("CartItem", back_populates="product", cascade="all, delete-orphan")
     def __repr__(self):
         return f"<Product {self.name} - {self.category}>"

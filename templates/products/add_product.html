@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Add Product</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    
+    <div>
+      {{ form.name.label }} {{ form.name(size=32) }}
+    </div>
+    <div>
+      {{ form.price.label }} {{ form.price() }}
+    </div>
+    <div>
+      {{ form.images.label }} {{ form.images(multiple=True) }}
+    </div>
+    <div>
+      {{ form.category.label }} {{ form.category() }}
+    </div>
+    <div>
+      {{ form.description.label }} {{ form.description(rows=4, cols=40) }}
+    </div>
+    <div>
+      {{ form.stock.label }} {{ form.stock() }}
+    </div>
+    <div>
+      {{ form.is_featured.label }} {{ form.is_featured() }}
+    </div>
+    
+    <button type="submit">Add Product</button>
+  </form>
+{% endblock %}

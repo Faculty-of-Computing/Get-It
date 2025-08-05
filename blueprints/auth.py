@@ -10,14 +10,14 @@ from services.user import register_user
 from models.users import User
 from sqlalchemy.exc import IntegrityError
 from core.configs import logger,bycrypt
-from services.loginform import LoginForm
+from forms.loginform import LoginForm
 from flask_login import login_user
 from flask import request, redirect, url_for, render_template, flash, abort
-from utils.utils import url_has_allowed_host_and_scheme
+from services.auth import url_has_allowed_host_and_scheme
 
-router = Blueprint('auth', __name__, url_prefix='/auth')
+blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 
-@router.route('/login', methods=['GET', 'POST'])
+@blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -38,7 +38,7 @@ def login():
     return render_template('login.html', form=form)
 
 
-@router.route('/signup', methods=['GET', 'POST']) # type: ignore
+@blueprint.route('/signup', methods=['GET', 'POST']) # type: ignore
 def register():
     error = None
     if request.method == 'POST':
@@ -46,10 +46,11 @@ def register():
         try:
             register_user(new_user)
             logger.info("Redirecting to auth/login")
+            flash('Registration Successful','success')
             return redirect(url_for('auth.login'))
         except IntegrityError as e:
             logger.error(f"An error occurred {e}")
-            flash("User already exists please try a different mail or username")
+            flash("User already exists please try a different mail or username",'error')
             return render_template('register.html',)
         except Exception as e:
             flash(e.__str__())

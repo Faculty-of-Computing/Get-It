@@ -3,15 +3,16 @@
 {% block content %}
 <h2>Register</h2>
 
-{% with messages = get_flashed_messages() %}
+{% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     <ul class="flashes">
-      {% for message in messages %}
-        <li style="color: red;">{{ message }}</li>
+      {% for category, message in messages %}
+        <li class="{{ 'success' if category == 'success' else 'error' }}">{{ message }}</li>
       {% endfor %}
     </ul>
   {% endif %}
 {% endwith %}
+
 
 {% if error %}<p class="error-message">{{ error }}</p>{% endif %}
 
