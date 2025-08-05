@@ -25,3 +25,7 @@ def add_new_product(form:AddProductForm):
     db.session.commit()
     logger.info(f"Product {new_product.name} added succesfully")
     return new_product
+
+def get_products_by_category(category:str):
+    products = db.session.execute(db.select(Products).where(Products.category==category))
+    return products.scalars().all()

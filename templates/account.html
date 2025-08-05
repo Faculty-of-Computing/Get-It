@@ -1,5 +1,45 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h1>Account</h1>
-<p>Manage your account details and orders.</p>
+<section class="account-page container">
+    <h1>My Account</h1>
+    <p>Manage your account details and orders.</p>
+
+    <!-- User Details -->
+    <div class="account-section">
+        <h2>Account Details</h2>
+        <div class="account-details">
+            <p><strong>Name:</strong> {{ current_user.name }}</p>
+            <p><strong>Email:</strong> {{ current_user.email }}</p>
+            <!-- Add more fields if available -->
+        </div>
+        <a href="{{ url_for('auth.edit_account') }}" class="btn">Edit Account</a>
+    </div>
+
+    <!-- Order History -->
+    <div class="account-section">
+        <h2>Order History</h2>
+        {% if orders %}
+            <div class="order-history">
+                {% for order in orders %}
+                <div class="order-card">
+                    <p><strong>Order ID:</strong> {{ order.id }}</p>
+                    <p><strong>Date:</strong> {{ order.date.strftime('%B %d, %Y') }}</p>
+                    <p><strong>Total:</strong> ${{ "%.2f"|format(order.total) }}</p>
+                    <a href="{{ url_for('order.view_order', order_id=order.id) }}" class="btn-small">View Details</a>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No orders found.</p>
+        {% endif %}
+    </div>
+
+    <!-- Logout -->
+    <div class="account-section">
+        <form method="post" action="{{ url_for('auth.logout') }}">
+            <button type="submit" class="btn logout-btn">Log Out</button>
+        </form>
+    </div>
+</section>
 {% endblock %}

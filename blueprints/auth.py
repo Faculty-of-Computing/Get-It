@@ -11,7 +11,7 @@ from models.users import User
 from sqlalchemy.exc import IntegrityError
 from core.configs import logger,bycrypt
 from forms.loginform import LoginForm
-from flask_login import login_user
+from flask_login import login_user,logout_user,login_required
 from flask import request, redirect, url_for, render_template, flash, abort
 from services.auth import url_has_allowed_host_and_scheme
 
@@ -56,3 +56,11 @@ def register():
             flash(e.__str__())
             return render_template('register.html')
     return render_template('register.html')
+
+@blueprint.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash("You have been logged out.", "info")
+    return redirect(url_for('auth.login'))
+    

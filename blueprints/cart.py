@@ -6,3 +6,7 @@ blueprint = Blueprint('cart', __name__, url_prefix='/cart')
 def cart():
     # Pass cart items from session/db here
     return render_template('cart.html')
+
+@blueprint.route('/add-to-cart')
+def add_to_cart():
+    return {'message':'in progress'}

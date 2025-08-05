@@ -65,3 +65,85 @@ footer {
     font-size: 0.9em;
     color: #bbb;
 }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.slider-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+.slide {
+    display: none;
+    width: 100%;
+}
+.slide.active {
+    display: block;
+}
+.prev, .next {
+    cursor: pointer;
+    background: #ccc;
+    padding: 5px 10px;
+    border: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.prev { left: 5px; }
+.next { right: 5px; }
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 1rem;
+}
+.account-section {
+    margin-top: 2rem;
+    border-top: 1px solid #ccc;
+    padding-top: 1rem;
+}
+.order-card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+.btn-small {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+.logout-btn {
+    background-color: #dc3545;
+}
+
+
