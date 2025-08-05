@@ -21,6 +21,10 @@ class User(db.Model, UserMixin):
     cart: Mapped['Cart'] = relationship("Cart", back_populates="user", uselist=False,lazy='selectin') # type: ignore
 
     cart_items:Mapped[list['CartItem']] = relationship("CartItem", back_populates="user", cascade="all, delete-orphan",lazy='selectin') # type: ignore
+   
+    orders = relationship("Order", back_populates="user", cascade="all, delete-orphan",lazy='selectin')
+    
+
     
     @validates('password')
     def hash_password(self, key, value:str):

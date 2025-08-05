@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Checkout</h2>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+      {{ form.name.label }}<br>
+      {{ form.name(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      {{ form.address.label }}<br>
+      {{ form.address(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      {{ form.phone.label }}<br>
+      {{ form.phone(class="form-control") }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Place Order</button>
+  </form>
+</div>
+{% endblock %}

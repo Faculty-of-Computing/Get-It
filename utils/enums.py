@@ -10,3 +10,11 @@ class ProductCategory(str,Enum): # type: ignore
     BEAUTY = "beauty"
     AUTOMOTIVE = "automotive"
     GROCERY = "grocery"
+
+class OrderStatus(str,Enum):
+    PENDING = "pending"
+    PROCESSING = "processing"
+    SHIPPED = "shipped"
+    DELIVERED = "delivered"
+    CANCELLED = "cancelled"
+    RETURNED = "returned"

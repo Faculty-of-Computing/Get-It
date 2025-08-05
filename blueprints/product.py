@@ -17,9 +17,10 @@ def add_product():
         try:
             add_new_product(form)
             flash('Product added successfully!', 'success')
-            return redirect(url_for('product.add_product'))
-        except Exception:
+            return redirect(url_for('home'))
+        except Exception as err:
             flash('An error occured','error')
+            logger.info(err)
             return redirect(request.url)
     return render_template('products/add_product.html', form=form)
 
