@@ -1,11 +1,10 @@
 import bcrypt
 from sqlalchemy import Integer, String,DateTime,Boolean
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column,relationship,validates
 from core.database import db 
 from datetime import datetime
-from flask_login import UserMixin # type: ignore
+from flask_login import UserMixin
 from core.configs import bycrypt
-from sqlalchemy.orm import validates
 
 class User(db.Model, UserMixin):
     __tablename__ = 'Users'
@@ -19,6 +18,9 @@ class User(db.Model, UserMixin):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     deleted: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
+    cart: Mapped['Cart'] = relationship("Cart", back_populates="user", uselist=False,lazy='selectin') # type: ignore
+
+    cart_items:Mapped[list['CartItem']] = relationship("CartItem", back_populates="user", cascade="all, delete-orphan",lazy='selectin') # type: ignore
     
     @validates('password')
     def hash_password(self, key, value:str):
