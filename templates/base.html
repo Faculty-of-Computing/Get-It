@@ -11,7 +11,7 @@
 
 <body>
     <header>
-        <nav class="navbar">
+        <nav class="navbar lg">
             <div class="container">
                 <a href="{{ url_for('home') }}" class="logo">Get-It</a>
                 <ul class="nav-links">
@@ -23,6 +23,24 @@
                 </ul>
             </div>
         </nav>
+      
+        <nav class="navbar sm">
+            <div class="container">
+                <a href="{{ url_for('home') }}" class="logo">Get-It</a>
+                <div class="mobile-nav">
+  <span></span>
+</div>
+            </div>
+        </nav>
+        <!-- <div class="mobile-menu sm">
+             <ul class="nav-links">
+                    <li><a href="{{ url_for('home') }}">Shop</a></li>
+                    <li><a href="{{ url_for('public.about') }}">About</a></li>
+                    <li><a href="{{ url_for('public.contact') }}">Contact</a></li>
+                    <li><a href="{{ url_for('cart.cart') }}">Cart</a></li>
+                    <li><a href="{{ url_for('account.account') }}">Account</a></li>
+                </ul>
+        </div> -->
     </header>
 
     <main>
