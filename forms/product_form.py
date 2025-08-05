@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, FloatField, TextAreaField, IntegerField, SelectField, MultipleFileField, BooleanField
+from wtforms import StringField, FloatField, TextAreaField, IntegerField, SelectField, MultipleFileField, BooleanField,SubmitField
 from wtforms.validators import DataRequired, NumberRange
 from utils.enums import ProductCategory
+from utils.utils import validate_phone
 
 class AddProductForm(FlaskForm):
     name = StringField('Product Name', validators=[DataRequired()])
@@ -11,3 +12,13 @@ class AddProductForm(FlaskForm):
     description = TextAreaField('Description')
     stock = IntegerField('Stock', validators=[DataRequired(), NumberRange(min=0)])
     is_featured = BooleanField('Feature this product?')
+    
+    
+
+
+class CheckoutForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
+    address = StringField("Shipping Address", validators=[DataRequired()])
+    phone = StringField("Phone", validators=[DataRequired(),validate_phone])
+    submit = SubmitField("Place Order")
+

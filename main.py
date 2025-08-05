@@ -10,6 +10,7 @@ from services.auth import login_manager
 from utils.enums import ProductCategory
 import json
 from typing import List
+from flask_login import logout_user,current_user
 
 logger.info(f'Base Dir {BASE_DIR}')
 
@@ -59,6 +60,11 @@ def home():
     return render_template('index.html', categories=categories, products=products)
 
 
+@app.before_request
+def ensure_user_active():
+    if current_user.is_authenticated and not current_user.is_active:
+        logout_user()
+        return redirect(url_for('auth.login'))
 
         
 if __name__ == '__main__':

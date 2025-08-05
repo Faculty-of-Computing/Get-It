@@ -15,6 +15,8 @@ login_manager = LoginManager()
 
 @login_manager.user_loader
 def load_user(user_id:int)->User|None:
-    user:User = db.session.execute(db.select(User).where(User.id==user_id)).scalars().one_or_none() # type: ignore
-    logger.info(f'User:{user.username} Fecthed from the database')
-    return user
+    try:
+        return User.query.get(int(user_id)) # type: ignore
+    except Exception as e:
+        logger.error(f"An error occured\n{e}")
+        return None

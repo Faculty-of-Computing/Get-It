@@ -35,7 +35,7 @@ def login():
         else:
             flash('Invalid username or password.')
 
-    return render_template('login.html', form=form)
+    return render_template('account/login.html', form=form)
 
 
 @blueprint.route('/signup', methods=['GET', 'POST']) # type: ignore
@@ -51,11 +51,11 @@ def register():
         except IntegrityError as e:
             logger.error(f"An error occurred {e}")
             flash("User already exists please try a different mail or username",'error')
-            return render_template('register.html',)
+            return render_template('account/register.html',)
         except Exception as e:
             flash(e.__str__())
-            return render_template('register.html')
-    return render_template('register.html')
+            return render_template('account/register.html')
+    return render_template('account/register.html')
 
 @blueprint.route('/logout',methods=['POST',"GET"])
 @login_required
