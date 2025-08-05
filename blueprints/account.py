@@ -40,7 +40,3 @@ def edit_account():
         return redirect(url_for("account.account"))
 
     return render_template("account/edit_account.html", form=form)
-
-
-
-    return render_template('account.html')
