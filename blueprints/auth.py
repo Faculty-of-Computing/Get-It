@@ -57,7 +57,7 @@ def register():
             return render_template('register.html')
     return render_template('register.html')
 
-@blueprint.route('/logout')
+@blueprint.route('/logout',methods=['POST',"GET"])
 @login_required
 def logout():
     logout_user()

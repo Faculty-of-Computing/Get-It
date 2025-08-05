@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Order #{{ order.id }}</h1>
+
+<p><strong>Status:</strong> {{ order.status|capitalize }}</p>
+<p><strong>Order Date:</strong> {{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+<p><strong>Shipping Address:</strong> {{ order.shipping_address }}</p>
+<p><strong>Total Price:</strong> ₦{{ "%.2f"|format(order.total_price) }}</p>
+
+<hr>
+
+<h2>Items</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Unit Price</th>
+            <th>Qty</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order.items %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>₦{{ "%.2f"|format(item.price) }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₦{{ "%.2f"|format(item.price * item.quantity) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+
+<a href="{{ url_for('order.edit_order', order_id=order.id) }}" class="btn-small">Edit Order</a>
+<a href="{{ url_for('account.account') }}" class="btn">Back to Account</a>
+{% endblock %}
