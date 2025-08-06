@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Checkout</h2>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+      {{ form.name.label }}<br>
+      {{ form.name(class="form-control", autofocus="autofocus" if invalid_field == 'name' else None) }}
+      {% for error in form.name.errors %}
+        <small class="form-error">{{ error }}</small>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.address.label }}<br>
+      {{ form.address(class="form-control", autofocus="autofocus" if invalid_field == 'address' else None) }}
+      {% for error in form.address.errors %}
+        <small class="form-error">{{ error }}</small>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.phone.label }}<br>
+      {{ form.phone(class="form-control", autofocus="autofocus" if invalid_field == 'phone' else None) }}
+      {% for error in form.phone.errors %}
+        <small class="form-error">{{ error }}</small>
+      {% endfor %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Place Order</button>
+  </form>
+</div>
+{% endblock %}

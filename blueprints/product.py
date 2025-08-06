@@ -1,13 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required
-from werkzeug.utils import secure_filename
-from models.products import Products
-from core.database import db
 from forms.product_form import AddProductForm
-import os
 from core.configs import logger,ALLOWED_EXTENSIONS,UPLOAD_FOLDER
-from utils.utils import allowed_file
-from services.product import add_new_product
+from utils.enums import ProductCategory
+from services.product import add_new_product,get_products_by_category
 
 
 blueprint = Blueprint('product', __name__,url_prefix='/product')
@@ -21,8 +17,15 @@ def add_product():
         try:
             add_new_product(form)
             flash('Product added successfully!', 'success')
-            return redirect(url_for('product.add_product'))
-        except Exception:
+            return redirect(url_for('home'))
+        except Exception as err:
             flash('An error occured','error')
+            logger.info(err)
             return redirect(request.url)
     return render_template('products/add_product.html', form=form)
+
+@blueprint.route('/category/<string:category>') # type: ignore
+def category(category):
+    categories = list(ProductCategory)
+    products = get_products_by_category(category)
+    return render_template('index.html', categories=categories, products=products)

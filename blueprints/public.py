@@ -6,48 +6,24 @@ from core.configs import UPLOAD_FOLDER
 
 blueprint = Blueprint('public', __name__, url_prefix='/public')
 
-@blueprint.route('/')
+@blueprint.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('public/about.html')
 
-@blueprint.route('/')
+@blueprint.route('/privacy')
 def privacy():
-    return render_template('privacy.html')
+    return render_template('public/privacy.html')
 
-@blueprint.route('/')
+@blueprint.route('/terms')
 def terms():
-    return render_template('terms.html')
+    return render_template('public/terms.html')
 
-@blueprint.route('/')
+@blueprint.route('/faq')
 def faq():
-    return render_template('faq.html')
+    return render_template('public/faq.html')
 
 
-@blueprint.route('/')
+@blueprint.route('/contact')
 def contact():
-    return render_template('contact.html')
+    return render_template('public/contact.html')
 
-@blueprint.route('/upload', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        if 'image' not in request.files:
-            flash('No image part')
-            return redirect(request.url)
-
-        file = request.files['image']
-
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename) # pyright: ignore[reportArgumentType]
-            save_path = os.path.join(UPLOAD_FOLDER, filename)
-            file.save(save_path)
-            flash('File uploaded successfully')
-            return redirect(request.url)
-        else:
-            flash('Invalid file type')
-            return redirect(request.url)
-
-    return render_template('upload.html')
