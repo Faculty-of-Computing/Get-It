@@ -200,11 +200,12 @@ section.hero div.overlay {
 section.hero div.container h1.title {
     font-size: 3em;
     margin-bottom: 0;
+    width: 90%;
 }
-/* section.hero div.container h1.tline {
-    font-size: 3em;
-    margin-bottom: 0.5em;
-} */
+section.hero div.container p.tline {
+    font-size: 1.3em;
+    width: 90%;
+}
 /* main {
     min-height: 60vh;
     padding: 0em 0em;
@@ -257,6 +258,25 @@ section.categories-section .container .categories-grid .category-card a div{
   border: 1px solid #333;
 }
 
+.btn-2 {
+        background:#007bff;
+    /* height: 100% !important; */
+    /* width: 100%; */
+    /* margin: 1rem; */
+    padding: 0.5rem;
+    border-radius: 30px;
+    /* scale: 0.5; */
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+    /* width: 60px; */
+  /* height: 34px; */
+  color: #fff;
+  outline: none;
+  border: 1px solid #333;
+  cursor: pointer;
+}
+
 .btn-2:hover {
   color: black;
 }
@@ -280,6 +300,122 @@ section.categories-section .container .categories-grid .category-card a div{
   transition: all 0.5s;
 }
 
+section.featured-section {
+    /* margin-top: 3em !important;
+    margin-bottom: 3em !important; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin: 3em auto;
+}
+section.featured-section .container .section-header h2 {
+    text-align: center;
+    font-size: 2em;
+}
+
+section.featured-section .container .products-grid  {
+ display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2em;
+    margin-top: 3em;
+}
+@media only screen and (max-width: 1024px){
+    section.featured-section .container .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+@media only screen and (max-width: 768px){
+    section.featured-section .container .products-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+}
+section.featured-section .container .products-grid .product-card {
+    border: 1px solid #ddd;
+    padding: 1em;
+    text-align: left;
+    border-radius: 20px;
+    position: relative;
+}
+
+section.featured-section .container .products-grid .product-card {
+    border: 1px solid #ddd;
+    padding: 1em;
+    text-align: left;
+    border-radius: 20px;
+    position: relative;
+}
+
+section.featured-section .container .products-grid .product-card {
+    border: 1px solid #ddd;
+    padding: 1em;
+    text-align: left;
+    border-radius: 20px;
+    position: relative;
+}
+
+section.featured-section .container .products-grid .product-card:hover img {
+    transform: scale(1.05);
+}
+
+section.featured-section .container .products-grid .product-card img {
+    width: 300px !important;
+    height: 220px !important;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+    border-radius: 20px;
+    transition: transform .5s ease;
+}
+
+section.featured-section .container .products-grid .product-card h3 {
+    border-top: 1px solid #ddd;
+    padding-top: 1em;
+}
+section.featured-section .container .products-grid .product-card button {
+margin-bottom: .8em !important;
+}
+
+h1.cart {
+    text-align: center;
+    margin-top: 2em;
+    font-size: 2em;
+}
+
+table {
+    width: 80%;
+    margin: 2em auto;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+
+p.total {
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 1em;
+}
+
+a.btn, button.btn {
+    text-align: center;
+    margin-top: 1em;
+    border: none;
+    cursor: pointer;
+}
+main {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2em;
+}
+
 footer {
     background: #222;
     color: #fff;
@@ -287,8 +423,20 @@ footer {
     text-align: center;
 }
 .footer-links {
-    margin-bottom: 0.5em;
+    margin-bottom: 0.8em;
+    margin-top: 0.8em;
 }
+
+@media only screen and (max-width: 1024px){
+
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8em;
+    }
+}
+
 .footer-links a {
     color: #fff;
     margin: 0 0.5em;
