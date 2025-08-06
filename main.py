@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, session
+from flask import Flask, render_template, redirect, url_for
 import os
 from core.configs import  DATABASE_URL,BASE_DIR,DEBUG,SECRET_KEY,bycrypt
 from core.database import db

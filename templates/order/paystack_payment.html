@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Pay with Paystack{% endblock %}
+
+{% block content %}
+<h2>Redirecting to payment...</h2>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+    let handler = PaystackPop.setup({
+        key: '{{ public_key }}',
+        email: '{{ email }}',
+        amount: {{ amount }},
+        currency: "NGN",
+        callback: function(response) {
+            window.location.href = "/orders/verify/" + response.reference;
+        },
+        onClose: function() {
+            alert('Payment window closed');
+            window.location.href = "/cart";
+        }
+    });
+    handler.openIframe();
+</script>
+{% endblock %}

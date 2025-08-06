@@ -18,3 +18,8 @@ class OrderStatus(str,Enum):
     DELIVERED = "delivered"
     CANCELLED = "cancelled"
     RETURNED = "returned"
+
+class OrderePaymentStatus(str,Enum):
+    PENDING = "pending"
+    PAID = "paid"
+    FAILED = "failed"

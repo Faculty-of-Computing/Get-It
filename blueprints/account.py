@@ -30,12 +30,13 @@ def edit_account():
     form = EditAccountForm(obj=current_user)
 
     if form.validate_on_submit():
-        current_user.name = form.name.data
+        current_user.username = form.username.data
         current_user.email = form.email.data
         current_user.first_name = form.first_name.data
         current_user.last_name = form.last_name.data
-
+        #db.session.add(current_user)
         db.session.commit()
+        db.session.refresh(current_user)
         flash("Account updated successfully.", "success")
         return redirect(url_for("account.account"))
 

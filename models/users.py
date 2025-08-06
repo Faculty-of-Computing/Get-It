@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     first_name: Mapped[str] = mapped_column(String(100), nullable=True)
     last_name: Mapped[str] = mapped_column(String(100), nullable=True)
     username: Mapped[str] = mapped_column(String(100), nullable=False, unique=True, index=True)
+    email:Mapped[str] = mapped_column(String,nullable=False,unique=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)
     updated_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
@@ -21,7 +22,6 @@ class User(db.Model, UserMixin):
     cart: Mapped['Cart'] = relationship("Cart", back_populates="user", uselist=False,lazy='selectin') # type: ignore
 
     cart_items:Mapped[list['CartItem']] = relationship("CartItem", back_populates="user", cascade="all, delete-orphan",lazy='selectin') # type: ignore
-   
     orders = relationship("Order", back_populates="user", cascade="all, delete-orphan",lazy='selectin')
     
 

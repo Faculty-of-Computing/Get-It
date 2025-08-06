@@ -2,16 +2,21 @@
 
 {% block content %}
 <h2>Login</h2>
-{% if error %}<p class="error-message">{{ error }}</p>{% endif %}
 
 <form method="post">
     {{ form.hidden_tag() }}
 
     <label for="username">{{ form.username.label }}</label>
-    {{ form.username(size=32, placeholder="Username", title="Enter your username") }}<br>
+    {{ form.username(size=32, placeholder="Username", title="Enter your username", autofocus=form.username.errors) }}
+    {% for error in form.username.errors %}
+        <span class="form-error">{{ error }}</span>
+    {% endfor %}<br>
 
     <label for="password">{{ form.password.label }}</label>
-    {{ form.password(size=32, placeholder="Password", title="Enter your password") }}<br>
+    {{ form.password(size=32, placeholder="Password", title="Enter your password") }}
+    {% for error in form.password.errors %}
+        <span class="form-error">{{ error }}</span>
+    {% endfor %}<br>
 
     <button type="submit">Login</button>
 </form>

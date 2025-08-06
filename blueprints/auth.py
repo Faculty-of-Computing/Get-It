@@ -26,14 +26,14 @@ def login():
         if user and bycrypt.check_password_hash(user.password, form.password.data):
             logger.info("User authenticated succesfully")
             login_user(user)
-            flash('Logged in successfully.')
+            flash('Logged in successfully',"success")
             
             next_url = request.args.get('next')
             if next_url and url_has_allowed_host_and_scheme(next_url, request.host):
                 return redirect(next_url)
             return redirect(url_for('home'))
         else:
-            flash('Invalid username or password.')
+            flash('Invalid username or password','error')
 
     return render_template('account/login.html', form=form)
 
@@ -53,7 +53,7 @@ def register():
             flash("User already exists please try a different mail or username",'error')
             return render_template('account/register.html',)
         except Exception as e:
-            flash(e.__str__())
+            flash(e.__str__(),'error')
             return render_template('account/register.html')
     return render_template('account/register.html')
 

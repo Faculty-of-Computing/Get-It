@@ -14,7 +14,8 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 DEBUG=os.getenv("DEBUG") == "True"
 SECRET_KEY= os.getenv("SECRET_KEY")
-
+PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
+PAYSTACK_PUBLIC_KEY = os.getenv('PAYSTACK_PUBLIC_KEY')
 
 class ColoredFormatter(logging.Formatter):
     COLORS = {
@@ -43,5 +44,3 @@ handler.setFormatter(ColoredFormatter("%(levelname)s:     %(funcName)s:Line-%(li
 logger.addHandler(handler)
 
 bycrypt = Bcrypt()
-
-print("Configs Loaded Successfully: ", DATABASE_URL)

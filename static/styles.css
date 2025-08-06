@@ -383,5 +383,68 @@ footer {
 .logout-btn {
     background-color: #dc3545;
 }
+.flash-container {
+    margin: 1rem auto;
+    padding: 0 1rem;
+    max-width: 800px;
+}
+
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+.form-error {
+  color: #cc0000;
+  font-size: 0.85em;
+  margin-top: 4px;
+  display: block;
+}
+
+.flash {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 1em;
+}
+
+.flash-success {
+  background-color: #e6ffed;
+  color: #2d7a46;
+  border: 1px solid #b0f1c2;
+}
+
+.flash-error, .flash-danger {
+  background-color: #ffe6e6;
+  color: #b30000;
+  border: 1px solid #ffb3b3;
+}
+
+.form-error {
+  color: #cc0000;
+  font-size: 0.85em;
+  margin-top: 4px;
+  display: block;
+}
 
 

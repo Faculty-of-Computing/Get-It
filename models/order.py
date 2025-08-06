@@ -18,6 +18,8 @@ class Order(db.Model):
     user = relationship("User", back_populates="orders")
     items = relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")
     phone: Mapped[str] = mapped_column(String(20), nullable=False)
+    paystack_reference = db.Column(db.String(64), unique=True, nullable=True)
+    
 
 
 class OrderItem(db.Model):

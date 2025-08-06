@@ -44,7 +44,7 @@
                 <div class="product-card" onclick="openModal({{ loop.index0 }})">
                     <img src="{{ url_for('static', filename=product.images[0].lstrip('/')) }}" alt="{{ product.name }}">
                     <h3>{{ product.name }}</h3>
-                    <p>${{ "%.2f"|format(product.price) }}</p>
+                    <p>₦{{ "%.2f"|format(product.price) }}</p>
                     <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
                         <button type="submit">Add to Cart</button>
                     </form>
@@ -67,7 +67,7 @@
                             <button class="next" onclick="moveSlide({{ loop.index0 }}, 1)">&#10095;</button>
                         </div>
 
-                        <p><strong>Price:</strong> ${{ "%.2f"|format(product.price) }}</p>
+                        <p><strong>Price:</strong> ₦{{ "%.2f"|format(product.price) }}</p>
                         <p>{{ product.description }}</p>
 
                         <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
