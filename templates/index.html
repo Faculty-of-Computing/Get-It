@@ -8,8 +8,8 @@
             <h1>{{ category_name.replace('_', ' ').title() }}</h1>
             <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
         {% else %}
-            <h1 class="title">Welcome to Get-It</h1>
-            <p class="tline">Your one-stop shop for everything.</p>
+            <h1 class="title">Everything You Need, <br> All in One Place</h1>
+            <p class="tline">Shop smarter. Live better. <br> Discover top deals across every category.</p>
         {% endif %}
     </div>
 </section>
@@ -18,15 +18,25 @@
 <section class="categories-section">
     <div class="container">
         <div class="section-header">
-            <h2>Featured Categories</h2>
+            <h2>Shop by Category</h2>
         </div>
         <div class="categories-grid">
             {% for category in categories %}
-            <div class="category-card {% if active_category == category.name %}active{% endif %}">
-                <a href="{{ url_for('product.category', category=category.value) }}">
-                    <div class="category-name btn-2">{{ category.name.replace('_', ' ').title() }}</div>
-                </a>
+         <div class="category-card category-{{ category.name|lower|replace(' ', '-') }} {% if active_category == category.name %}active{% endif %}">
+    <!-- <a href="{{ url_for('product.category', category=category.value) }}">
+        <div class="category-name btn-2 category-{{ category.name|lower|replace(' ', '-') }}">
+            {{ category.name.replace('_', ' ').title() }}
+        </div>
+    </a> -->
+    <a href="{{ url_for('product.category', category=category.value) }}">
+        <div class="category-name category-{{ category.name|lower|replace(' ', '-') }}">
+        <div class="img-con">
+            <img src="../static/imgs/{{category.name}}.jpg" alt="">
             </div>
+          <p> {{ category.name.replace('_', ' ').title() }}</p> 
+        </div>
+    </a>
+</div>
             {% endfor %}
         </div>
     </div>
@@ -42,8 +52,11 @@
             {% if products %}
                 {% for product in products %}
                 <div class="product-card" onclick="openModal({{ loop.index0 }})">
+                    <div class="img-container">
                     <img src="{{ url_for('static', filename=product.images[0].lstrip('/')) }}" alt="{{ product.name }}">
+                    </div>
                     <h3>{{ product.name }}</h3>
+                    <div class="rating"><img src="../static/imgs/star3.png" alt=""><img src="../static/imgs/star3.png" alt=""><img src="../static/imgs/star3.png" alt=""><img src="../static/imgs/star3.png" alt=""><img src="../static/imgs/star3.png" alt=""></div>
                     <p>₦{{ "%.2f"|format(product.price) }}</p>
                     <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
                         <button type="submit" class="btn-2">Add to Cart</button>
@@ -71,7 +84,7 @@
                         <p>{{ product.description }}</p>
 
                         <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
-                            <button type="submit">Add to Cart</button>
+                            <button type="submit" class="btn-2">Add to Cart</button>
                         </form>
                     </div>
                 </div>
