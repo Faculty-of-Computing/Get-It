@@ -1,8 +1,9 @@
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
+    margin: 0;
     padding: 0;
-    background: #f8f9fa;
+    background: #f4f4f4;
     color: #222;
 }
 
@@ -165,21 +166,29 @@ header {
 
     section.categories-section .container .categories-grid{
     display: grid;
-    grid-template-rows:  29px  29px 29px 29px 29px!important;
-    grid-template-columns:  160px  160px !important;
+    /* grid-template-rows:  1fr  1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr !important; */
+    grid-template-columns:  1fr !important;
     gap: 30px !important;
     margin-top: 3em;
 }
 }
 
+@media only screen and (max-width: 992px){
+    section.categories-section .container .categories-grid{
+    grid-template-columns:  1fr !important;
+}
+}
+
+
 section.hero {
-    background: url('./imgs/header.jpg') no-repeat center center/cover;
+    background: url('./imgs/header.png') no-repeat center center/cover;
     color: #fff;
     /* padding: 4em 0; */
     text-align: center;
     height:90vh;
     width: 100%;
     position:relative;
+    margin-top: -2em;
 }
 section.hero div.overlay {
     position: absolute;
@@ -201,6 +210,7 @@ section.hero div.container h1.title {
     font-size: 3em;
     margin-bottom: 0;
     width: 90%;
+    line-height: 1.2;
 }
 section.hero div.container p.tline {
     font-size: 1.3em;
@@ -222,55 +232,112 @@ section.categories-section {
 
 section.categories-section .container .section-header h2 {
     text-align: center;
-    font-size: 2em;
+    font-size: 2.5em;
+    letter-spacing: -2px;
 }
 section.categories-section .container .categories-grid{
     display: grid;
-    grid-template-rows:  29px  29px 29px;
-    grid-template-columns:  160px  160px 160px ;
+    grid-template-rows:  1fr  1fr 1fr;
+    grid-template-columns:  1fr  1fr 1fr ;
     gap: 38px;
     margin-top: 3em;
 }
 
 section.categories-section .container .categories-grid .category-card a{
-    color: #fff;
+    /* color: #fff; */
     text-decoration: none;
     text-align: center;
         display: flex;
+        flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
 }
-section.categories-section .container .categories-grid .category-card a div{
-    background: #333;
-    /* height: 100% !important; */
-    width: 100%;
+section.categories-section .container .categories-grid .category-card a:hover div.category-name img{
+    transform: scale(1.1);
+    transition: transform 0.5s ease;
+
+}
+section.categories-section .container .categories-grid .category-card a div.category-name p{
+  color: #222;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+section.categories-section .container .categories-grid .category-card a div.category-name{
+    /* background: #333; */
     /* margin: 1rem; */
-    padding: 0.5rem;
-    border-radius: 30px;
+    /* padding: 0.5rem; */
+    border-radius: 20px;
     /* scale: 0.5; */
-  position: absolute;
-  z-index: 1;
-  overflow: hidden;
+  position: relative;
+  /* z-index: 1; */
+  /* overflow: hidden; */
     /* width: 60px; */
   /* height: 34px; */
   outline: none;
-  border: 1px solid #333;
+  /* border: 1px solid #333; */
+}
+section.categories-section .container .categories-grid .category-card a div.category-name{
+    /* background: #333; */
+    /* margin: 1rem; */
+    /* padding: 0.5rem; */
+    border-radius: 20px;
+    /* scale: 0.5; */
+  position: relative;
+  /* z-index: 1; */
+  /* overflow: hidden; */
+    /* width: 60px; */
+  /* height: 34px; */
+  outline: none;
+  /* border: 1px solid #333; */
+}
+section.categories-section .container .categories-grid .category-card a div.category-name .img-con{
+    height: 300px !important;
+    width: 300px;
+    /* object-fit: cover; */
+    /* padding: 0.9rem; */
+    /* background-color: #ccc; */
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    /* box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); */
+    /* border: 2px solid #222; */
+}
+section.categories-section .container .categories-grid .category-card a div.category-name img{
+    /* height: 90% !important;
+    width: 90%; */
+        height: 100% !important;
+    width: 100%;
+    object-fit: cover;
+     transition: transform 0.5s ease;
+    /* padding: 0.9rem;
+    background-color: #ccc; */
+    border-radius: 20px;
+    /* box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); */
+    /* border: 2px solid #222; */
 }
 
+
+/* section.categories-section .container .categories-grid .category-card a div.category-name.category-electronics { 
+    background: url('/static/imgs/electronics.jpg') no-repeat center center/cover; 
+} */
+
 .btn-2 {
-        background:#007bff;
-    /* height: 100% !important; */
-    /* width: 100%; */
-    /* margin: 1rem; */
+        background:#b88346;
+    height: 100% !important;
+    width: 120px !important;
     padding: 0.5rem;
     border-radius: 30px;
     /* scale: 0.5; */
   position: relative;
   z-index: 1;
   overflow: hidden;
-    /* width: 60px; */
-  /* height: 34px; */
+    /* width: 60px;
+  height: 34px; */
   color: #fff;
   outline: none;
   border: 1px solid #333;
@@ -303,22 +370,24 @@ section.categories-section .container .categories-grid .category-card a div{
 section.featured-section {
     /* margin-top: 3em !important;
     margin-bottom: 3em !important; */
-    display: flex;
+    display: flex ;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 90%;
-    margin: 3em auto;
+    justify-content: center ;
+    align-items: center ;
+    width: 90% ;
+    margin: 3em auto ;
 }
+
 section.featured-section .container .section-header h2 {
     text-align: center;
-    font-size: 2em;
+    font-size: 2.5em;
+    letter-spacing: -2px;
 }
 
 section.featured-section .container .products-grid  {
  display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2em;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1em;
     margin-top: 3em;
 }
 @media only screen and (max-width: 1024px){
@@ -333,25 +402,9 @@ section.featured-section .container .products-grid  {
     }
 
 }
-section.featured-section .container .products-grid .product-card {
-    border: 1px solid #ddd;
-    padding: 1em;
-    text-align: left;
-    border-radius: 20px;
-    position: relative;
-}
 
 section.featured-section .container .products-grid .product-card {
-    border: 1px solid #ddd;
-    padding: 1em;
-    text-align: left;
-    border-radius: 20px;
-    position: relative;
-}
-
-section.featured-section .container .products-grid .product-card {
-    border: 1px solid #ddd;
-    padding: 1em;
+    /* padding: 1em; */
     text-align: left;
     border-radius: 20px;
     position: relative;
@@ -361,18 +414,38 @@ section.featured-section .container .products-grid .product-card:hover img {
     transform: scale(1.05);
 }
 
+section.featured-section .container .products-grid .product-card div.img-container {
+    width: 250px !important;
+    height: 250px !important;
+    border-radius: 20px;
+    transition: transform .5s ease;
+    background: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 section.featured-section .container .products-grid .product-card img {
-    width: 300px !important;
-    height: 220px !important;
-    object-fit: cover;
-    border-bottom: 1px solid #ddd;
+    width: 90% !important;
+    height: 90% !important;
+    object-fit: contain;
     border-radius: 20px;
     transition: transform .5s ease;
 }
 
 section.featured-section .container .products-grid .product-card h3 {
-    border-top: 1px solid #ddd;
+    /* border-top: 1px solid #ddd; */
     padding-top: 1em;
+}
+section.featured-section .container .products-grid .product-card p {
+ font-weight: 500;
+}
+section.featured-section .container .products-grid .product-card div.rating {
+display: flex;
+    
+}
+section.featured-section .container .products-grid .product-card div.rating img{
+width: 13px !important;
 }
 section.featured-section .container .products-grid .product-card button {
 margin-bottom: .8em !important;
