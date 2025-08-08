@@ -6,27 +6,27 @@
     {{ form.hidden_tag() }}
     
     <div>
-      {{ form.name.label }} {{ form.name(size=32) }}
+      {{ form.name.label }} <br>{{ form.name(size=32) }}
     </div>
     <div>
-      {{ form.price.label }} {{ form.price() }}
+      {{ form.price.label }} <br> {{ form.price() }}
     </div>
     <div>
-      {{ form.images.label }} {{ form.images(multiple=True) }}
+      {{ form.images.label }} <br> {{ form.images(multiple=True) }}
     </div>
     <div>
-      {{ form.category.label }} {{ form.category() }}
+      {{ form.category.label }} <br> {{ form.category() }}
     </div>
     <div>
-      {{ form.description.label }} {{ form.description(rows=4, cols=40) }}
+      {{ form.description.label }} <br> {{ form.description(rows=4, cols=40) }}
     </div>
     <div>
-      {{ form.stock.label }} {{ form.stock() }}
+      {{ form.stock.label }} <br> {{ form.stock() }}
     </div>
     <div>
-      {{ form.is_featured.label }} {{ form.is_featured() }}
+      {{ form.is_featured.label }} <br> {{ form.is_featured() }}
     </div>
     
-    <button type="submit">Add Product</button>
+    <button type="submit" class="btn-2">Add Product</button>
   </form>
 {% endblock %}
