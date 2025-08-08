@@ -458,15 +458,43 @@ h1.cart {
 }
 
 table {
-    width: 80%;
+    width: 90%;
     margin: 2em auto;
 }
 
 table, th, td {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-collapse: collapse;
 }
 
+th {
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: .8em;
+    /* margin-bottom: .8em; */
+}
+td{
+padding-top: .9em !important;
+border-bottom: 1px solid #ddd;
+    padding-bottom:.9em !important;
+}
+
+
+@media only screen and (max-width: 1024px){
+td.quantity {
+    text-align: center;
+}
+}
+
+.remove-btn {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
 
 p.total {
     text-align: center;
@@ -591,11 +619,15 @@ footer {
 }
 .btn {
     display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
+    padding: 0.8rem 1.2rem;
+    background-color: #b88346;
     color: white;
     text-decoration: none;
-    border-radius: 4px;
+    border-radius: 40px;
+    width:100%;
+}
+.btn.btn-lg {
+    width:90%;
 }
 .btn-small {
     padding: 0.25rem 0.5rem;
@@ -668,4 +700,33 @@ footer {
   display: block;
 }
 
+input {
+    padding: 1em  7em 1em 1em;
+    border-radius: 30px;
+    outline: none;
+    border: 1px solid #000;
+    margin-top: .5em;
+    margin-bottom: 1.5em;
+}
 
+label {
+    font-weight: 500;
+}
+
+.form-group {
+/* margin-top: 1.5em; */
+}
+
+div.dflex {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap:  20px;
+}
+
+@media only screen and (max-width: 1024px){
+div.dflex {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap:  20px;
+}
+}
