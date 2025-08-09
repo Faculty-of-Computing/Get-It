@@ -25,17 +25,20 @@
     <tbody>
     {% for item in cart_items %}
         <tr>
-            <td>{{ item.product.name }}</td>
-            <td>{{ item.quantity }}</td>
+            <td>
+              <!-- <img src="{{ url_for('static', filename=item.product['images'][0].lstrip('/')) }}" alt="{{ item.product['name'] }}" alt="">  -->
+              {{ item.product.name }}
+            </td>
+            <td class="quantity">{{ item.quantity }}</td>
             <td>₦{{ "%.2f"|format(item.subtotal) }}</td>
-            <td><a href="{{ url_for('cart.remove_from_cart', product_id=item.product.id) }}">Remove</a></td>
+            <td class="remove"><a href="{{ url_for('cart.remove_from_cart', product_id=item.product.id) }}" class="remove-btn">Remove</a></td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
 
-<p><strong>Total:</strong> ₦{{ "%.2f"|format(total) }}</p>
-<a href="{{ url_for('order.checkout') }}" class="btn">Proceed to Checkout</a>
+<p class="total"><strong>Total:</strong> ₦{{ "%.2f"|format(total) }}</p>
+<a href="{{ url_for('order.checkout') }}" class="btn btn-lg">Proceed to Checkout</a>
 {% else %}
 <p>Your cart is empty.</p>
 {% endif %}

@@ -6,19 +6,19 @@
 <form method="post">
     {{ form.hidden_tag() }}
 
-    <label for="username">{{ form.username.label }}</label>
+    <label for="username">{{ form.username.label }}</label> <br>
     {{ form.username(size=32, placeholder="Username", title="Enter your username", autofocus=form.username.errors) }}
     {% for error in form.username.errors %}
         <span class="form-error">{{ error }}</span>
     {% endfor %}<br>
 
-    <label for="password">{{ form.password.label }}</label>
+    <label for="password">{{ form.password.label }}</label> <br>
     {{ form.password(size=32, placeholder="Password", title="Enter your password") }}
     {% for error in form.password.errors %}
         <span class="form-error">{{ error }}</span>
     {% endfor %}<br>
 
-    <button type="submit">Login</button>
+    <button type="submit" class="btn">Login</button>
 </form>
 
 <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
