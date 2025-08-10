@@ -327,21 +327,21 @@ section.categories-section .container .categories-grid .category-card a div.cate
 } */
 
 .btn-2 {
-        background:#b88346;
-    height: 100% !important;
-    width: 120px !important;
-    padding: 0.5rem;
+    background: #b88346;
+    color: #fff;
+    padding: 0.8rem 1.2rem;
     border-radius: 30px;
-    /* scale: 0.5; */
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-    /* width: 60px;
-  height: 34px; */
-  color: #fff;
-  outline: none;
-  border: 1px solid #333;
-  cursor: pointer;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    font-size: 1rem;
+    transition: background 0.3s, color 0.3s;
+    width: auto;
+    height: auto;
+    display: inline-block;
 }
 
 .btn-2:hover {
