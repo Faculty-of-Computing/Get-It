@@ -106,6 +106,7 @@ Get-It/
 │   ├── utils.py
 │   └── __pycache__/
 ```
+```
 
 
 ### Folder and File Details
