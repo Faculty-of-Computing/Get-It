@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="featured-section">
+    <div class="container">
+        <div class="section-header">
+           <!-- {% for category in categories %} -->
+            <!-- <h2>{{ category.name.replace('_', ' ').title() }}</h2> -->
+             <!-- {% endfor %} -->
+              {% for cat in categories %}
+  {% if cat.name.lower() == category_name.lower() %}
+    <h2>{{ cat.name.replace('_', ' ').title() }}</h2>
+  {% endif %}
+{% endfor %}
+        </div>
+        <div class="products-grid">
+            {% if products %}
+                {% for product in products %}
+                <div class="product-card" onclick="openModal({{ loop.index0 }})">
+                    <div class="img-container">
+                    <img src="{{ url_for('static', filename=product.images[0].lstrip('/')) }}" alt="{{ product.name }}">
+                    </div>
+                    <h3>{{ product.name }}</h3>
+                    <div class="rating"><img src="../static/imgs/star3.png" alt=""><img src="../static/imgs/star3.png" alt=""><img src="../static/imgs/star3.png" alt=""><img src="../static/imgs/star3.png" alt=""><img src="../static/imgs/star3.png" alt=""></div>
+                    <p>₦{{ "%.2f"|format(product.price) }}</p>
+                    <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
+                        <button type="submit" class="btn-2">Add to Cart</button>
+                    </form>
+                </div>
+                {% endfor %}
+
+                <!-- Product Modals -->
+                {% for product in products %}
+                <div class="modal" id="modal-{{ loop.index0 }}">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal({{ loop.index0 }})">&times;</span>
+                        <h2>{{ product.name }}</h2>
+
+                        <!-- Image Slider -->
+                        <div class="slider-wrapper">
+                            {% for img in product.images %}
+                            <img src="{{ url_for('static', filename=img.lstrip('/')) }}" class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}">
+                            {% endfor %}
+                            <button class="prev" onclick="moveSlide({{ loop.index0 }}, -1)">&#10094;</button>
+                            <button class="next" onclick="moveSlide({{ loop.index0 }}, 1)">&#10095;</button>
+                        </div>
+
+                        <p><strong>Price:</strong> ₦{{ "%.2f"|format(product.price) }}</p>
+                        <p>{{ product.description }}</p>
+
+                        <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
+                            <button type="submit" class="btn-2">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No products available in this category.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

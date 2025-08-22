@@ -27,5 +27,6 @@ def add_product():
 @blueprint.route('/category/<string:category>') # type: ignore
 def category(category):
     categories = list(ProductCategory)
+    # selected_category = next((cat for cat in categories if cat.name == category), None)
     products = get_products_by_category(category)
-    return render_template('index.html', categories=categories, products=products)
+    return render_template('category/category.html', categories=categories, category_name=category, products=products)
