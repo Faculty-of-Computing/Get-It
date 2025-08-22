@@ -26,7 +26,6 @@
     {% for item in cart_items %}
         <tr>
             <td>
-              <!-- <img src="{{ url_for('static', filename=item.product['images'][0].lstrip('/')) }}" alt="{{ item.product['name'] }}" alt="">  -->
               {{ item.product.name }}
             </td>
             <td class="quantity">{{ item.quantity }}</td>
