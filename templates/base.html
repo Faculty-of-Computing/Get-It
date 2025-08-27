@@ -33,13 +33,13 @@
         </nav>
 
         <div class="mobile-menu">
- <ul class="nav-links">
-                    <li><a href="{{ url_for('public.about') }}">About</a></li>
-                    <li><a href="{{ url_for('public.contact') }}">Contact</a></li>
-                    <li><a href="{{ url_for('cart.view_cart') }}">Cart</a></li>
-                    <li><a href="{{ url_for('account.account') }}">Account</a></li>
-                </ul>
-</div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('public.about') }}">About</a></li>
+                <li><a href="{{ url_for('public.contact') }}">Contact</a></li>
+                <li><a href="{{ url_for('cart.view_cart') }}">Cart</a></li>
+                <li><a href="{{ url_for('account.account') }}">Account</a></li>
+            </ul>
+        </div>
     </header>
 
     <main>
@@ -76,22 +76,22 @@
     </footer>
 
 
-<script>
-    let menuToggle = document.querySelector(".mobile-nav");
-let menuToggleLinks = document.querySelectorAll(".mobile-menu ul li a");
-let nav = document.querySelector(".mobile-menu");
-menuToggle.onclick = function() {
-  menuToggle.classList.toggle("active");
-  nav.classList.toggle("show");
-}
+    <script>
+        let menuToggle = document.querySelector(".mobile-nav");
+        let menuToggleLinks = document.querySelectorAll(".mobile-menu ul li a");
+        let nav = document.querySelector(".mobile-menu");
+        menuToggle.onclick = function() {
+        menuToggle.classList.toggle("active");
+        nav.classList.toggle("show");
+        }
 
-menuToggleLinks.forEach(link => {
-  link.addEventListener('click', () => {
-    menuToggle.classList.toggle("active");
-    nav.classList.toggle("show");
-  })
-})
-</script>
+        menuToggleLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            menuToggle.classList.toggle("active");
+            nav.classList.toggle("show");
+        })
+        })
+    </script>
    
 </body>
 

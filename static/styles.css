@@ -1,3 +1,27 @@
+/* static/styles.css */
+
+/* --- Import Google Font --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* --- CSS Variables for Easy Theme Management --- */
+:root {
+    --primary-color: #2c3e50;    /* A modern, dark blue */
+    --secondary-color: #3498db;  /* A complementary brighter blue */
+    --accent-color: #e67e22;     /* A vibrant orange, similar to your current brown */
+    --background-color: #ecf0f1; /* A light, clean grey background */
+    --text-color: #34495e;       /* A softer, dark grey for text */
+    --card-background: #ffffff;   /* White background for cards */
+    --border-radius: 8px;       /* Softer, rounded corners */
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif; /* Use the new font */
+    margin: 0;
+    padding: 0;
+    background: var(--background-color); /* Use CSS variable */
+    color: var(--text-color);           /* Use CSS variable */
+}
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
@@ -194,7 +218,7 @@ header {
 
 
 section.hero {
-    background: url('./imgs/header.png') no-repeat center center/cover;
+    background: url('https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756291065/header.png') no-repeat center center/cover;
     color: #fff;
     /* padding: 4em 0; */
     text-align: center;
@@ -297,13 +321,13 @@ section.categories-section .container .categories-grid .category-card a div.cate
     /* padding: 0.5rem; */
     border-radius: 20px;
     /* scale: 0.5; */
-  position: relative;
-  /* z-index: 1; */
-  /* overflow: hidden; */
-    /* width: 60px; */
-  /* height: 34px; */
-  outline: none;
-  /* border: 1px solid #333; */
+    position: relative;
+    /* z-index: 1; */
+    /* overflow: hidden; */
+        /* width: 60px; */
+    /* height: 34px; */
+    outline: none;
+    /* border: 1px solid #333; */
 }
 section.categories-section .container .categories-grid .category-card a div.category-name .img-con{
     height: 300px !important;

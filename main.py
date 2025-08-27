@@ -1,6 +1,14 @@
 from flask import Flask, render_template, redirect, url_for
 import os
-from core.configs import  DATABASE_URL,BASE_DIR,DEBUG,SECRET_KEY,bycrypt
+from core.configs import  (DATABASE_URL,
+                           BASE_DIR,
+                           DEBUG,
+                           SECRET_KEY,
+                           bycrypt,
+                           CLOUDINARY_API_KEY,
+                           CLOUDINARY_API_SECRET,
+                           CLOUDINARY_NAME,
+                           CLOUDINARY_URL)
 from core.database import db
 from blueprints import account, auth,public,cart,product,order as order_bp
 from core.configs import logger,UPLOAD_FOLDER
@@ -11,6 +19,9 @@ from utils.enums import ProductCategory
 import json
 from typing import List
 from flask_login import logout_user,current_user
+import cloudinary
+from datetime import datetime
+import datetime as dt
 
 logger.info(f'Base Dir {BASE_DIR}')
 
@@ -33,7 +44,12 @@ def create_app():
 
 app = create_app()
 
-
+cloudinary.config(
+    cloud_name=CLOUDINARY_NAME,
+    api_key=CLOUDINARY_API_KEY,
+    api_secret=CLOUDINARY_API_SECRET,
+    secure=True
+)
 
 
 #NOTE - blueprints are registered here
@@ -49,16 +65,14 @@ def home():
     categories = list(ProductCategory)  # If using Enum for categories
     #products = Products.query.limit(8).all()  # Load featured products (limit to 8 for performance/UI)
     products:List[Products] = db.session.execute(db.select(Products)).scalars().all() # type: ignore
-    for product in products:
-        if isinstance(product.images, str):
-            try:
-                product.images = json.loads(product.images)
-                #logger.info(product.images)
-            except json.JSONDecodeError:
-                product.images = []
                 
     return render_template('index.html', categories=categories, products=products)
 
+
+
+@app.context_processor
+def inject_current_year():
+    return {'current_year': datetime.now(dt.timezone.utc).year}
 
 @app.before_request
 def ensure_user_active():
@@ -66,7 +80,30 @@ def ensure_user_active():
         logout_user()
         return redirect(url_for('auth.login'))
 
-        
+@app.template_global('get_category_image_url')
+def get_category_image_url(category_enum_value):
+    """
+    Returns the hard-coded Cloudinary URL for a given product category.
+    This is a simple, direct mapping.
+    """
+    # --- IMPORTANT ---
+    # Replace these URLs with the actual URLs you copied from your Cloudinary account!
+    image_map = {
+        ProductCategory.ELECTRONICS.value: "https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756291040/electronics.jpg",
+        ProductCategory.CLOTHING.value: "https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756291041/clothing.jpg",
+        ProductCategory.HOME_APPLIANCES.value: "https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294159/home_appliances.jpg",
+        ProductCategory.BOOKS.value: "https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756291032/books.jpg",
+        ProductCategory.GROCERY.value: "https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756291040/grocery.jpg",
+        ProductCategory.SPORTS.value: "https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294299/sports.jpg",
+        ProductCategory.TOYS.value:"https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294300/toys.jpg",
+        ProductCategory.BEAUTY.value: "https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756291031/beauty.jpg",
+        ProductCategory.AUTOMOTIVE.value: "https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756290937/automotive.jpg",
+    }
+
+    # Return the URL for the given category, or a default placeholder image if not found
+    
+    return image_map.get(category_enum_value, None)
+
 if __name__ == '__main__':
     app.run(debug=DEBUG,host ='0.0.0.0', port=8000)
 

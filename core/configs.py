@@ -17,6 +17,12 @@ SECRET_KEY= os.getenv("SECRET_KEY")
 PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
 PAYSTACK_PUBLIC_KEY = os.getenv('PAYSTACK_PUBLIC_KEY')
 
+#SECTION -Cloudinare
+CLOUDINARY_URL = os.getenv('CLOUDINARY_URL')
+CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET')
+CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY')
+CLOUDINARY_NAME = os.getenv('CLOUDINARY_NAME')
+
 class ColoredFormatter(logging.Formatter):
     COLORS = {
         "DEBUG": "\033[94m",   #NOTE Blue

@@ -5,11 +5,11 @@
 <section class="hero">
     <div class="container overlay">
         {% if category_name %}
-            <h1>{{ category_name.replace('_', ' ').title() }}</h1>
-            <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
+        <h1>{{ category_name.replace('_', ' ').title() }}</h1>
+        <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
         {% else %}
-            <h1 class="title">Everything You Need, <br> All in One Place</h1>
-            <p class="tline">Shop smarter. Live better. <br> Discover top deals across every category.</p>
+        <h1 class="title">Everything You Need, <br> All in One Place</h1>
+        <p class="tline">Shop smarter. Live better. <br> Discover top deals across every category.</p>
         {% endif %}
     </div>
 </section>
@@ -22,21 +22,17 @@
         </div>
         <div class="categories-grid">
             {% for category in categories %}
-         <div class="category-card category-{{ category.name|lower|replace(' ', '-') }} {% if active_category == category.name %}active{% endif %}">
-    <!-- <a href="{{ url_for('product.category', category=category.value) }}">
-        <div class="category-name btn-2 category-{{ category.name|lower|replace(' ', '-') }}">
-            {{ category.name.replace('_', ' ').title() }}
-        </div>
-    </a> -->
-    <a href="{{ url_for('product.category', category=category.value) }}">
-        <div class="category-name category-{{ category.name|lower|replace(' ', '-') }}">
-        <div class="img-con">
-            <img src="../static/imgs/{{category.name}}.jpg" alt="">
+            <div
+                class="category-card category-{{ category.name|lower|replace(' ', '-') }} {% if active_category == category.name %}active{% endif %}">
+                <a href="{{ url_for('product.category', category=category.value) }}">
+                    <div class="category-name category-{{ category.name|lower|replace(' ', '-') }}">
+                        <div class="img-con">
+                            <img src="{{ get_category_image_url(category.value)  }}" alt="">
+                        </div>
+                        <p> {{ category.name.replace('_', ' ').title() }}</p>
+                    </div>
+                </a>
             </div>
-          <p> {{ category.name.replace('_', ' ').title() }}</p> 
-        </div>
-    </a>
-</div>
             {% endfor %}
         </div>
     </div>
@@ -46,51 +42,58 @@
 <section class="featured-section">
     <div class="container">
         <div class="section-header">
-            <h2>{% if category_name %}{{ category_name.replace('_', ' ').title() }}{% else %}Featured{% endif %} Products</h2>
+            <h2>{% if category_name %}{{ category_name.replace('_', ' ').title() }}{% else %}Featured{% endif %}
+                Products</h2>
         </div>
         <div class="products-grid">
             {% if products %}
-                {% for product in products %}
-                <div class="product-card" onclick="openModal({{ loop.index0 }})">
-                    <div class="img-container">
-                    <img src="{{ url_for('static', filename=product.images[0].lstrip('/')) }}" alt="{{ product.name }}">
+            {% for product in products %}
+            <div class="product-card" onclick="openModal({{ loop.index0 }})">
+                <div class="img-container">
+                    <img src="{{ product.images[0] }}" alt="{{ product.name }}">
+                </div>
+                <h3>{{ product.name }}</h3>
+                <div class="rating"><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
+                        alt=""><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
+                        alt=""><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
+                        alt=""><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
+                        alt=""><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
+                        alt=""></div>
+                <p>₦{{ "%.2f"|format(product.price) }}</p>
+                <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
+                    <button type="submit" class="btn-2">Add to Cart</button>
+                </form>
+            </div>
+            {% endfor %}
+
+            <!-- Product Modals -->
+            {% for product in products %}
+            <div class="modal" id="modal-{{ loop.index0 }}">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal({{ loop.index0 }})">&times;</span>
+                    <h2>{{ product.name }}</h2>
+
+                    <!-- Image Slider -->
+                    <div class="slider-wrapper">
+                        {% for image in product.images %}
+                        <img src="{{ image }}"
+                            class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}">
+                        {% endfor %}
+                        <button class="prev" onclick="moveSlide({{ loop.index0 }}, -1)">&#10094;</button>
+                        <button class="next" onclick="moveSlide({{ loop.index0 }}, 1)">&#10095;</button>
                     </div>
-                    <h3>{{ product.name }}</h3>
-                    <div class="rating"><img src="../static/imgs/star3.png" alt=""><img src="../static/imgs/star3.png" alt=""><img src="../static/imgs/star3.png" alt=""><img src="../static/imgs/star3.png" alt=""><img src="../static/imgs/star3.png" alt=""></div>
-                    <p>₦{{ "%.2f"|format(product.price) }}</p>
+
+                    <p><strong>Price:</strong> ₦{{ "%.2f"|format(product.price) }}</p>
+                    <p>{{ product.description }}</p>
+
                     <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
                         <button type="submit" class="btn-2">Add to Cart</button>
                     </form>
                 </div>
-                {% endfor %}
-
-                <!-- Product Modals -->
-                {% for product in products %}
-                <div class="modal" id="modal-{{ loop.index0 }}">
-                    <div class="modal-content">
-                        <span class="close" onclick="closeModal({{ loop.index0 }})">&times;</span>
-                        <h2>{{ product.name }}</h2>
-
-                        <!-- Image Slider -->
-                        <div class="slider-wrapper">
-                            {% for img in product.images %}
-                            <img src="{{ url_for('static', filename=img.lstrip('/')) }}" class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}">
-                            {% endfor %}
-                            <button class="prev" onclick="moveSlide({{ loop.index0 }}, -1)">&#10094;</button>
-                            <button class="next" onclick="moveSlide({{ loop.index0 }}, 1)">&#10095;</button>
-                        </div>
-
-                        <p><strong>Price:</strong> ₦{{ "%.2f"|format(product.price) }}</p>
-                        <p>{{ product.description }}</p>
-
-                        <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
-                            <button type="submit" class="btn-2">Add to Cart</button>
-                        </form>
-                    </div>
-                </div>
-                {% endfor %}
+            </div>
+            {% endfor %}
             {% else %}
-                <p>No products available in this category.</p>
+            <p>No products available in this category.</p>
             {% endif %}
         </div>
     </div>
@@ -98,28 +101,28 @@
 
 <!-- Modal JS -->
 <script>
-function openModal(index) {
-    document.getElementById('modal-' + index).style.display = 'block';
-    showSlide(index, 0);
-}
+    function openModal(index) {
+        document.getElementById('modal-' + index).style.display = 'block';
+        showSlide(index, 0);
+    }
 
-function closeModal(index) {
-    document.getElementById('modal-' + index).style.display = 'none';
-}
+    function closeModal(index) {
+        document.getElementById('modal-' + index).style.display = 'none';
+    }
 
-function showSlide(index, slideIndex) {
-    const slides = document.querySelectorAll('.slide-' + index);
-    slides.forEach((s, i) => s.classList.toggle('active', i === slideIndex));
-    window['currentSlide_' + index] = slideIndex;
-}
+    function showSlide(index, slideIndex) {
+        const slides = document.querySelectorAll('.slide-' + index);
+        slides.forEach((s, i) => s.classList.toggle('active', i === slideIndex));
+        window['currentSlide_' + index] = slideIndex;
+    }
 
-function moveSlide(index, step) {
-    const slides = document.querySelectorAll('.slide-' + index);
-    const total = slides.length;
-    let current = window['currentSlide_' + index] || 0;
-    current = (current + step + total) % total;
-    showSlide(index, current);
-}
+    function moveSlide(index, step) {
+        const slides = document.querySelectorAll('.slide-' + index);
+        const total = slides.length;
+        let current = window['currentSlide_' + index] || 0;
+        current = (current + step + total) % total;
+        showSlide(index, current);
+    }
 </script>
 
 {% endblock %}
