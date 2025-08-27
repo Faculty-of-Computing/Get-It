@@ -7,7 +7,7 @@ from utils.utils import validate_phone
 class AddProductForm(FlaskForm):
     name = StringField('Product Name', validators=[DataRequired()])
     price = FloatField('Price', validators=[DataRequired(), NumberRange(min=0)])
-    images = MultipleFileField('Product Images')
+    images = MultipleFileField('Product Images',id="add-product-images-field",description="Allows File Uploads")
     category = SelectField('Category', choices=[(cat.name, cat.value) for cat in ProductCategory], validators=[DataRequired()])
     description = TextAreaField('Description')
     stock = IntegerField('Stock', validators=[DataRequired(), NumberRange(min=0)])
