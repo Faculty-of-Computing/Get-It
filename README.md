@@ -223,6 +223,10 @@ Get-It/
    SECRET_KEY=your-secret-key
    PAYSTACK_PUBLIC_KEY=your-paystack-public-key
    PAYSTACK_SECRET_KEY=your-paystack-secret-key
+   CLOUDINARY_URL=cloudinary-url
+   CLOUDINARY_API_SECRET=cloudinary-api-secret
+   CLOUDINARY_NAME=cloudinary-name
+   CLOUDINARY_API_KEY=your-api-key
    ```
 3. **Initialize the database:**
    ```bash
