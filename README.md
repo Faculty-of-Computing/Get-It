@@ -32,7 +32,6 @@
 
 ## Project Structure
 ```
-```
 Get-It/
 ├── README.md
 ├── requirements.txt
@@ -106,8 +105,6 @@ Get-It/
 │   ├── utils.py
 │   └── __pycache__/
 ```
-```
-
 
 ### Folder and File Details
 
@@ -220,24 +217,24 @@ Get-It/
    ```bash
    pip install -r requirements.txt
    ```
-2. **Set up environment variables: ** Create a .env file in the project root with the following content:
-   ```sqliteDATABASE_URL=:///instance/app.db
-SECRET_KEY=your-secret-key
-PAYSTACK_PUBLIC_KEY=your-paystack-public-key
-PAYSTACK_SECRET_KEY=your-paystack-secret-key
+2. **Set up environment variables:** Create a .env file in the project root with the following content:
+   ```plaintext
+   DATABASE_URL=sqlite:///instance/app.db
+   SECRET_KEY=your-secret-key
+   PAYSTACK_PUBLIC_KEY=your-paystack-public-key
+   PAYSTACK_SECRET_KEY=your-paystack-secret-key
    ```
-3. **Initialize the database:**:
+3. **Initialize the database:**
    ```bash
-    flask db init
-    flask db migrate
-    flask db upgrade
+   flask db init
+   flask db migrate
+   flask db upgrade
    ```
 4. **Run the application:** 
-    python [main.py](http://_vscodecontentref_/45)
-
-5. Access the app: 
-    Open your browser and navigate to http://localhost:8000.
-
+   ```bash
+   python main.py
+   ```
+5. **Access the app:** Open your browser and navigate to http://localhost:8000.
 
 ## Contribution
 
