@@ -69,25 +69,25 @@ def home():
     return render_template('index.html', categories=categories, products=products)
 
 
-
+#NOTE - created a global variable which is current_year that is injected into the Copyright section
 @app.context_processor
 def inject_current_year():
     return {'current_year': datetime.now(dt.timezone.utc).year}
 
+#NOTE - RRuns before every request to ensure the user is logged in and is an active user
 @app.before_request
 def ensure_user_active():
     if current_user.is_authenticated and not current_user.is_active:
         logout_user()
         return redirect(url_for('auth.login'))
 
+#NOTE - Creates a global tamplate function that is callable to return image urls based on category
 @app.template_global('get_category_image_url')
 def get_category_image_url(category_enum_value):
     """
     Returns the hard-coded Cloudinary URL for a given product category.
     This is a simple, direct mapping.
     """
-    # --- IMPORTANT ---
-    # Replace these URLs with the actual URLs you copied from your Cloudinary account!
     image_map = {
         ProductCategory.ELECTRONICS.value: "https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756291040/electronics.jpg",
         ProductCategory.CLOTHING.value: "https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756291041/clothing.jpg",
@@ -100,7 +100,7 @@ def get_category_image_url(category_enum_value):
         ProductCategory.AUTOMOTIVE.value: "https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756290937/automotive.jpg",
     }
 
-    # Return the URL for the given category, or a default placeholder image if not found
+    #NOTE Return the URL for the given category, or a default placeholder image if not found
     
     return image_map.get(category_enum_value, None)
 
