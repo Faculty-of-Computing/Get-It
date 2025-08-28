@@ -150,7 +150,7 @@ header {
     }
     header .mobile-menu {
         position:fixed;
-        top:15%;
+        top:10%;
         bottom:0;
         /* left:0; */
         right:0;
@@ -407,11 +407,11 @@ section.categories-section .container .categories-grid .category-card a div.cate
 section.featured-section {
     /* margin-top: 3em !important;
     margin-bottom: 3em !important; */
-    display: flex ;
-    flex-direction: column;
-    justify-content: center ;
-    align-items: center ;
-    width: 90% ;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% ;
     margin: 3em auto ;
 }
 
@@ -419,13 +419,18 @@ section.featured-section .container .section-header h2 {
     text-align: center;
     font-size: 2.5em;
     letter-spacing: -2px;
+    margin-bottom:2em;
 }
 
 section.featured-section .container .products-grid  {
  display: grid;
     grid-template-columns: repeat(4, 1fr);
+        justify-content: center !important;
+    align-items: center !important;
     gap: 1em;
-    margin-top: 3em;
+    margin: auto;
+    width: 70%;
+
 }
 @media only screen and (max-width: 1024px){
     section.featured-section .container .products-grid {
@@ -685,12 +690,15 @@ footer {
 .btn {
     width: 90%;
 }
+.btn.btn-primary {
+    width: 100%;
+}
 
 }
 
 
 .btn.btn-lg {
-    width:90%;
+    width:85%;
 }
 .btn-small {
     padding: 0.25rem 0.5rem;
@@ -770,10 +778,12 @@ input {
     border: 1px solid #000;
     margin-top: .5em;
     margin-bottom: 1.5em;
+    width: 200px;
 }
 
 label {
     font-weight: 500;
+    font-size: 1.1rem;
 }
 
 .form-group {
@@ -798,80 +808,47 @@ div.dflex {
 /* =================================================================== */
 
 /* --- Form Container --- */
-.add-product-form-container {
-    background-color: #ffffff;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(44, 62, 80, 0.1);
-    width: 100%;
-    max-width: 700px;
-    margin: 2em auto;
-    box-sizing: border-box;
-}
 
-.add-product-form-container h2 {
-    text-align: center;
-    font-size: 2rem;
-    color: #2c3e50;
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-}
 
 /* --- General Form Field Styling --- */
-.add-product-form-container .form-group {
-    margin-bottom: 1.5rem;
-}
 
-.add-product-form-container label {
-    display: block;
-    font-weight: 600;
-    color: #34495e;
-    margin-bottom: 0.5rem;
-}
-
-.add-product-form-container input[type="text"],
-.add-product-form-container input[type="number"],
-.add-product-form-container textarea,
-.add-product-form-container select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ced4da;
-    border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.add-product-form-container input[type="text"]:focus,
-.add-product-form-container input[type="number"]:focus,
-.add-product-form-container textarea:focus,
-.add-product-form-container select:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-}
-
-.add-product-form-container textarea {
-    min-height: 120px;
-    resize: vertical;
-}
-
-/* --- Boolean/Checkbox Field --- */
-.add-product-form-container .checkbox-group {
+.body {
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 0.75rem;
+    flex-direction: column;
 }
 
-.add-product-form-container .checkbox-group input[type="checkbox"] {
-    width: 1.2em;
-    height: 1.2em;
+input[type="file"] {
+ border:none;
+ border-radius: 0;
+ outline:none;
+ padding: .9em 0 0 0;
+}
+input[type="checkbox"] {
+ border:none;
+ border-radius: 0;
+ outline:none;
+ padding: .0 0 0 0 ;
+ transform: translateX(-50%);
 }
 
-/* --- STYLING FOR THE MULTIPLE FILE FIELD --- */
-/* We hide the default browser input button */
-.add-product-form-container input[type="file"] {
-    display: none;
+select, textarea {
+    width: 100%;
+    margin-top: .9em;
+    margin-bottom: .9em;
+    padding: .5em;
+    border-radius: 30px;
+        outline: none;
+    border: 1px solid #000;
+}
+
+select {
+padding: 1em  7em 1em 1em;
+}
+
+textarea {
+    padding-top: 2em;
 }
 
 /* We style the label to look like a button */
