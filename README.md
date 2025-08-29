@@ -21,7 +21,7 @@
 - **Python 3.x**: Core programming language.
 - **Flask**: Web framework for routing, templating, and server logic.
 - **Jinja2**: Templating engine for dynamic HTML rendering.
-- **SQLite & Postgres#*:development Default database for local development, then Postgres for Production.
+- **SQLite & Postgres**:development Default database for local development, then Postgres for Production.
 - **SQLAlchemy**: ORM for database interactions.
 - **Flask-WTF**: Form handling and validation.
 - **Flask-Login**: User authentication and session management.
