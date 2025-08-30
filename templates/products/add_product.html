@@ -2,18 +2,17 @@
 
 {% block content %}
   <h2>Add Product</h2>
+  <div class="body">
   <form method="POST" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     
     <div>
       {{ form.name.label }} <br>{{ form.name(size=32) }}
     </div>
-    <div>
+    <div class="price">
       {{ form.price.label }} <br> {{ form.price() }}
     </div>
-    <div>
-      {{ form.images.label }} <br> {{ form.images(multiple=True) }}
-    </div>
+
     <div>
       {{ form.category.label }} <br> {{ form.category() }}
     </div>
@@ -23,10 +22,14 @@
     <div>
       {{ form.stock.label }} <br> {{ form.stock() }}
     </div>
+        <div>
+      {{ form.images.label }} <br> {{ form.images(multiple=True) }}
+    </div>
     <div>
       {{ form.is_featured.label }} <br> {{ form.is_featured() }}
     </div>
     
     <button type="submit" class="btn-2">Add Product</button>
   </form>
+  </div>
 {% endblock %}
