@@ -53,7 +53,7 @@ cloudinary.config(
 
 
 #NOTE - blueprints are registered here
-app.register_blueprint(auth.blueprint) # type: ignore
+app.register_blueprint(auth.blueprint) 
 app.register_blueprint(public.blueprint)
 app.register_blueprint(cart.blueprint)
 app.register_blueprint(account.blueprint)
