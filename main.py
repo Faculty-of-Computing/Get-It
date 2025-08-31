@@ -26,7 +26,7 @@ import datetime as dt
 logger.info(f'Base Dir {BASE_DIR}')
 
 def create_app():
-    app = Flask(__name__, static_folder=os.path.join(BASE_DIR, 'static'))
+    app = Flask(__name__)
     app.secret_key = SECRET_KEY
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
     db.init_app(app)
