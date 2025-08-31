@@ -8,9 +8,6 @@ load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 # Go 2 levels up from configs.py (e.g., from core/configs.py to project root)
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-UPLOAD_FOLDER = os.path.join(BASE_DIR,'static')
-# Ensure the upload folder exists
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 DEBUG=os.getenv("DEBUG") == "True"
 SECRET_KEY= os.getenv("SECRET_KEY")
