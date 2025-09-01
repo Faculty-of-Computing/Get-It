@@ -4,7 +4,7 @@ import os
 from utils.utils import allowed_file
 from werkzeug.utils import secure_filename
 from core.database import db
-from core.configs import UPLOAD_FOLDER,logger
+from core.configs import logger
 from models.products import Products
 import json
 import cloudinary.uploader
