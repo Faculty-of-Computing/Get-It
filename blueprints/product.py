@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required
 from forms.product_form import AddProductForm
-from core.configs import logger,ALLOWED_EXTENSIONS,UPLOAD_FOLDER
+from core.configs import logger,ALLOWED_EXTENSIONS
 from utils.enums import ProductCategory
 from services.product import add_new_product,get_products_by_category
 

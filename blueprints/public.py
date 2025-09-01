@@ -2,7 +2,7 @@ from flask import Blueprint, render_template,flash,redirect,request,url_for
 from utils.utils import allowed_file
 import os
 from werkzeug.utils import secure_filename
-from core.configs import UPLOAD_FOLDER
+
 
 blueprint = Blueprint('public', __name__, url_prefix='/public')
 

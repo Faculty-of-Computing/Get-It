@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 import os
 from core.configs import  (DATABASE_URL,
-                           BASE_DIR,
                            DEBUG,
                            SECRET_KEY,
                            bycrypt,
@@ -11,7 +10,7 @@ from core.configs import  (DATABASE_URL,
                            CLOUDINARY_URL)
 from core.database import db
 from blueprints import account, auth,public,cart,product,order as order_bp
-from core.configs import logger,UPLOAD_FOLDER
+from core.configs import logger
 from models import users,products,cart as cart_model,order
 from models.products import Products
 from services.auth import login_manager
@@ -23,10 +22,10 @@ import cloudinary
 from datetime import datetime
 import datetime as dt
 
-logger.info(f'Base Dir {BASE_DIR}')
+
 
 def create_app():
-    app = Flask(__name__, static_folder=os.path.join(BASE_DIR, 'static'))
+    app = Flask(__name__)
     app.secret_key = SECRET_KEY
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
     db.init_app(app)
@@ -36,7 +35,6 @@ def create_app():
     login_manager.login_view = 'auth.login'  # type: ignore
     bycrypt.init_app(app)
     logger.info("App Binded to Bcrypt ")
-    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     with app.app_context():
         db.create_all()
         logger.info("Models migrated")
@@ -53,7 +51,7 @@ cloudinary.config(
 
 
 #NOTE - blueprints are registered here
-app.register_blueprint(auth.blueprint) # type: ignore
+app.register_blueprint(auth.blueprint) 
 app.register_blueprint(public.blueprint)
 app.register_blueprint(cart.blueprint)
 app.register_blueprint(account.blueprint)
