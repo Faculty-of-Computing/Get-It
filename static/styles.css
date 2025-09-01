@@ -366,15 +366,15 @@ section.categories-section .container .categories-grid .category-card a div.cate
 .btn-2 {
     background: #b88346;
     color: #fff;
-    padding: 0.8rem 1.2rem;
-    border-radius: 30px;
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
     border: 1px solid #000;
     outline: none;
     cursor: pointer;
     position: relative;
     z-index: 1;
     overflow: hidden;
-    font-size: 1rem;
+    /* font-size: 1rem; */
     transition: background 0.3s, color 0.3s;
     width: auto;
     height: auto;
@@ -533,7 +533,7 @@ td.quantity {
     color: #fff;
     border: none;
     padding: 0.5em 1em;
-    border-radius: 20px;
+    border-radius: 10px;
     cursor: pointer;
     text-decoration: none;
 }
@@ -678,7 +678,7 @@ footer {
     background-color: #b88346;
     color: white;
     text-decoration: none;
-    border-radius: 40px;
+    border-radius: 10px;
     width:100%;
 }
 
@@ -773,7 +773,7 @@ footer {
 
 input {
     padding: 1em  7em 1em 1em;
-    border-radius: 30px;
+    border-radius: 10px;
     outline: none;
     border: 1px solid #000;
     margin-top: .5em;
@@ -823,8 +823,39 @@ input[type="file"] {
  border:none;
  border-radius: 0;
  outline:none;
- padding: .9em 0 0 0;
+ border-radius:10px;
+ padding: 0;
+ margin-top: 1.5em;
+ /* font-size: 1.02rem; */
+ /* color:  #b88346; */
+ /* border: 2px solid #b88346; */
+ /* background-color: #dfc2a2ff; */
+ width: 100%;
 }
+
+input[type="file"]::file-selector-button {
+  border-radius: 10px;
+  padding: 0 16px;
+  height: 35px;
+  cursor: pointer;
+  background-color: #dfc2a2ff;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+  margin-left: 0;
+  margin-right: 16px;
+  transition: background-color 700ms;
+}
+
+/* file upload button hover state */
+input[type="file"]::file-selector-button:hover {
+  background-color: #f3f4f6;
+}
+
+/* file upload button active state */
+input[type="file"]::file-selector-button:active {
+  background-color: #e5e7eb;
+}
+
 input[type="checkbox"] {
  border:none;
  border-radius: 0;
@@ -838,7 +869,7 @@ select, textarea {
     margin-top: .9em;
     margin-bottom: .9em;
     padding: .5em;
-    border-radius: 30px;
+    border-radius: 10px;
         outline: none;
     border: 1px solid #000;
 }

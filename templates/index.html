@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <!--Hero Section -->
 <section class="hero">
     <div class="container overlay">
@@ -71,13 +72,14 @@
             <div class="modal" id="modal-{{ loop.index0 }}">
                 <div class="modal-content">
                     <span class="close" onclick="closeModal({{ loop.index0 }})">&times;</span>
+                   
+                   <!-- <div class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}"> -->
                     <h2>{{ product.name }}</h2>
 
                     <!-- Image Slider -->
                     <div class="slider-wrapper">
                         {% for image in product.images %}
-                        <img src="{{ image }}"
-                            class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}">
+                        <img src="{{ image }}" class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}">
                         {% endfor %}
                         <button class="prev" onclick="moveSlide({{ loop.index0 }}, -1)">&#10094;</button>
                         <button class="next" onclick="moveSlide({{ loop.index0 }}, 1)">&#10095;</button>
@@ -89,6 +91,7 @@
                     <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
                         <button type="submit" class="btn-2">Add to Cart</button>
                     </form>
+                <!-- </div> -->
                 </div>
             </div>
             {% endfor %}
@@ -100,6 +103,8 @@
 </section>
 
 <!-- Modal JS -->
+
+
 <script>
     function openModal(index) {
         document.getElementById('modal-' + index).style.display = 'block';
@@ -124,5 +129,4 @@
         showSlide(index, current);
     }
 </script>
-
 {% endblock %}
