@@ -21,4 +21,9 @@ class CheckoutForm(FlaskForm):
     address = StringField("Shipping Address", validators=[DataRequired()])
     phone = StringField("Phone", validators=[DataRequired(),validate_phone])
     submit = SubmitField("Place Order")
+    
+class ReviewForm(FlaskForm):
+    rating = IntegerField('Rating', validators=[DataRequired(), NumberRange(min=1, max=5)],id="rating-field")
+    review_text = TextAreaField('Review',id="review-text")
+    submit = SubmitField('Submit Review')
 

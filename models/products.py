@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String,Float,DateTime,Boolean,Enum,JSON
+from sqlalchemy import Integer, String,Float,DateTime,Boolean,Enum,JSON,ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column,relationship
 from core.database import db
 from datetime import datetime 
@@ -20,5 +20,19 @@ class Products(db.Model):
     created_at:Mapped[datetime]= mapped_column(DateTime,nullable=False,default=datetime.now())
     updated_at:Mapped[datetime] = mapped_column(DateTime,nullable=False,default=datetime.now(),onupdate=datetime.now)
     cart_items = relationship("CartItem", back_populates="product", cascade="all, delete-orphan")
+    product = relationship('Products', back_populates='reviews')
+    
     def __repr__(self):
         return f"<Product {self.name} - {self.category}>"
+
+class Review(db.Model):
+    __tablename__ = 'reviews'
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    product_id: Mapped[int] = mapped_column(Integer, ForeignKey('Products.id'), nullable=False)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey('Users.id'), nullable=False)
+    rating: Mapped[int] = mapped_column(Integer, nullable=False)
+    review_text: Mapped[str] = mapped_column(db.Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
+
+    user = relationship('User')
+    
