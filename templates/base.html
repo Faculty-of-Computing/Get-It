@@ -8,12 +8,17 @@
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <!-- Add your CSS links here -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
 </head>
 
 <body>
     <header>
         <nav class="navbar lg">
             <div class="container">
+               <div class="left">
                 <a href="{{ url_for('home') }}" class="logo">Get-It</a>
                 <ul class="nav-links">
                     <li><a href="{{ url_for('public.about') }}">About</a></li>
@@ -21,15 +26,55 @@
                     <li><a href="{{ url_for('cart.view_cart') }}">Cart</a></li>
                     <li><a href="{{ url_for('account.account') }}">Account</a></li>
                 </ul>
+                </div>
+                <div class="search">
+                    <form>
+  <input class="search" style="
+      width: 35px !important;
+      height: 40px !important;
+  box-sizing: border-box !important;
+  border-radius: 4px !important;
+  font-size: 16px !important;
+  background-color: white !important;
+  background-image: url('../static/searchicon.png') !important;
+  background-position: 5px 10px !important; 
+  background-repeat: no-repeat !important;
+  background-size: 20px;
+  padding: 1px !important;
+  transition: width 0.4s ease-in-out !important;
+    " 
+    onfocus="this.style.width='100%';this.style.borderColor='#4a85ac'; this.style.paddingLeft='2em';"
+onblur="this.style.width='35px';this.style.borderColor='#ccc'; this.style.paddingLeft='0';"
+    type="text" name="search">
+</form>
+                </div>
             </div>
         </nav>
 
         <nav class="navbar sm">
             <div class="container">
-                <a href="{{ url_for('home') }}" class="logo">Get-It</a>
                 <div class="mobile-nav">
                     <span></span>
                 </div>
+                <a href="{{ url_for('home') }}" class="logo">Get-It</a>
+            
+              <input class="search" style="
+      width: 35px !important;
+      height: 40px !important;
+  box-sizing: border-box !important;
+  border-radius: 4px !important;
+  font-size: 16px !important;
+  background-color: white !important;
+  background-image: url('../static/searchicon.png') !important;
+  background-position: 5px 10px !important; 
+  background-repeat: no-repeat !important;
+  background-size: 20px;
+  padding: 1px !important;
+  transition: width 0.4s ease-in-out !important;
+    " 
+    onfocus="this.style.width='50%';this.style.borderColor='#4a85ac'; this.style.paddingLeft='2em';"
+onblur="this.style.width='35px';this.style.borderColor='#ccc'; this.style.paddingLeft='0';"
+    type="text" name="search">
             </div>
         </nav>
 
@@ -61,7 +106,8 @@
         {% endblock %}
     </main>
 
-    <footer>
+
+<footer>
         <div class="footer-container">
             <div class="footer-links">
                 <a href="{{ url_for('public.about') }}">About Us</a>
@@ -76,6 +122,53 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+   
+<script type="text/javascript">
+    new Swiper('.swiper', {
+  
+    // If we need pagination
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+
+    spaceBetween: 0,
+    loop: true,
+    autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+    },
+    effect: 'fade',
+    fadeEffect: {
+        crossFade: true
+    },
+    
+    slidesPerView: 1,
+  });
+
+  const header = document.querySelector(".navbar");
+const scrollThreshold = 50;
+
+document.addEventListener('scroll', () => {
+    const top = document.documentElement.scrollTop;
+    if(top > scrollThreshold)
+{
+    header.classList.add("static");
+}
+    
+else 
+{
+    header.classList.remove("static");
+}
+});
+</script>
 
     <script>
         let menuToggle = document.querySelector(".mobile-nav");
