@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, url_for
+
 import os
 from core.configs import  (DATABASE_URL,
                            DEBUG,
@@ -40,7 +41,7 @@ def create_app():
         logger.info("Models migrated")
     return app
 
-app = create_app()
+ap = create_app()
 
 cloudinary.config(
     cloud_name=CLOUDINARY_NAME,

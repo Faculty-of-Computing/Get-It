@@ -96,7 +96,6 @@
     </div>
 </section>
 
-<!-- Products -->
 <section class="featured-section">
     <div class="container">
         <div class="section-header">
@@ -105,6 +104,7 @@
         </div>
         <div class="products-grid">
             {% if products %}
+            
             {% for product in products %}
             <div class="product-card" onclick="openModal({{ loop.index0 }})">
                 <div class="img-container">
@@ -119,34 +119,33 @@
                         alt=""></div>
                 <p>₦{{ "%.2f"|format(product.price) }}</p>
                 <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
-                    <button type="submit" class="btn-2">Add to Cart</button>
+                    <button type="submit" class="btn-2">₦{{ "%.2f"|format(product.price) }}</button>
                 </form>
             </div>
             {% endfor %}
 
-            <!-- Product Modals -->
             {% for product in products %}
-            <div class="modal" id="modal-{{ loop.index0 }}">
+            {% set product_index = loop.index0 %}
+            <div class="modal" id="modal-{{ product_index }}">
                 <div class="modal-content">
                     <span class="close" onclick="closeModal({{ loop.index0 }})">&times;</span>
                    
                    <!-- <div class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}"> -->
                     <h2>{{ product.name }}</h2>
 
-                    <!-- Image Slider -->
                     <div class="slider-wrapper">
                         {% for image in product.images %}
                         <img src="{{ image }}" class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}">
                         {% endfor %}
-                        <button class="prev" onclick="moveSlide({{ loop.index0 }}, -1)">&#10094;</button>
-                        <button class="next" onclick="moveSlide({{ loop.index0 }}, 1)">&#10095;</button>
+                        <button class="prev" onclick="moveSlide({{ product_index }}, -1)">&#10094;</button>
+                        <button class="next" onclick="moveSlide({{ product_index }}, 1)">&#10095;</button>
                     </div>
 
                     <p><strong>Price:</strong> ₦{{ "%.2f"|format(product.price) }}</p>
                     <p>{{ product.description }}</p>
 
                     <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
-                        <button type="submit" class="btn-2">Add to Cart</button>
+                        <button type="submit" class="btn-2">₦{{ "%.2f"|format(product.price) }}</button>
                     </form>
                 <!-- </div> -->
                 </div>
@@ -163,6 +162,7 @@
 
 
 <script>
+    // The JavaScript from the previous step is correct and does not need to be changed.
     function openModal(index) {
         document.getElementById('modal-' + index).style.display = 'block';
         showSlide(index, 0);
@@ -173,14 +173,15 @@
     }
 
     function showSlide(index, slideIndex) {
-        const slides = document.querySelectorAll('.slide-' + index);
+        const slides = document.querySelectorAll('.slide-product-' + index);
         slides.forEach((s, i) => s.classList.toggle('active', i === slideIndex));
         window['currentSlide_' + index] = slideIndex;
     }
 
     function moveSlide(index, step) {
-        const slides = document.querySelectorAll('.slide-' + index);
+        const slides = document.querySelectorAll('.slide-product-' + index);
         const total = slides.length;
+        if (total === 0) return;
         let current = window['currentSlide_' + index] || 0;
         current = (current + step + total) % total;
         showSlide(index, current);
