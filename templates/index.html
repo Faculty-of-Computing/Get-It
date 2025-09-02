@@ -3,20 +3,77 @@
 {% block content %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <!--Hero Section -->
-<section class="hero">
+<div class="swiper">
+<div class="swiper-wrapper">
+<section class="hero swiper-slide slide-one">
     <div class="container overlay">
         {% if category_name %}
         <h1>{{ category_name.replace('_', ' ').title() }}</h1>
         <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
         {% else %}
-        <h1 class="title">Everything You Need, <br> All in One Place</h1>
-        <p class="tline">Shop smarter. Live better. <br> Discover top deals across every category.</p>
-        {% endif %}
+       <div class="text">        
+           <p class="tline">Shop 2025</p>
+           <h1 class="title">Elevate Your 
+        </h1>
+        <h1 class="title">
+
+            Shopping Game
+        </h1>
+
+        <a href="#categories" class="explore">Explore Now</a>
+       </div>
     </div>
+        {% endif %}
 </section>
 
+<section class="hero swiper-slide slide-two">
+    <div class="container overlay">
+        {% if category_name %}
+        <h1>{{ category_name.replace('_', ' ').title() }}</h1>
+        <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
+        {% else %}
+       <div class="text">        
+           <p class="tline">Fashion That Fits You</p>
+           <h1 class="title">Trendy outfits, 
+        </h1>
+        <h1 class="title">
+
+            timeless classics
+        </h1>
+
+        <a href="#categories" class="explore">Explore Now</a>
+       </div>
+    </div>
+        {% endif %}
+</section>
+<section class="hero swiper-slide slide-three">
+    <div class="container overlay">
+        {% if category_name %}
+        <h1>{{ category_name.replace('_', ' ').title() }}</h1>
+        <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
+        {% else %}
+       <div class="text">        
+           <p class="tline">Fashion That Fits You</p>
+           <h1 class="title">Your Marketplace, 
+        </h1>
+        <h1 class="title">
+
+            Your Way
+        </h1>
+
+        <a href="#categories" class="explore">Explore Now</a>
+       </div>
+    </div>
+        {% endif %}
+</section>
+</div>
+<div class="swiper-pagination"></div>
+<div class="swiper-button-prev"></div>
+<div class="swiper-button-next"></div>
+</div>
+
 <!-- Categories -->
-<section class="categories-section">
+<section class="categories-section" id="categories">
     <div class="container">
         <div class="section-header">
             <h2>Shop by Category</h2>
