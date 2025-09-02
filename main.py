@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, url_for
+
 import os
 from core.configs import  (DATABASE_URL,
                            DEBUG,
