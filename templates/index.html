@@ -1,19 +1,79 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="hero">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<!--Hero Section -->
+<div class="swiper">
+<div class="swiper-wrapper">
+<section class="hero swiper-slide slide-one">
     <div class="container overlay">
         {% if category_name %}
         <h1>{{ category_name.replace('_', ' ').title() }}</h1>
         <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
         {% else %}
-        <h1 class="title">Everything You Need, <br> All in One Place</h1>
-        <p class="tline">Shop smarter. Live better. <br> Discover top deals across every category.</p>
-        {% endif %}
+       <div class="text">        
+           <p class="tline">Shop 2025</p>
+           <h1 class="title">Elevate Your 
+        </h1>
+        <h1 class="title">
+
+            Shopping Game
+        </h1>
+
+        <a href="#categories" class="explore">Explore Now</a>
+       </div>
     </div>
+        {% endif %}
 </section>
 
-<section class="categories-section">
+<section class="hero swiper-slide slide-two">
+    <div class="container overlay">
+        {% if category_name %}
+        <h1>{{ category_name.replace('_', ' ').title() }}</h1>
+        <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
+        {% else %}
+       <div class="text">        
+           <p class="tline">Fashion That Fits You</p>
+           <h1 class="title">Trendy outfits, 
+        </h1>
+        <h1 class="title">
+
+            timeless classics
+        </h1>
+
+        <a href="#categories" class="explore">Explore Now</a>
+       </div>
+    </div>
+        {% endif %}
+</section>
+<section class="hero swiper-slide slide-three">
+    <div class="container overlay">
+        {% if category_name %}
+        <h1>{{ category_name.replace('_', ' ').title() }}</h1>
+        <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
+        {% else %}
+       <div class="text">        
+           <p class="tline">Fashion That Fits You</p>
+           <h1 class="title">Your Marketplace, 
+        </h1>
+        <h1 class="title">
+
+            Your Way
+        </h1>
+
+        <a href="#categories" class="explore">Explore Now</a>
+       </div>
+    </div>
+        {% endif %}
+</section>
+</div>
+<div class="swiper-pagination"></div>
+<div class="swiper-button-prev"></div>
+<div class="swiper-button-next"></div>
+</div>
+
+<!-- Categories -->
+<section class="categories-section" id="categories">
     <div class="container">
         <div class="section-header">
             <h2>Shop by Category</h2>
@@ -68,13 +128,14 @@
             {% set product_index = loop.index0 %}
             <div class="modal" id="modal-{{ product_index }}">
                 <div class="modal-content">
-                    <span class="close" onclick="closeModal({{ product_index }})">&times;</span>
+                    <span class="close" onclick="closeModal({{ loop.index0 }})">&times;</span>
+                   
+                   <!-- <div class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}"> -->
                     <h2>{{ product.name }}</h2>
 
                     <div class="slider-wrapper">
                         {% for image in product.images %}
-                        <img src="{{ image }}"
-                            class="slide slide-product-{{ product_index }} {% if loop.first %}active{% endif %}">
+                        <img src="{{ image }}" class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}">
                         {% endfor %}
                         <button class="prev" onclick="moveSlide({{ product_index }}, -1)">&#10094;</button>
                         <button class="next" onclick="moveSlide({{ product_index }}, 1)">&#10095;</button>
@@ -86,6 +147,7 @@
                     <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
                         <button type="submit" class="btn-2">₦{{ "%.2f"|format(product.price) }}</button>
                     </form>
+                <!-- </div> -->
                 </div>
             </div>
             {% endfor %}
@@ -95,6 +157,9 @@
         </div>
     </div>
 </section>
+
+<!-- Modal JS -->
+
 
 <script>
     // The JavaScript from the previous step is correct and does not need to be changed.
@@ -122,5 +187,4 @@
         showSlide(index, current);
     }
 </script>
-
 {% endblock %}
