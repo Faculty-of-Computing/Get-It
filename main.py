@@ -41,7 +41,7 @@ def create_app():
         logger.info("Models migrated")
     return app
 
-ap = create_app()
+app = create_app()
 
 cloudinary.config(
     cloud_name=CLOUDINARY_NAME,
