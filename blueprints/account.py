@@ -5,6 +5,7 @@ from forms.edit_account_form import EditAccountForm
 from core.database import db
 from flask import Blueprint, render_template
 from flask_login import login_required
+from utils.utils import admin_required
 # from models.or
 
 blueprint = Blueprint('account', __name__, url_prefix='/account')
@@ -41,3 +42,10 @@ def edit_account():
         return redirect(url_for("account.account"))
 
     return render_template("account/edit_account.html", form=form)
+
+@blueprint.route('/dashboard')
+@login_required
+@admin_required
+def dashboard():
+    # Fetch data for the dashboard
+    return render_template('admin/dashboard.html')

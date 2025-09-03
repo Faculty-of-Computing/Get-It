@@ -10,7 +10,7 @@ from core.configs import  (DATABASE_URL,
                            CLOUDINARY_NAME,
                            CLOUDINARY_URL)
 from core.database import db
-from blueprints import account, auth,public,cart,product,order as order_bp
+from blueprints import account, auth,public,cart,product,order as order_bp,admin
 from core.configs import logger
 from models import users,products,cart as cart_model,order
 from models.products import Products
@@ -22,6 +22,7 @@ from flask_login import logout_user,current_user
 import cloudinary
 from datetime import datetime
 import datetime as dt
+from forms.product_form import ReviewForm
 
 
 
@@ -58,14 +59,16 @@ app.register_blueprint(cart.blueprint)
 app.register_blueprint(account.blueprint)
 app.register_blueprint(product.blueprint)
 app.register_blueprint(order_bp.blueprint)
+app.register_blueprint(admin.admin_bp)
 
 @app.route('/')  # type: ignore
 def home():
     categories = list(ProductCategory)  # If using Enum for categories
     #products = Products.query.limit(8).all()  # Load featured products (limit to 8 for performance/UI)
     products:List[Products] = db.session.execute(db.select(Products)).scalars().all() # type: ignore
+    form = ReviewForm()
                 
-    return render_template('index.html', categories=categories, products=products)
+    return render_template('index.html', categories=categories, products=products, form=form)
 
 
 #NOTE - created a global variable which is current_year that is injected into the Copyright section

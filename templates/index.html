@@ -4,72 +4,72 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <!--Hero Section -->
 <div class="swiper">
-<div class="swiper-wrapper">
-<section class="hero swiper-slide slide-one">
-    <div class="container overlay">
-        {% if category_name %}
-        <h1>{{ category_name.replace('_', ' ').title() }}</h1>
-        <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
-        {% else %}
-       <div class="text">        
-           <p class="tline">Shop 2025</p>
-           <h1 class="title">Elevate Your 
-        </h1>
-        <h1 class="title">
+    <div class="swiper-wrapper">
+        <section class="hero swiper-slide slide-one">
+            <div class="container overlay">
+                {% if category_name %}
+                <h1>{{ category_name.replace('_', ' ').title() }}</h1>
+                <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
+                {% else %}
+                <div class="text">
+                    <p class="tline">Shop 2025</p>
+                    <h1 class="title">Elevate Your
+                    </h1>
+                    <h1 class="title">
 
-            Shopping Game
-        </h1>
+                        Shopping Game
+                    </h1>
 
-        <a href="#categories" class="explore">Explore Now</a>
-       </div>
+                    <a href="#categories" class="explore">Explore Now</a>
+                </div>
+            </div>
+            {% endif %}
+        </section>
+
+        <section class="hero swiper-slide slide-two">
+            <div class="container overlay">
+                {% if category_name %}
+                <h1>{{ category_name.replace('_', ' ').title() }}</h1>
+                <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
+                {% else %}
+                <div class="text">
+                    <p class="tline">Fashion That Fits You</p>
+                    <h1 class="title">Trendy outfits,
+                    </h1>
+                    <h1 class="title">
+
+                        timeless classics
+                    </h1>
+
+                    <a href="#categories" class="explore">Explore Now</a>
+                </div>
+            </div>
+            {% endif %}
+        </section>
+        <section class="hero swiper-slide slide-three">
+            <div class="container overlay">
+                {% if category_name %}
+                <h1>{{ category_name.replace('_', ' ').title() }}</h1>
+                <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
+                {% else %}
+                <div class="text">
+                    <p class="tline">Fashion That Fits You</p>
+                    <h1 class="title">Your Marketplace,
+                    </h1>
+                    <h1 class="title">
+
+                        Your Way
+                    </h1>
+
+                    <a href="#categories" class="explore">Explore Now</a>
+                </div>
+            </div>
+            {% endif %}
+        </section>
     </div>
-        {% endif %}
-</section>
-
-<section class="hero swiper-slide slide-two">
-    <div class="container overlay">
-        {% if category_name %}
-        <h1>{{ category_name.replace('_', ' ').title() }}</h1>
-        <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
-        {% else %}
-       <div class="text">        
-           <p class="tline">Fashion That Fits You</p>
-           <h1 class="title">Trendy outfits, 
-        </h1>
-        <h1 class="title">
-
-            timeless classics
-        </h1>
-
-        <a href="#categories" class="explore">Explore Now</a>
-       </div>
-    </div>
-        {% endif %}
-</section>
-<section class="hero swiper-slide slide-three">
-    <div class="container overlay">
-        {% if category_name %}
-        <h1>{{ category_name.replace('_', ' ').title() }}</h1>
-        <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
-        {% else %}
-       <div class="text">        
-           <p class="tline">Fashion That Fits You</p>
-           <h1 class="title">Your Marketplace, 
-        </h1>
-        <h1 class="title">
-
-            Your Way
-        </h1>
-
-        <a href="#categories" class="explore">Explore Now</a>
-       </div>
-    </div>
-        {% endif %}
-</section>
-</div>
-<div class="swiper-pagination"></div>
-<div class="swiper-button-prev"></div>
-<div class="swiper-button-next"></div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
 </div>
 
 <!-- Categories -->
@@ -104,19 +104,28 @@
         </div>
         <div class="products-grid">
             {% if products %}
-            
+
             {% for product in products %}
             <div class="product-card" onclick="openModal({{ loop.index0 }})">
                 <div class="img-container">
                     <img src="{{ product.images[0] }}" alt="{{ product.name }}">
                 </div>
                 <h3>{{ product.name }}</h3>
-                <div class="rating"><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
-                        alt=""><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
-                        alt=""><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
-                        alt=""><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
-                        alt=""><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
-                        alt=""></div>
+                <div class="rating">
+                    {% set avg = product.average_rating %}
+                    {% for i in range(1, 6) %}
+                    {% if i <= avg %} <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-fill.svg"
+                        alt="star" style="width:20px;height:20px;">
+                        {% elif i - avg < 1 %} <img
+                            src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-half.svg"
+                            alt="half-star" style="width:20px;height:20px;">
+                            {% else %}
+                            <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star.svg"
+                                alt="empty-star" style="width:20px;height:20px;">
+                            {% endif %}
+                            {% endfor %}
+                            <span>({{ product.reviews|length }})</span>
+                </div>
                 <p>₦{{ "%.2f"|format(product.price) }}</p>
                 <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
                     <button type="submit" class="btn-2">₦{{ "%.2f"|format(product.price) }}</button>
@@ -129,13 +138,14 @@
             <div class="modal" id="modal-{{ product_index }}">
                 <div class="modal-content">
                     <span class="close" onclick="closeModal({{ loop.index0 }})">&times;</span>
-                   
-                   <!-- <div class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}"> -->
+
+                    <!-- <div class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}"> -->
                     <h2>{{ product.name }}</h2>
 
                     <div class="slider-wrapper">
                         {% for image in product.images %}
-                        <img src="{{ image }}" class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}">
+                        <img src="{{ image }}"
+                            class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}">
                         {% endfor %}
                         <button class="prev" onclick="moveSlide({{ product_index }}, -1)">&#10094;</button>
                         <button class="next" onclick="moveSlide({{ product_index }}, 1)">&#10095;</button>
@@ -144,10 +154,40 @@
                     <p><strong>Price:</strong> ₦{{ "%.2f"|format(product.price) }}</p>
                     <p>{{ product.description }}</p>
 
+                    <div class="rating">
+                        {% set avg = product.average_rating %}
+                        {% for i in range(1, 6) %}
+                        {% if i <= avg %} <img
+                            src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-fill.svg" alt="star"
+                            style="width:20px;height:20px;">
+                            {% elif i - avg < 1 %} <img
+                                src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-half.svg"
+                                alt="half-star" style="width:20px;height:20px;">
+                                {% else %}
+                                <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star.svg"
+                                    alt="empty-star" style="width:20px;height:20px;">
+                                {% endif %}
+                                {% endfor %}
+                                <span>({{ product.reviews|length }})</span>
+                    </div>
+
+                    <!-- Review Form in Modal -->
+                    {% if current_user.is_authenticated %}
+                    <form method="post" action="{{ url_for('product.add_review', product_id=product.id) }}"
+                        class="review-form">
+                        {{ form.hidden_tag() }}
+                        <label for="rating">Your Rating:</label>
+                        {{ form.rating(class="form-control") }}
+                        <label for="review_text">Your Review:</label>
+                        {{ form.review_text(class="form-control") }}
+                        {{ form.submit(class="btn-small") }}
+                    </form>
+                    {% endif %}
+
                     <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
                         <button type="submit" class="btn-2">₦{{ "%.2f"|format(product.price) }}</button>
                     </form>
-                <!-- </div> -->
+                    <!-- </div> -->
                 </div>
             </div>
             {% endfor %}

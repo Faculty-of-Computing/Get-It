@@ -12,6 +12,7 @@ class AddProductForm(FlaskForm):
     description = TextAreaField('Description')
     stock = IntegerField('Stock', validators=[DataRequired(), NumberRange(min=0)])
     is_featured = BooleanField('Feature this product?')
+    submit = SubmitField('Submit')
     
     
 

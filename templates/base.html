@@ -28,12 +28,12 @@
                 </ul>
                 </div>
                 <div class="search">
-                    <form>
-  <input class="search" style="
-      width: 35px !important;
-      height: 40px !important;
-  box-sizing: border-box !important;
-  border-radius: 4px !important;
+                    <form action="{{ url_for('product.search') }}" method="GET">
+                        <input class="search" style="
+                            width: 35px !important;
+                            height: 40px !important;
+                            box-sizing: border-box !important;
+                            border-radius: 4px !important;
   font-size: 16px !important;
   background-color: white !important;
   background-image: url('../static/searchicon.png') !important;

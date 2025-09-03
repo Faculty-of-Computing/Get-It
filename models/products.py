@@ -20,19 +20,24 @@ class Products(db.Model):
     created_at:Mapped[datetime]= mapped_column(DateTime,nullable=False,default=datetime.now())
     updated_at:Mapped[datetime] = mapped_column(DateTime,nullable=False,default=datetime.now(),onupdate=datetime.now)
     cart_items = relationship("CartItem", back_populates="product", cascade="all, delete-orphan")
-    product = relationship('Products', back_populates='reviews')
+    reviews = relationship('Review', back_populates='product')
     
     def __repr__(self):
         return f"<Product {self.name} - {self.category}>"
 
+    @property
+    def average_rating(self):
+        if not self.reviews or len(self.reviews) == 0:
+            return 0
+        return round(sum([r.rating for r in self.reviews]) / len(self.reviews), 1)
+
 class Review(db.Model):
     __tablename__ = 'reviews'
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True,autoincrement=True)
     product_id: Mapped[int] = mapped_column(Integer, ForeignKey('Products.id'), nullable=False)
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey('Users.id'), nullable=False)
     rating: Mapped[int] = mapped_column(Integer, nullable=False)
     review_text: Mapped[str] = mapped_column(db.Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
-
+    product = relationship('Products', back_populates='reviews')
     user = relationship('User')
-    

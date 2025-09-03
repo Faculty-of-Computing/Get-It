@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>{{ product.name }}</h1>
+    <div class="img-container">
+        {% for image in product.images %}
+        <img src="{{ image }}" alt="{{ product.name }}" style="max-width:200px;">
+        {% endfor %}
+    </div>
+    <p><strong>Price:</strong> ₦{{ "%.2f"|format(product.price) }}</p>
+    <p>{{ product.description }}</p>
+    <div class="rating">
+        {% set avg = product.average_rating %}
+        {% for i in range(1, 6) %}
+        {% if i <= avg %} <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-fill.svg" alt="star"
+            style="width:20px;height:20px;">
+            {% elif i - avg < 1 %} <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-half.svg"
+                alt="half-star" style="width:20px;height:20px;">
+                {% else %}
+                <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star.svg" alt="empty-star"
+                    style="width:20px;height:20px;">
+                {% endif %}
+                {% endfor %}
+                <span>({{ product.reviews|length }})</span>
+    </div>
+    <h3>Reviews</h3>
+    {% if reviews %}
+    <ul>
+        {% for review in reviews %}
+        <li>
+            <strong>{{ review.user.username }}</strong> - {{ review.rating }}★<br>
+            {{ review.review_text }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No reviews yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
