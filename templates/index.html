@@ -52,8 +52,7 @@
                 <a href="{{ url_for('product.category', category=category.value) }}">
                     <div class="category-name category-{{ category.name|lower|replace(' ', '-') }}">
                         <div class="img-con">
-                            <!-- <img src="{{ get_category_image_url(category.value)  }}" alt=""> -->
-                            <img src="../static/{{category.name}}.png" alt="">
+                            <img src="{{ get_category_image_url(category.value) }}" alt="{{ category.value }} Image">
                             <p> {{ category.name.replace('_', ' ').title() }}</p>
                         </div>
                     </div>
