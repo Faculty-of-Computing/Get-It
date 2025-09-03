@@ -4,6 +4,8 @@ from models.products import Products
 from forms.product_form import AddProductForm
 from core.database import db
 import cloudinary.uploader
+from services.product import add_new_product
+from core.configs import logger
 
 blueprint = Blueprint('seller_products', __name__, url_prefix='/seller/products')
 
@@ -22,24 +24,17 @@ def add_product():
         abort(403)
     form = AddProductForm()
     if form.validate_on_submit():
-        images = []
-        if form.images.data:
-            for image in form.images.data:
-                upload_result = cloudinary.uploader.upload(image)
-                images.append(upload_result['secure_url'])
-        product = Products(
-            name=form.name.data, # type: ignore
-            price=form.price.data, # type: ignore
-            description=form.description.data, # type: ignore
-            stock=form.stock.data, # type: ignore
-            category=form.category.data, # type: ignore
-            images=images, # type: ignore
-            owner_id=current_user.id # type: ignore
-        )
-        db.session.add(product)
-        db.session.commit()
-        flash('Product added!', 'success')
-        return redirect(url_for('seller_products.list_products'))
+        logger.debug("Proccessing request")
+        try:
+            logger.debug(form.images.data)
+            add_new_product(form)
+            logger.debug("Product addition finished")
+            flash('Product added successfully!', 'success')
+            return redirect(url_for('seller_products.list_products'))
+        except Exception as err:
+            flash(f'An error occured\n{err}','error')
+            logger.info(err)
+            return redirect(request.url)      
     return render_template('seller/add_product.html', form=form)
 
 @blueprint.route('/edit/<int:product_id>', methods=['GET', 'POST'])

@@ -13,14 +13,20 @@ def add_new_product(form: AddProductForm):
     image_paths = []
 
     for file in form.images.data:
+        logger.info(f"Type of file: {type(file)}, Value: {file}")
+
+        if isinstance(file, str):
+            logger.warning(f"Skipping string filename instead of file: {file}")
+            continue
+
         if file and allowed_file(file.filename):
+            logger.debug(file.filename)
             #NOTE - This is uploading to a cloud container called CLoudinary and fetching the secure url after for rendering
             try:
                 # Upload the file to Cloudinary. 
                 # The 'file' object from Flask-WTF is directly usable.
                 upload_result = cloudinary.uploader.upload(
                     file,
-                    # You can add options here, e.g., a folder to store images
                     folder=f"products/{form.category.data}" #This specifies product upload
                 )
                 

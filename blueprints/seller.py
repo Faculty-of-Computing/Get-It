@@ -4,6 +4,7 @@ from forms.seller_application_form import SellerApplicationForm
 from core.database import db
 from models.users import User
 from models.products import Products
+from core.mail_config import MAIL_DEFAULT_SENDER
 
 blueprint = Blueprint('seller', __name__, url_prefix='/seller')
 
@@ -48,7 +49,7 @@ def review(user_id, action):
         flash('Seller application approved.', 'success')
         logger.info(f"Admin {current_user.id} approved seller application for user {user.id}")
         if mail:
-            msg = Message('Seller Application Approved', recipients=[user.email])
+            msg = Message('Seller Application Approved', recipients=[user.email], sender=MAIL_DEFAULT_SENDER)
             msg.body = 'Congratulations! Your seller application has been approved.'
             mail.send(msg)
     elif action == 'deny':
@@ -57,7 +58,7 @@ def review(user_id, action):
         flash('Seller application denied.', 'info')
         logger.info(f"Admin {current_user.id} denied seller application for user {user.id}")
         if mail:
-            msg = Message('Seller Application Denied', recipients=[user.email])
+            msg = Message('Seller Application Denied', recipients=[user.email], sender=MAIL_DEFAULT_SENDER)
             msg.body = 'We regret to inform you that your seller application has been denied.'
             mail.send(msg)
     db.session.commit()
