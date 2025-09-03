@@ -56,6 +56,8 @@ def review(user_id, action):
         elif action == 'deny':
             user.seller_application_status = 'denied'
             user.is_seller = False
+            db.session.commit()
+            db.session.refresh(user)
             flash('Seller application denied.', 'info')
             logger.info(f"Admin {current_user.id} denied seller application for user {user.id}")
             if mail:
@@ -65,8 +67,7 @@ def review(user_id, action):
     except Exception:
         flash("Could Not Send mail but approved as seller","warning")
         return redirect(request.url)
-    finally:
-        db.session.commit()
+    
     return redirect(url_for('seller.applications'))
 
 @blueprint.route('/<int:seller_id>')
