@@ -4,7 +4,7 @@ import os
 from core.configs import  (DATABASE_URL,
                            DEBUG,
                            SECRET_KEY,
-                           bycrypt,
+                           bycrypt,logger,
                            CLOUDINARY_API_KEY,
                            CLOUDINARY_API_SECRET,
                            CLOUDINARY_NAME,
@@ -132,6 +132,7 @@ def get_category_image_url(category_enum_value):
     Returns the hard-coded Cloudinary URL for a given product category.
     This is a simple, direct mapping.
     """
+    
     image_map = {
         ProductCategory.ELECTRONICS.value: "https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756291040/electronics.jpg",
         ProductCategory.CLOTHING.value: "https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756291041/clothing.jpg",
@@ -145,6 +146,7 @@ def get_category_image_url(category_enum_value):
     }
 
     #NOTE Return the URL for the given category, or a default placeholder image if not found
+    logger.debug(f"Returned {image_map.get(category_enum_value,None)}")
     
     return image_map.get(category_enum_value, None)
 
