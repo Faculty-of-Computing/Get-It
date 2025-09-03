@@ -9,7 +9,8 @@ from core.configs import  (DATABASE_URL,
                            CLOUDINARY_API_KEY,
                            CLOUDINARY_API_SECRET,
                            CLOUDINARY_NAME,
-                           CLOUDINARY_URL)
+                           CLOUDINARY_URL,
+                           GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET)
 from core.mail_config import MAIL_SERVER, MAIL_PORT, MAIL_USE_TLS, MAIL_USE_SSL, MAIL_USERNAME, MAIL_PASSWORD, MAIL_DEFAULT_SENDER
 from flask_mail import Mail
 from core.database import db
@@ -43,8 +44,8 @@ def create_app():
     bycrypt.init_app(app)
     logger.info("App Binded to Bcrypt ")
     # CSRF protection
-    csrf = CSRFProtect(app)
-    app.csrf = csrf # type: ignore
+    #csrf = CSRFProtect(app)
+    #NOTE - app.csrf = csrf # type: ignore
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
     with app.app_context():
         db.create_all()
@@ -81,7 +82,7 @@ google_bp = make_google_blueprint(
 
 app.register_blueprint(google_bp, url_prefix="/google_login")
 
-from core.configs import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
+
 
 
 #NOTE - blueprints are registered here
