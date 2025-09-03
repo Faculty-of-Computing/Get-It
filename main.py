@@ -95,6 +95,14 @@ app.register_blueprint(seller.blueprint)
 app.register_blueprint(seller_products.blueprint)
 app.register_blueprint(wishlist.blueprint)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('errors/404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('errors/500.html'), 500
+
 @app.route('/')  # type: ignore
 def home():
     categories = list(ProductCategory)  # If using Enum for categories

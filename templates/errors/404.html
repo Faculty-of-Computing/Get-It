@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="error-page">
+    <h1>Oops! Page Not Found (404)</h1>
+    <p>The page you are looking for does not exist. It might have been moved or deleted.</p>
+    <a href="{{ url_for('home') }}" class="btn btn-primary">Go Home</a>
+</div>
+{% endblock %}

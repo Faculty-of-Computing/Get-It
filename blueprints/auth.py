@@ -18,6 +18,9 @@ from flask_dance.contrib.google import google
 from core.database import db
 from flask_dance.contrib.google import make_google_blueprint, google
 from core.configs import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
+from forms.password_reset_request_form import PasswordResetRequestForm
+from forms.password_reset_form import PasswordResetForm
+from services.mail_service import send_password_reset_email
 
 
 blueprint = Blueprint('auth', __name__, url_prefix='/auth')
@@ -102,3 +105,29 @@ def google_callback():
     login_user(user)
     flash('Logged in with Google!', 'success')
     return redirect(url_for('account.account'))
+
+@blueprint.route("/reset_password", methods=['GET', 'POST'])
+def reset_request():
+    form = PasswordResetRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash('An email has been sent with instructions to reset your password.', 'info')
+        return redirect(url_for('auth.login'))
+    return render_template('account/reset_request.html', title='Reset Password', form=form)
+
+
+@blueprint.route("/reset_password/<token>", methods=['GET', 'POST'])
+def reset_token(token):
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash('That is an invalid or expired token', 'warning')
+        return redirect(url_for('auth.reset_request'))
+    form = PasswordResetForm()
+    if form.validate_on_submit():
+        user.password = form.password.data
+        db.session.commit()
+        flash('Your password has been updated! You are now able to log in', 'success')
+        return redirect(url_for('auth.login'))
+    return render_template('account/reset_token.html', title='Reset Password', form=form)

@@ -1632,3 +1632,36 @@ section.hero div.container .text p.tline {
     max-height: 1000px; /* A large enough value */
     margin-top: 1rem;
 }
+
+.error-page {
+    text-align: center;
+    padding: 50px;
+}
+
+.error-page h1 {
+    font-size: 4rem;
+    color: var(--primary-color);
+}
+
+.error-page p {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+}
+
+.btn-google {
+    background-color: #4285F4;
+    color: white;
+}
+
+.btn-google:hover {
+    background-color: #357ae8;
+}
+
+.content-section {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 20px;
+}

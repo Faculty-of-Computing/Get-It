@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from forms.seller_application_form import SellerApplicationForm
 from core.database import db
 from models.users import User
+from models.products import Products
 
 blueprint = Blueprint('seller', __name__, url_prefix='/seller')
 
@@ -61,3 +62,11 @@ def review(user_id, action):
             mail.send(msg)
     db.session.commit()
     return redirect(url_for('seller.applications'))
+
+@blueprint.route('/<int:seller_id>')
+def profile(seller_id):
+    seller = User.query.get_or_404(seller_id)
+    if not seller.is_seller:
+        return "Not a seller", 404
+    products = Products.query.filter_by(seller_id=seller.id).all()
+    return render_template('seller/seller_profile.html', seller=seller, products=products)

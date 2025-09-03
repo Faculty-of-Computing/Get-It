@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="public-page-hero">
+        <h1>{{ seller.username }}'s Profile</h1>
+        <p>Welcome to my shop!</p>
+    </div>
+
+    <div class="public-page-card">
+        <h3>About Me</h3>
+        <p>{{ seller.first_name }} {{ seller.last_name }}</p>
+        <p>Email: {{ seller.email }}</p>
+    </div>
+
+    <div class="public-page-card">
+        <h3>My Products</h3>
+        <div class="products-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <a href="{{ url_for('product.product_detail', product_id=product.id) }}">
+                    <div class="img-container">
+                        <img src="{{ product.images[0] }}" alt="{{ product.name }}">
+                    </div>
+                    <h3>{{ product.name }}</h3>
+                    <p>₦{{ "%.2f"|format(product.price) }}</p>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
