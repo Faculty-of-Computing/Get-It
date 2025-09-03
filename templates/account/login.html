@@ -1,26 +1,57 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Login</h2>
+<div class="login-container">
+    <div class="login-form">
+        <h2>Login</h2>
 
-<form method="post">
-    {{ form.hidden_tag() }}
+        <form method="post">
+            {{ form.hidden_tag() }}
 
-    <label for="username">{{ form.username.label }}</label> <br>
-    {{ form.username(size=32, placeholder="Username", title="Enter your username", autofocus=form.username.errors) }}
-    {% for error in form.username.errors %}
-    <span class="form-error">{{ error }}</span>
-    {% endfor %}<br>
+            <div class="form-group">
+                {{ form.username.label }}
+                {{ form.username(class="form-control", placeholder="Username", title="Enter your username",
+                autofocus=form.username.errors) }}
+                {% for error in form.username.errors %}
+                <span class="form-error">{{ error }}</span>
+                {% endfor %}
+            </div>
 
-    <label for="password">{{ form.password.label }}</label> <br>
-    {{ form.password(size=32, placeholder="Password", title="Enter your password", id="password") }}
-    <input type="checkbox" onclick="togglePassword()"> Show Password
-    {% for error in form.password.errors %}
-    <span class="form-error">{{ error }}</span>
-    {% endfor %}<br>
+            <div class="form-group">
+                {{ form.password.label }}
+                <div class="password-wrapper">
+                    {{ form.password(class="form-control", placeholder="Password", title="Enter your password",
+                    id="password") }}
+                </div>
+                {% for error in form.password.errors %}
+                <span class="form-error">{{ error }}</span>
+                {% endfor %}
+            </div>
 
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
+            <div class="form-group-inline">
+                <input type="checkbox" id="show-password" onclick="togglePassword()">
+                <label for="show-password">Show Password</label>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+
+        <div class="form-group">
+            <a href="{{ url_for('google.login') }}" class="btn btn-google">
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google"
+                    style="width:20px;vertical-align:middle;margin-right:8px;"> Sign in with Google
+            </a>
+        </div>
+
+        <div class="form-links">
+            <a href="{{ url_for('auth.reset_request') }}">Forgot Password?</a>
+            <span>|</span>
+            <a href="{{ url_for('auth.register') }}">Don't have an account?</a>
+        </div>
+    </div>
+</div>
 
 <script>
     function togglePassword() {
@@ -32,18 +63,4 @@
         }
     }
 </script>
-
-<div class="form-group">
-    <a href="{{ url_for('google.login') }}" class="btn btn-google">
-        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google"
-            style="width:20px;vertical-align:middle;margin-right:8px;"> Sign in with Google
-    </a>
-</div>
-
-<div class="border-top pt-3">
-    <small class="text-muted">
-        <a class="ml-2" href="{{ url_for('auth.reset_request') }}">Forgot Password?</a>
-    </small>
-</div>
-<p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
 {% endblock %}

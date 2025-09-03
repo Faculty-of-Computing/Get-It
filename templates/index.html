@@ -11,21 +11,22 @@
             <div class="hero-caption">
                 <h2>Big Sale: Up to 50% Off!</h2>
                 <p>Shop our best deals of the season.</p>
-                <a href="#" class="btn">Shop Now</a>
+                <a href="{{ url_for('product.category', category='electronics') }}" class="btn">Shop Now</a>
             </div>
         </section>
         <section class="hero swiper-slide slide-two">
             <div class="hero-caption">
                 <h2>New Arrivals</h2>
                 <p>Check out the latest products in store.</p>
-                <a href="#" class="btn">View Collection</a>
+                <a href="{{ url_for('product.category', category='clothing') }}" class="btn">View Collection</a>
             </div>
         </section>
         <section class="hero swiper-slide slide-three">
             <div class="hero-caption">
                 <h2>Shop by Category</h2>
                 <p>Find what you love, fast.</p>
-                <a href="#" class="btn">Explore Categories</a>
+                <a href="{{ url_for('product.category', category='home_appliances') }}" class="btn">Explore
+                    Categories</a>
             </div>
         </section>
     </div>
