@@ -63,6 +63,7 @@ def review(user_id, action):
                 msg.body = 'We regret to inform you that your seller application has been denied.'
                 mail.send(msg)
     except Exception:
+        flash("Could Not Send mail but approved as admin","error")
         return redirect(request.url)
     finally:
         db.session.commit()
