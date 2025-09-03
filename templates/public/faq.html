@@ -3,32 +3,47 @@
 {% block title %}FAQ - Get-It{% endblock %}
 
 {% block content %}
-  <div class="container py-4">
+<div class="container py-4">
+  <div class="public-page-hero">
     <h1>Frequently Asked Questions</h1>
-
-    <div class="faq-item">
-      <h3>How can I place an order?</h3>
-      <p>Browse our products, add items to your cart, and proceed to checkout.</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>What payment methods do you accept?</h3>
-      <p>We accept PayPal, bank transfer, and all major credit cards.</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>How do I track my order?</h3>
-      <p>You’ll receive an email with tracking info once your order is shipped.</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Can I cancel or return an order?</h3>
-      <p>You may return items within 7 days. Contact support for cancellations.</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Is my personal data secure?</h3>
-      <p>Yes. We use industry-standard security to protect your information.</p>
-    </div>
+    <p>Find answers to common questions below.</p>
   </div>
+
+  <div class="faq-item">
+    <h3>How can I place an order?</h3>
+    <p>Browse our products, add items to your cart, and proceed to checkout. It's that simple!</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>What payment methods do you accept?</h3>
+    <p>We accept PayPal, bank transfers, and all major credit cards for your convenience.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>How do I track my order?</h3>
+    <p>You’ll receive an email with a tracking link as soon as your order is shipped.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Can I cancel or return an order?</h3>
+    <p>Yes, you can return items within 7 days of receipt. For cancellations, please contact our support team as soon as
+      possible.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Is my personal data secure?</h3>
+    <p>Absolutely. We use industry-standard encryption and security protocols to protect your information.</p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('active');
+      });
+    });
+  });
+</script>
 {% endblock %}

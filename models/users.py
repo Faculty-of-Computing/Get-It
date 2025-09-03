@@ -21,7 +21,7 @@ class User(db.Model, UserMixin):
     is_seller: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     seller_application_status: Mapped[str] = mapped_column(String(20), default='none', nullable=False)  # none, pending, approved, denied
     deleted: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
-    password: Mapped[str] = mapped_column(String(255), nullable=False)
+    password: Mapped[str] = mapped_column(String(255), nullable=True)
     profile_image: Mapped[str] = mapped_column(String(255), nullable=True)
     cart: Mapped['Cart'] = relationship("Cart", back_populates="user", uselist=False,lazy='selectin') # type: ignore
 

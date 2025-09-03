@@ -13,13 +13,25 @@
     {% endfor %}<br>
 
     <label for="password">{{ form.password.label }}</label> <br>
-    {{ form.password(size=32, placeholder="Password", title="Enter your password") }}
+    {{ form.password(size=32, placeholder="Password", title="Enter your password", id="password") }}
+    <input type="checkbox" onclick="togglePassword()"> Show Password
     {% for error in form.password.errors %}
     <span class="form-error">{{ error }}</span>
     {% endfor %}<br>
 
     <button type="submit" class="btn btn-primary">Login</button>
 </form>
+
+<script>
+    function togglePassword() {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
 
 <div class="form-group">
     <a href="{{ url_for('google.login') }}" class="btn btn-google">

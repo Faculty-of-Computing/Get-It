@@ -51,6 +51,22 @@
             {% endfor %}
         </div>
 
+        <div class="form-group">
+            {{ form.password.label }}<br>
+            {{ form.password(class="form-control") }}
+            {% for error in form.password.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.confirm_password.label }}<br>
+            {{ form.confirm_password(class="form-control") }}
+            {% for error in form.confirm_password.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+
         <button type="submit" class="btn">Update Account</button>
     </form>
 </div>

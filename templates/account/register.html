@@ -39,12 +39,26 @@
     </div>
     <div>
       <label for="password">Confirm Password:</label> <br>
-      <input type="password" required placeholder="Confirm Password" title="Confirm your password"><br>
+      <input type="password" id="confirm_password" required placeholder="Confirm Password"
+        title="Confirm your password"><br>
     </div>
-
+    <input type="checkbox" onclick="togglePassword()"> Show Password
   </div>
   <button type="submit" class="btn btn-primary">Register</button>
 </form>
+<script>
+  function togglePassword() {
+    var password = document.getElementById("password");
+    var confirm_password = document.getElementById("confirm_password");
+    if (password.type === "password") {
+      password.type = "text";
+      confirm_password.type = "text";
+    } else {
+      password.type = "password";
+      confirm_password.type = "password";
+    }
+  }
+</script>
 <div class="form-group">
   <a href="{{ url_for('google.login') }}" class="btn btn-google">
     <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google"

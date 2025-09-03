@@ -43,6 +43,8 @@ def edit_account():
             # Upload new image
             upload_result = cloudinary.uploader.upload(form.profile_image.data)
             current_user.profile_image = upload_result['secure_url']
+        if form.password.data:
+            current_user.password = form.password.data
         current_user.username = form.username.data
         current_user.email = form.email.data
         current_user.first_name = form.first_name.data
