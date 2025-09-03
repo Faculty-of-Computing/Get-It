@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>My Products</h2>
+    <a href="{{ url_for('seller_products.add_product') }}" class="btn">Add Product</a>
+    <div class="products-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <div class="img-container">
+                <img src="{{ product.images[0] if product.images else url_for('static', filename='b.png') }}"
+                    alt="{{ product.name }}">
+            </div>
+            <h3>{{ product.name }}</h3>
+            <p>₦{{ "%.2f"|format(product.price) }}</p>
+            <a href="{{ url_for('seller_products.edit_product', product_id=product.id) }}" class="btn-small">Edit</a>
+            <form method="post" action="{{ url_for('seller_products.delete_product', product_id=product.id) }}"
+                style="display:inline;">
+                <button type="submit" class="btn-small">Delete</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

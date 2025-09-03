@@ -1,3 +1,4 @@
+from flask_wtf import CSRFProtect
 from flask import Flask, render_template, redirect, url_for
 
 import os
@@ -9,8 +10,10 @@ from core.configs import  (DATABASE_URL,
                            CLOUDINARY_API_SECRET,
                            CLOUDINARY_NAME,
                            CLOUDINARY_URL)
+from core.mail_config import MAIL_SERVER, MAIL_PORT, MAIL_USE_TLS, MAIL_USE_SSL, MAIL_USERNAME, MAIL_PASSWORD, MAIL_DEFAULT_SENDER
+from flask_mail import Mail
 from core.database import db
-from blueprints import account, auth,public,cart,product,order as order_bp
+from blueprints import account, auth,public,cart,product,order as order_bp,admin
 from core.configs import logger
 from models import users,products,cart as cart_model,order
 from models.products import Products
@@ -22,6 +25,8 @@ from flask_login import logout_user,current_user
 import cloudinary
 from datetime import datetime
 import datetime as dt
+from forms.product_form import ReviewForm
+from flask_dance.contrib.google import make_google_blueprint, google
 
 
 
@@ -36,9 +41,22 @@ def create_app():
     login_manager.login_view = 'auth.login'  # type: ignore
     bycrypt.init_app(app)
     logger.info("App Binded to Bcrypt ")
+    # CSRF protection
+    csrf = CSRFProtect(app)
+    app.csrf = csrf # type: ignore
     with app.app_context():
         db.create_all()
         logger.info("Models migrated")
+    # Flask-Mail SMTP config
+    app.config['MAIL_SERVER'] = MAIL_SERVER
+    app.config['MAIL_PORT'] = MAIL_PORT
+    app.config['MAIL_USE_TLS'] = MAIL_USE_TLS
+    app.config['MAIL_USE_SSL'] = MAIL_USE_SSL
+    app.config['MAIL_USERNAME'] = MAIL_USERNAME
+    app.config['MAIL_PASSWORD'] = MAIL_PASSWORD
+    app.config['MAIL_DEFAULT_SENDER'] = MAIL_DEFAULT_SENDER
+    mail = Mail(app)
+    app.mail = mail # type: ignore
     return app
 
 app = create_app()
@@ -51,6 +69,18 @@ cloudinary.config(
 )
 
 
+# Set up Google OAuth
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
+google_bp = make_google_blueprint(
+    client_id=GOOGLE_CLIENT_ID,
+    client_secret=GOOGLE_CLIENT_SECRET,
+    scope=["profile", "email"],
+    redirect_url="/google_login/callback"
+)
+app.register_blueprint(google_bp, url_prefix="/google_login")
+
+
 #NOTE - blueprints are registered here
 app.register_blueprint(auth.blueprint) 
 app.register_blueprint(public.blueprint)
@@ -58,14 +88,26 @@ app.register_blueprint(cart.blueprint)
 app.register_blueprint(account.blueprint)
 app.register_blueprint(product.blueprint)
 app.register_blueprint(order_bp.blueprint)
+app.register_blueprint(admin.admin_bp)
+
+# Import and register missing blueprints
+from blueprints import seller, seller_products, wishlist
+app.register_blueprint(seller.blueprint)
+app.register_blueprint(seller_products.blueprint)
+app.register_blueprint(wishlist.blueprint)
 
 @app.route('/')  # type: ignore
 def home():
     categories = list(ProductCategory)  # If using Enum for categories
     #products = Products.query.limit(8).all()  # Load featured products (limit to 8 for performance/UI)
     products:List[Products] = db.session.execute(db.select(Products)).scalars().all() # type: ignore
+    # New Arrivals: latest 8 products
+    new_arrivals:List[Products] = db.session.execute(db.select(Products).order_by(Products.created_at.desc()).limit(8)).scalars().all() # type: ignore
+    # Best Sellers: products sorted by sold count (assuming Products.sold is an int count)
+    best_sellers:List[Products] = db.session.execute(db.select(Products).order_by(Products.sold.desc()).limit(8)).scalars().all() # type: ignore
+    form = ReviewForm()
                 
-    return render_template('index.html', categories=categories, products=products)
+    return render_template('index.html', categories=categories, products=products, new_arrivals=new_arrivals, best_sellers=best_sellers, form=form)
 
 
 #NOTE - created a global variable which is current_year that is injected into the Copyright section

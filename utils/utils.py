@@ -1,7 +1,9 @@
+from functools import wraps
 from core.configs import ALLOWED_EXTENSIONS,logger
 from wtforms.validators import ValidationError
 import re
-from cloudinary.utils import cloudinary_url
+from flask_login import current_user
+from flask import abort
 
 def validate_phone(form, field):
     phone = field.data.strip()
@@ -16,3 +18,10 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_admin:
+            abort(403)
+        return f(*args, **kwargs)
+    return decorated_function

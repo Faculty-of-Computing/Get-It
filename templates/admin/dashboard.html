@@ -1,0 +1,80 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<div class="dashboard-header">
+    <h1>Welcome, Admin!</h1>
+</div>
+<div class="dashboard-content">
+    <h2>Sales Analytics</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:2em;">
+        <div style="flex:1;min-width:320px;">
+            <canvas id="salesTrendsChart"></canvas>
+        </div>
+        <div style="flex:1;min-width:320px;">
+            <canvas id="revenueChart"></canvas>
+        </div>
+        <div style="flex:1;min-width:320px;">
+            <canvas id="topProductsChart"></canvas>
+        </div>
+    </div>
+    <h2 style="margin-top:2em;">All Products</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ "%.2f"|format(product.price) }}</td>
+                <td>{{ product.stock }}</td>
+                <td>
+                    <a href="{{ url_for('admin.edit_product', product_id=product.id) }}">Edit</a>
+                    <form action="{{ url_for('admin.delete_product', product_id=product.id) }}" method="post"
+                        style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Example data, replace with real data from backend
+    const salesTrendsData = {
+        labels: {{ sales_trends_labels| tojson }},
+    datasets: [{
+        label: 'Orders',
+        data: {{ sales_trends_data| tojson }},
+        borderColor: '#3498db',
+        fill: false
+    }]
+};
+    const revenueData = {
+        labels: {{ revenue_labels| tojson }},
+    datasets: [{
+        label: 'Revenue',
+        data: {{ revenue_data| tojson }},
+        backgroundColor: '#b88346'
+    }]
+};
+    const topProductsData = {
+        labels: {{ top_products_labels| tojson }},
+    datasets: [{
+        label: 'Units Sold',
+        data: {{ top_products_data| tojson }},
+        backgroundColor: '#2ecc71'
+    }]
+};
+    new Chart(document.getElementById('salesTrendsChart'), { type: 'line', data: salesTrendsData });
+    new Chart(document.getElementById('revenueChart'), { type: 'bar', data: revenueData });
+    new Chart(document.getElementById('topProductsChart'), { type: 'bar', data: topProductsData });
+</script>
+{% endblock %}

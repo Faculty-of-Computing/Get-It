@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Search Results for "{{ query }}"</h2>
+    <div class="products-grid">
+        {% if products %}
+            {% for product in products %}
+                <div class="product-card">
+                    </div>
+            {% endfor %}
+        {% else %}
+            <p>No products found for your search query.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

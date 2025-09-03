@@ -17,12 +17,18 @@ class User(db.Model, UserMixin):
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)
     updated_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    is_admin: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    is_seller: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    seller_application_status: Mapped[str] = mapped_column(String(20), default='none', nullable=False)  # none, pending, approved, denied
     deleted: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
+    profile_image: Mapped[str] = mapped_column(String(255), nullable=True)
     cart: Mapped['Cart'] = relationship("Cart", back_populates="user", uselist=False,lazy='selectin') # type: ignore
 
     cart_items:Mapped[list['CartItem']] = relationship("CartItem", back_populates="user", cascade="all, delete-orphan",lazy='selectin') # type: ignore
+    
     orders = relationship("Order", back_populates="user", cascade="all, delete-orphan",lazy='selectin')
+
     
 
     
@@ -33,4 +39,3 @@ class User(db.Model, UserMixin):
         return value
 
 
-    

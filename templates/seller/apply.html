@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Apply to Become a Seller</h2>
+    {% if status == 'pending' %}
+    <p>Your application is pending review.</p>
+    {% elif status == 'approved' %}
+    <p>Your application has been approved! You are now a seller.</p>
+    {% elif status == 'denied' %}
+    <p>Your application was denied. Please contact support for more info.</p>
+    {% else %}
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.business_name.label }}
+            {{ form.business_name(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.business_description.label }}
+            {{ form.business_description(class="form-control") }}
+        </div>
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

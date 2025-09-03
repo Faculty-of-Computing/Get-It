@@ -2,75 +2,45 @@
 
 {% block content %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-<!--Hero Section -->
-<div class="swiper">
-<div class="swiper-wrapper">
-<section class="hero swiper-slide slide-one">
-    <div class="container overlay">
-        {% if category_name %}
-        <h1>{{ category_name.replace('_', ' ').title() }}</h1>
-        <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
-        {% else %}
-       <div class="text">        
-           <p class="tline">Shop 2025</p>
-           <h1 class="title">Elevate Your 
-        </h1>
-        <h1 class="title">
-
-            Shopping Game
-        </h1>
-
-        <a href="#categories" class="explore">Explore Now</a>
-       </div>
+<div class="hero-carousel">
+    <div class="swiper hero-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="/static/k.jpg" alt="Featured 1" style="width:100%;height:400px;object-fit:cover;">
+                <div class="hero-caption">
+                    <h2>Big Sale: Up to 50% Off!</h2>
+                    <p>Shop our best deals of the season.</p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="/static/j.jpg" alt="Featured 2" style="width:100%;height:400px;object-fit:cover;">
+                <div class="hero-caption">
+                    <h2>New Arrivals</h2>
+                    <p>Check out the latest products in store.</p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="/static/l.jpg" alt="Featured 3" style="width:100%;height:400px;object-fit:cover;">
+                <div class="hero-caption">
+                    <h2>Shop by Category</h2>
+                    <p>Find what you love, fast.</p>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
     </div>
-        {% endif %}
-</section>
-
-<section class="hero swiper-slide slide-two">
-    <div class="container overlay">
-        {% if category_name %}
-        <h1>{{ category_name.replace('_', ' ').title() }}</h1>
-        <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
-        {% else %}
-       <div class="text">        
-           <p class="tline">Fashion That Fits You</p>
-           <h1 class="title">Trendy outfits, 
-        </h1>
-        <h1 class="title">
-
-            timeless classics
-        </h1>
-
-        <a href="#categories" class="explore">Explore Now</a>
-       </div>
-    </div>
-        {% endif %}
-</section>
-<section class="hero swiper-slide slide-three">
-    <div class="container overlay">
-        {% if category_name %}
-        <h1>{{ category_name.replace('_', ' ').title() }}</h1>
-        <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
-        {% else %}
-       <div class="text">        
-           <p class="tline">Fashion That Fits You</p>
-           <h1 class="title">Your Marketplace, 
-        </h1>
-        <h1 class="title">
-
-            Your Way
-        </h1>
-
-        <a href="#categories" class="explore">Explore Now</a>
-       </div>
-    </div>
-        {% endif %}
-</section>
 </div>
-<div class="swiper-pagination"></div>
-<div class="swiper-button-prev"></div>
-<div class="swiper-button-next"></div>
-</div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    var heroSwiper = new Swiper('.hero-swiper', {
+        loop: true,
+        autoplay: { delay: 4000 },
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+    });
+</script>
 
 <!-- Categories -->
 <section class="categories-section" id="categories">
@@ -105,19 +75,28 @@
         </div>
         <div class="products-grid">
             {% if products %}
-            
+
             {% for product in products %}
             <div class="product-card" onclick="openModal({{ loop.index0 }})">
                 <div class="img-container">
                     <img src="{{ product.images[0] }}" alt="{{ product.name }}">
                 </div>
                 <h3>{{ product.name }}</h3>
-                <div class="rating"><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
-                        alt=""><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
-                        alt=""><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
-                        alt=""><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
-                        alt=""><img src="https://res.cloudinary.com/dpcqv1vjh/image/upload/v1756294811/star3.png"
-                        alt=""></div>
+                <div class="rating">
+                    {% set avg = product.average_rating %}
+                    {% for i in range(1, 6) %}
+                    {% if i <= avg %} <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-fill.svg"
+                        alt="star" style="width:20px;height:20px;">
+                        {% elif i - avg < 1 %} <img
+                            src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-half.svg"
+                            alt="half-star" style="width:20px;height:20px;">
+                            {% else %}
+                            <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star.svg"
+                                alt="empty-star" style="width:20px;height:20px;">
+                            {% endif %}
+                            {% endfor %}
+                            <span>({{ product.reviews|length }})</span>
+                </div>
                 <p>₦{{ "%.2f"|format(product.price) }}</p>
                 <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
                     <button type="submit" class="btn-2">₦{{ "%.2f"|format(product.price) }}</button>
@@ -130,13 +109,14 @@
             <div class="modal" id="modal-{{ product_index }}">
                 <div class="modal-content">
                     <span class="close" onclick="closeModal({{ loop.index0 }})">&times;</span>
-                   
-                   <!-- <div class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}"> -->
+
+                    <!-- <div class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}"> -->
                     <h2>{{ product.name }}</h2>
 
                     <div class="slider-wrapper">
                         {% for image in product.images %}
-                        <img src="{{ image }}" class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}">
+                        <img src="{{ image }}"
+                            class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}">
                         {% endfor %}
                         <button class="prev" onclick="moveSlide({{ product_index }}, -1)">&#10094;</button>
                         <button class="next" onclick="moveSlide({{ product_index }}, 1)">&#10095;</button>
@@ -145,16 +125,152 @@
                     <p><strong>Price:</strong> ₦{{ "%.2f"|format(product.price) }}</p>
                     <p>{{ product.description }}</p>
 
+                    <div class="rating">
+                        {% set avg = product.average_rating %}
+                        {% for i in range(1, 6) %}
+                        {% if i <= avg %} <img
+                            src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-fill.svg" alt="star"
+                            style="width:20px;height:20px;">
+                            {% elif i - avg < 1 %} <img
+                                src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-half.svg"
+                                alt="half-star" style="width:20px;height:20px;">
+                                {% else %}
+                                <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star.svg"
+                                    alt="empty-star" style="width:20px;height:20px;">
+                                {% endif %}
+                                {% endfor %}
+                                <span>({{ product.reviews|length }})</span>
+                    </div>
+
+                    <!-- Review Form in Modal -->
+                    {% if current_user.is_authenticated %}
+                    <form method="post" action="{{ url_for('product.add_review', product_id=product.id) }}"
+                        class="review-form">
+                        {{ form.hidden_tag() }}
+                        <label for="rating">Your Rating:</label>
+                        {{ form.rating(class="form-control") }}
+                        <label for="review_text">Your Review:</label>
+                        {{ form.review_text(class="form-control") }}
+                        {{ form.submit(class="btn-small") }}
+                    </form>
+                    {% endif %}
+
                     <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
                         <button type="submit" class="btn-2">₦{{ "%.2f"|format(product.price) }}</button>
                     </form>
-                <!-- </div> -->
+                    <!-- </div> -->
                 </div>
             </div>
             {% endfor %}
             {% else %}
             <p>No products available in this category.</p>
             {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- New Arrivals Thin Banner -->
+<section class="new-arrivals-banner">
+    <div class="container">
+        <div class="section-header">
+            <h2>New Arrivals</h2>
+        </div>
+        <div class="swiper new-arrivals-swiper" style="padding-bottom: 2em;">
+            <div class="swiper-wrapper" style="align-items:stretch;">
+                {% for product in new_arrivals %}
+                <div class="swiper-slide" style="width:180px;min-width:180px;max-width:180px;">
+                    <div class="product-card"
+                        style="box-shadow:0 2px 8px rgba(0,0,0,0.07);margin:0 8px;position:relative;">
+                        <div class="img-container"
+                            style="height:120px;display:flex;align-items:center;justify-content:center;">
+                            <img src="{{ product.images[0] }}" alt="{{ product.name }}"
+                                style="max-height:100px;max-width:100%;object-fit:contain;">
+                        </div>
+                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="{{ product.id }}"
+                            style="position:absolute;top:8px;right:8px;background:none;border:none;cursor:pointer;z-index:2;"
+                            onclick="addToWishlist(event, {{ product.id }})">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b88346"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-heart">
+                                <path
+                                    d="M20.8 4.6c-1.5-1.3-3.8-1.1-5.2.3l-.6.6-.6-.6c-1.4-1.4-3.7-1.6-5.2-.3-1.7 1.5-1.8 4.1-.2 5.7l8 8.1 8-8.1c1.6-1.6 1.5-4.2-.2-5.7z">
+                                </path>
+                            </svg>
+                        </button>
+                        <h3 style="font-size:1em;margin:0.5em 0;">{{ product.name }}</h3>
+                        <p style="font-size:0.95em;color:#b88346;margin:0;">₦{{ "%.2f"|format(product.price) }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
+</section>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script>
+    var newArrivalsSwiper = new Swiper('.new-arrivals-swiper', {
+        slidesPerView: 'auto',
+        spaceBetween: 10,
+        loop: false,
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        pagination: { el: '.swiper-pagination', clickable: true }
+    });
+
+    function addToWishlist(e, productId) {
+        e.stopPropagation();
+        fetch(`/wishlist/add/${productId}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                Toastify({
+                    text: data.message,
+                    duration: 2500,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: data.success ? "#3498db" : "#e74c3c",
+                    stopOnFocus: true
+                }).showToast();
+            });
+    }
+</script>
+
+<!-- Best Sellers Section -->
+<section class="best-sellers-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Best Sellers</h2>
+        </div>
+        <div class="products-grid">
+            {% for product in best_sellers %}
+            <div class="product-card">
+                <div class="img-container">
+                    <img src="{{ product.images[0] }}" alt="{{ product.name }}">
+                </div>
+                <h3>{{ product.name }}</h3>
+                <div class="rating">
+                    {% set avg = product.average_rating %}
+                    {% for i in range(1, 6) %}
+                    {% if i <= avg %} <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-fill.svg"
+                        alt="star" style="width:20px;height:20px;">
+                        {% elif i - avg < 1 %} <img
+                            src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-half.svg"
+                            alt="half-star" style="width:20px;height:20px;">
+                            {% else %}
+                            <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star.svg"
+                                alt="empty-star" style="width:20px;height:20px;">
+                            {% endif %}
+                            {% endfor %}
+                            <span>({{ product.reviews|length }})</span>
+                </div>
+                <p>₦{{ "%.2f"|format(product.price) }}</p>
+                <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
+                    <button type="submit" class="btn-2">₦{{ "%.2f"|format(product.price) }}</button>
+                </form>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
