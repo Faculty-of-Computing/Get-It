@@ -19,9 +19,12 @@ class Products(db.Model):
     is_deleted:Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     created_at:Mapped[datetime]= mapped_column(DateTime,nullable=False,default=datetime.now())
     updated_at:Mapped[datetime] = mapped_column(DateTime,nullable=False,default=datetime.now(),onupdate=datetime.now)
+    owner_id:Mapped[int] = mapped_column(Integer, db.ForeignKey('Users.id'), nullable=True)  # Seller who owns this product
     cart_items = relationship("CartItem", back_populates="product", cascade="all, delete-orphan")
+    wishlist_entries = relationship('Wishlist', back_populates='product', cascade="all, delete-orphan")
     reviews = relationship('Review', back_populates='product')
-    
+    owner = relationship('User', foreign_keys=[owner_id])
+
     def __repr__(self):
         return f"<Product {self.name} - {self.category}>"
 

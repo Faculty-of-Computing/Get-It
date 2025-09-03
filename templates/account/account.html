@@ -32,6 +32,8 @@
                 <p><strong>Order ID:</strong> {{ order.id }}</p>
                 <p><strong>Date:</strong> {{ order.created_at.strftime('%B %d, %Y') }}</p>
                 <p><strong>Total:</strong> ₦{{ "%.2f"|format(order.total_price) }}</p>
+                <p><strong>Status:</strong> <span class="order-status order-status-{{ order.status|lower }}">{{
+                        order.status|capitalize }}</span></p>
                 <a href="{{ url_for('order.view_order', order_id=order.id) }}" class="btn-small">View Details</a>
             </div>
             {% endfor %}

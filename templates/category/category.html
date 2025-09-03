@@ -1,13 +1,71 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<section class="featured-section">
-    <div class="container">
+<div class="category-page container" style="display:flex;gap:2em;">
+    <!-- Sidebar Filters -->
+    <aside class="category-filters" style="width:260px;">
+        <h3>Filter By</h3>
+        <form id="filterForm" method="get">
+            <div class="filter-group">
+                <label for="brand">Brand</label>
+                <select name="brand" id="brand">
+                    <option value="">All</option>
+                    {% for brand in brands %}
+                    <option value="{{ brand }}" {% if request.args.get('brand')==brand %}selected{% endif %}>{{ brand }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="color">Color</label>
+                <select name="color" id="color">
+                    <option value="">All</option>
+                    {% for color in colors %}
+                    <option value="{{ color }}" {% if request.args.get('color')==color %}selected{% endif %}>{{ color }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="size">Size</label>
+                <select name="size" id="size">
+                    <option value="">All</option>
+                    {% for size in sizes %}
+                    <option value="{{ size }}" {% if request.args.get('size')==size %}selected{% endif %}>{{ size }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="price_min">Price Min</label>
+                <input type="number" name="price_min" id="price_min" value="{{ request.args.get('price_min', '') }}"
+                    style="width:100px;">
+            </div>
+            <div class="filter-group">
+                <label for="price_max">Price Max</label>
+                <input type="number" name="price_max" id="price_max" value="{{ request.args.get('price_max', '') }}"
+                    style="width:100px;">
+            </div>
+            <div class="filter-group">
+                <label for="sort">Sort By</label>
+                <select name="sort" id="sort">
+                    <option value="">Default</option>
+                    <option value="price_asc" {% if request.args.get('sort')=='price_asc' %}selected{% endif %}>Price:
+                        Low to High</option>
+                    <option value="price_desc" {% if request.args.get('sort')=='price_desc' %}selected{% endif %}>Price:
+                        High to Low</option>
+                    <option value="newest" {% if request.args.get('sort')=='newest' %}selected{% endif %}>Newest
+                    </option>
+                    <option value="best_rated" {% if request.args.get('sort')=='best_rated' %}selected{% endif %}>Best
+                        Rated</option>
+                </select>
+            </div>
+            <button type="submit" class="btn">Apply Filters</button>
+        </form>
+    </aside>
+    <!-- Products -->
+    <section class="featured-section" style="flex:1;">
         <div class="section-header">
-            <!-- {% for category in categories %} -->
-            <!-- <h2>{{ category.name.replace('_', ' ').title() }}</h2> -->
-            <!-- {% endfor %} -->
             {% for cat in categories %}
             {% if cat.name.lower() == category_name.lower() %}
             <h2>{{ cat.name.replace('_', ' ').title() }}</h2>
@@ -17,7 +75,7 @@
         <div class="products-grid">
             {% if products %}
             {% for product in products %}
-            <div class="product-card" onclick="openModal({{ loop.index0 }})">
+            <div class="product-card" onclick="openModal('{{ loop.index0 }}')">
                 <div class="img-container">
                     <img src="{{ product.images[0] }}" alt="{{ product.name }}">
                 </div>
@@ -34,26 +92,21 @@
                 </form>
             </div>
             {% endfor %}
-
-            <!-- Product Modals -->
+            <!-- Product Modals ...existing code... -->
             {% for product in products %}
             <div class="modal" id="modal-{{ loop.index0 }}">
                 <div class="modal-content">
-                    <span class="close" onclick="closeModal({{ loop.index0 }})">&times;</span>
+                    <span class="close" onclick="closeModal('{{ loop.index0 }}')">&times;</span>
                     <h2>{{ product.name }}</h2>
-
-                    <!-- Image Slider -->
                     <div class="slider-wrapper">
                         {% for img in product.images %}
                         <img src="{{ img }}" class="slide slide-{{ loop.index0 }} {% if loop.first %}active{% endif %}">
                         {% endfor %}
-                        <button class="prev" onclick="moveSlide({{ loop.index0 }}, -1)">&#10094;</button>
-                        <button class="next" onclick="moveSlide({{ loop.index0 }}, 1)">&#10095;</button>
+                        <button class="prev" onclick="moveSlide('{{ loop.index0 }}', -1)">&#10094;</button>
+                        <button class="next" onclick="moveSlide('{{ loop.index0 }}', 1)">&#10095;</button>
                     </div>
-
                     <p><strong>Price:</strong> ₦{{ "%.2f"|format(product.price) }}</p>
                     <p>{{ product.description }}</p>
-
                     <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
                         <button type="submit" class="btn-2">Add to Cart</button>
                     </form>
@@ -64,7 +117,6 @@
             <p>No products available in this category.</p>
             {% endif %}
         </div>
-    </div>
-</section>
-
+    </section>
+</div>
 {% endblock %}

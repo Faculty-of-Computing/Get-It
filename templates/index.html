@@ -168,43 +168,73 @@
     </div>
 </section>
 
-<!-- New Arrivals Section -->
-<section class="new-arrivals-section">
+<!-- New Arrivals Thin Banner -->
+<section class="new-arrivals-banner">
     <div class="container">
         <div class="section-header">
             <h2>New Arrivals</h2>
         </div>
-        <div class="products-grid">
-            {% for product in new_arrivals %}
-            <div class="product-card">
-                <div class="img-container">
-                    <img src="{{ product.images[0] }}" alt="{{ product.name }}">
+        <div class="swiper new-arrivals-swiper" style="padding-bottom: 2em;">
+            <div class="swiper-wrapper" style="align-items:stretch;">
+                {% for product in new_arrivals %}
+                <div class="swiper-slide" style="width:180px;min-width:180px;max-width:180px;">
+                    <div class="product-card"
+                        style="box-shadow:0 2px 8px rgba(0,0,0,0.07);margin:0 8px;position:relative;">
+                        <div class="img-container"
+                            style="height:120px;display:flex;align-items:center;justify-content:center;">
+                            <img src="{{ product.images[0] }}" alt="{{ product.name }}"
+                                style="max-height:100px;max-width:100%;object-fit:contain;">
+                        </div>
+                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="{{ product.id }}"
+                            style="position:absolute;top:8px;right:8px;background:none;border:none;cursor:pointer;z-index:2;"
+                            onclick="addToWishlist(event, {{ product.id }})">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b88346"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-heart">
+                                <path
+                                    d="M20.8 4.6c-1.5-1.3-3.8-1.1-5.2.3l-.6.6-.6-.6c-1.4-1.4-3.7-1.6-5.2-.3-1.7 1.5-1.8 4.1-.2 5.7l8 8.1 8-8.1c1.6-1.6 1.5-4.2-.2-5.7z">
+                                </path>
+                            </svg>
+                        </button>
+                        <h3 style="font-size:1em;margin:0.5em 0;">{{ product.name }}</h3>
+                        <p style="font-size:0.95em;color:#b88346;margin:0;">₦{{ "%.2f"|format(product.price) }}</p>
+                    </div>
                 </div>
-                <h3>{{ product.name }}</h3>
-                <div class="rating">
-                    {% set avg = product.average_rating %}
-                    {% for i in range(1, 6) %}
-                    {% if i <= avg %} <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-fill.svg"
-                        alt="star" style="width:20px;height:20px;">
-                        {% elif i - avg < 1 %} <img
-                            src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-half.svg"
-                            alt="half-star" style="width:20px;height:20px;">
-                            {% else %}
-                            <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star.svg"
-                                alt="empty-star" style="width:20px;height:20px;">
-                            {% endif %}
-                            {% endfor %}
-                            <span>({{ product.reviews|length }})</span>
-                </div>
-                <p>₦{{ "%.2f"|format(product.price) }}</p>
-                <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
-                    <button type="submit" class="btn-2">₦{{ "%.2f"|format(product.price) }}</button>
-                </form>
+                {% endfor %}
             </div>
-            {% endfor %}
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
         </div>
     </div>
 </section>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script>
+    var newArrivalsSwiper = new Swiper('.new-arrivals-swiper', {
+        slidesPerView: 'auto',
+        spaceBetween: 10,
+        loop: false,
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        pagination: { el: '.swiper-pagination', clickable: true }
+    });
+
+    function addToWishlist(e, productId) {
+        e.stopPropagation();
+        fetch(`/wishlist/add/${productId}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                Toastify({
+                    text: data.message,
+                    duration: 2500,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: data.success ? "#3498db" : "#e74c3c",
+                    stopOnFocus: true
+                }).showToast();
+            });
+    }
+</script>
 
 <!-- Best Sellers Section -->
 <section class="best-sellers-section">

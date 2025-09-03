@@ -1,0 +1,49 @@
+from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask_login import login_required, current_user
+from forms.seller_application_form import SellerApplicationForm
+from core.database import db
+from models.users import User
+
+blueprint = Blueprint('seller', __name__, url_prefix='/seller')
+
+@blueprint.route('/apply', methods=['GET', 'POST'])
+@login_required
+def apply():
+    form = SellerApplicationForm()
+    if form.validate_on_submit():
+        current_user.seller_application_status = 'pending'
+        current_user.business_name = form.business_name.data
+        current_user.business_description = form.business_description.data
+        db.session.commit()
+        flash('Your application has been submitted and is pending review.', 'info')
+        return redirect(url_for('account.account'))
+    return render_template('seller/apply.html', form=form, status=current_user.seller_application_status)
+
+@blueprint.route('/applications')
+@login_required
+def applications():
+    # Only admins can view all applications
+    if not getattr(current_user, 'is_admin', False):
+        flash('Unauthorized', 'danger')
+        return redirect(url_for('account.account'))
+    applicants = User.query.filter(User.seller_application_status != 'none').all()
+    return render_template('admin/seller_applications.html', applicants=applicants)
+
+@blueprint.route('/review/<int:user_id>/<string:action>', methods=['POST'])
+@login_required
+def review(user_id, action):
+    # Only admins can approve/deny
+    if not getattr(current_user, 'is_admin', False):
+        flash('Unauthorized', 'danger')
+        return redirect(url_for('account.account'))
+    user = User.query.get_or_404(user_id)
+    if action == 'approve':
+        user.seller_application_status = 'approved'
+        user.is_seller = True
+        flash('Seller application approved.', 'success')
+    elif action == 'deny':
+        user.seller_application_status = 'denied'
+        user.is_seller = False
+        flash('Seller application denied.', 'info')
+    db.session.commit()
+    return redirect(url_for('seller.applications'))

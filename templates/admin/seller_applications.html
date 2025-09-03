@@ -1,0 +1,43 @@
+{% extends "admin/base.html" %}
+{% block admin_content %}
+<div class="dashboard-header">
+    <h2>Seller Applications</h2>
+</div>
+<div class="dashboard-content">
+    <table>
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Business Name</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in applicants %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.business_name or '' }}</td>
+                <td>{{ user.business_description or '' }}</td>
+                <td>{{ user.seller_application_status|capitalize }}</td>
+                <td>
+                    {% if user.seller_application_status == 'pending' %}
+                    <form method="post" action="{{ url_for('seller.review', user_id=user.id, action='approve') }}"
+                        style="display:inline;">
+                        <button type="submit" class="btn-small">Approve</button>
+                    </form>
+                    <form method="post" action="{{ url_for('seller.review', user_id=user.id, action='deny') }}"
+                        style="display:inline;">
+                        <button type="submit" class="btn-small">Deny</button>
+                    </form>
+                    {% else %}
+                    <span>-</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,40 +1,166 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/drift-zoom/dist/drift-basic.min.css">
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/drift-zoom/dist/Drift.min.js"></script>
+<script src="{{ url_for('static', filename='product_detail.js') }}"></script>
+
+<div class="container product-detail">
     <h1>{{ product.name }}</h1>
-    <div class="img-container">
-        {% for image in product.images %}
-        <img src="{{ image }}" alt="{{ product.name }}" style="max-width:200px;">
-        {% endfor %}
+    <div class="product-gallery">
+        <img id="main-product-img" src="{{ product.images[0]|default('') }}"
+            data-zoom="{{ product.images[0]|default('') }}" alt="{{ product.name }}" class="main-img"
+            style="max-width:350px;">
+        <div class="thumbnails">
+            {% for image in product.images %}
+            <img src="{{ image }}" alt="{{ product.name }}" class="product-thumbnail"
+                style="width:60px;cursor:pointer;">
+            {% endfor %}
+        </div>
     </div>
-    <p><strong>Price:</strong> ₦{{ "%.2f"|format(product.price) }}</p>
-    <p>{{ product.description }}</p>
-    <div class="rating">
-        {% set avg = product.average_rating %}
-        {% for i in range(1, 6) %}
-        {% if i <= avg %} <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-fill.svg" alt="star"
-            style="width:20px;height:20px;">
-            {% elif i - avg < 1 %} <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-half.svg"
-                alt="half-star" style="width:20px;height:20px;">
-                {% else %}
-                <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star.svg" alt="empty-star"
+    <div class="product-info">
+        <p><strong>Price:</strong> ₦{{ "%.2f"|format(product.price) }}</p>
+        <div class="rating">
+            {% set avg = product.average_rating %}
+            {% for i in range(1, 6) %}
+            {% if i <= avg %} <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-fill.svg"
+                alt="star" style="width:20px;height:20px;">
+                {% elif i - avg < 1 %} <img
+                    src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-half.svg" alt="half-star"
                     style="width:20px;height:20px;">
-                {% endif %}
-                {% endfor %}
-                <span>({{ product.reviews|length }})</span>
+                    {% else %}
+                    <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star.svg" alt="empty-star"
+                        style="width:20px;height:20px;">
+                    {% endif %}
+                    {% endfor %}
+                    <span>({{ product.reviews|length if product.reviews is defined else 0 }})</span>
+        </div>
     </div>
-    <h3>Reviews</h3>
-    {% if reviews %}
-    <ul>
-        {% for review in reviews %}
-        <li>
-            <strong>{{ review.user.username }}</strong> - {{ review.rating }}★<br>
-            {{ review.review_text }}
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>No reviews yet.</p>
-    {% endif %}
+    <!-- Tabbed Content -->
+    <div class="product-tabs">
+        <ul class="tab-links">
+            <li><a href="#" class="tab-link active" data-tab="tab-desc">Description</a></li>
+            <li><a href="#" class="tab-link" data-tab="tab-specs">Specifications</a></li>
+            <li><a href="#" class="tab-link" data-tab="tab-reviews">Reviews</a></li>
+        </ul>
+        <div class="tab-content active" id="tab-desc">
+            <p>{{ product.description }}</p>
+        </div>
+        <div class="tab-content" id="tab-specs">
+            <p>{{ product.specifications|default('No specifications provided.') }}</p>
+        </div>
+        <div class="tab-content" id="tab-reviews">
+            <h3>Reviews</h3>
+            {% if reviews %}
+            <ul>
+                {% for review in reviews %}
+                <li>
+                    <strong>{{ review.user.username }}</strong> - {{ review.rating }}★<br>
+                    {{ review.review_text }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No reviews yet.</p>
+            {% endif %}
+        </div>
+    </div>
+    <button class="btn btn-primary btn-animate" onclick="showToast('Item added to cart!')">Add to Cart</button>
 </div>
+<style>
+    .product-detail {
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+    }
+
+    .product-gallery {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5em;
+    }
+
+    .main-img {
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .thumbnails {
+        display: flex;
+        gap: 0.5em;
+        margin-top: 0.5em;
+    }
+
+    .product-thumbnail {
+        border-radius: 4px;
+        border: 2px solid #eee;
+        transition: border 0.2s;
+    }
+
+    .product-thumbnail:hover {
+        border: 2px solid #3498db;
+    }
+
+    .product-tabs {
+        margin-top: 2em;
+    }
+
+    .tab-links {
+        display: flex;
+        gap: 2em;
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1em;
+    }
+
+    .tab-link {
+        text-decoration: none;
+        color: #3498db;
+        font-weight: 500;
+        padding: 0.5em 1em;
+        border-radius: 6px 6px 0 0;
+        transition: background 0.2s;
+    }
+
+    .tab-link.active,
+    .tab-link:hover {
+        background: #ecf0f1;
+        color: #2c3e50;
+    }
+
+    .tab-content {
+        display: none;
+        background: #fff;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        padding: 1em;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .btn-animate {
+        transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-animate.hovered {
+        transform: scale(1.07);
+        box-shadow: 0 4px 16px rgba(52, 152, 219, 0.15);
+    }
+</style>
+<script>
+    // Initialize Drift.js zoom
+    document.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('main-product-img')) {
+            new Drift(document.getElementById('main-product-img'), {
+                paneContainer: document.body,
+                inlinePane: false,
+                hoverBoundingBox: true
+            });
+        }
+    });
+</script>
 {% endblock %}

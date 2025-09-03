@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>My Wishlist</h2>
+    <div class="products-grid">
+        {% if products %}
+        {% for product in products %}
+        <div class="product-card">
+            <div class="img-container">
+                <img src="{{ product.images[0] }}" alt="{{ product.name }}">
+            </div>
+            <h3>{{ product.name }}</h3>
+            <p>₦{{ "%.2f"|format(product.price) }}</p>
+            <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
+                <button type="submit" class="btn-2">Add to Cart</button>
+            </form>
+            <button class="wishlist-btn" onclick="removeFromWishlist({{ product.id }})" title="Remove from Wishlist">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#b88346" stroke="#b88346" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
+                    <path
+                        d="M20.8 4.6c-1.5-1.3-3.8-1.1-5.2.3l-.6.6-.6-.6c-1.4-1.4-3.7-1.6-5.2-.3-1.7 1.5-1.8 4.1-.2 5.7l8 8.1 8-8.1c1.6-1.6 1.5-4.2-.2-5.7z">
+                    </path>
+                </svg>
+            </button>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>Your wishlist is empty.</p>
+        {% endif %}
+    </div>
+</div>
+<script>
+    function removeFromWishlist(productId) {
+        fetch(`/wishlist/remove/${productId}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) location.reload();
+                else alert(data.message);
+            });
+    }
+</script>
+{% endblock %}

@@ -5,7 +5,19 @@
     <h1>Welcome, Admin!</h1>
 </div>
 <div class="dashboard-content">
-    <h2>All Products</h2>
+    <h2>Sales Analytics</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:2em;">
+        <div style="flex:1;min-width:320px;">
+            <canvas id="salesTrendsChart"></canvas>
+        </div>
+        <div style="flex:1;min-width:320px;">
+            <canvas id="revenueChart"></canvas>
+        </div>
+        <div style="flex:1;min-width:320px;">
+            <canvas id="topProductsChart"></canvas>
+        </div>
+    </div>
+    <h2 style="margin-top:2em;">All Products</h2>
     <table>
         <thead>
             <tr>
@@ -33,4 +45,36 @@
         </tbody>
     </table>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Example data, replace with real data from backend
+    const salesTrendsData = {
+        labels: {{ sales_trends_labels| tojson }},
+    datasets: [{
+        label: 'Orders',
+        data: {{ sales_trends_data| tojson }},
+        borderColor: '#3498db',
+        fill: false
+    }]
+};
+    const revenueData = {
+        labels: {{ revenue_labels| tojson }},
+    datasets: [{
+        label: 'Revenue',
+        data: {{ revenue_data| tojson }},
+        backgroundColor: '#b88346'
+    }]
+};
+    const topProductsData = {
+        labels: {{ top_products_labels| tojson }},
+    datasets: [{
+        label: 'Units Sold',
+        data: {{ top_products_data| tojson }},
+        backgroundColor: '#2ecc71'
+    }]
+};
+    new Chart(document.getElementById('salesTrendsChart'), { type: 'line', data: salesTrendsData });
+    new Chart(document.getElementById('revenueChart'), { type: 'bar', data: revenueData });
+    new Chart(document.getElementById('topProductsChart'), { type: 'bar', data: topProductsData });
+</script>
 {% endblock %}
