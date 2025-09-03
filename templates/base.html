@@ -86,6 +86,13 @@
                 <li><a href="{{ url_for('public.contact') }}">Contact</a></li>
                 <li><a href="{{ url_for('cart.view_cart') }}">Cart</a></li>
                 <li><a href="{{ url_for('account.account') }}">Account</a></li>
+                {% if current_user.is_authenticated %}
+                {% if current_user.is_seller %}
+                <li><a href="{{ url_for('seller_products.list_products') }}">List Products</a></li>
+                {% else %}
+                <li><a href="{{ url_for('seller.apply') }}">Apply to Become Seller</a></li>
+                {% endif %}
+                {% endif %}
             </ul>
         </div>
     </header>
