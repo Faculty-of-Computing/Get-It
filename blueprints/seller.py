@@ -42,26 +42,30 @@ def review(user_id, action):
     from core.configs import logger
     from flask_mail import Message
     from flask import current_app
-    mail = getattr(current_app, 'mail', None)
-    if action == 'approve':
-        user.seller_application_status = 'approved'
-        user.is_seller = True
-        flash('Seller application approved.', 'success')
-        logger.info(f"Admin {current_user.id} approved seller application for user {user.id}")
-        if mail:
-            msg = Message('Seller Application Approved', recipients=[user.email], sender=MAIL_DEFAULT_SENDER)
-            msg.body = 'Congratulations! Your seller application has been approved.'
-            mail.send(msg)
-    elif action == 'deny':
-        user.seller_application_status = 'denied'
-        user.is_seller = False
-        flash('Seller application denied.', 'info')
-        logger.info(f"Admin {current_user.id} denied seller application for user {user.id}")
-        if mail:
-            msg = Message('Seller Application Denied', recipients=[user.email], sender=MAIL_DEFAULT_SENDER)
-            msg.body = 'We regret to inform you that your seller application has been denied.'
-            mail.send(msg)
-    db.session.commit()
+    try:
+        mail = getattr(current_app, 'mail', None)
+        if action == 'approve':
+            user.seller_application_status = 'approved'
+            user.is_seller = True
+            flash('Seller application approved.', 'success')
+            logger.info(f"Admin {current_user.id} approved seller application for user {user.id}")
+            if mail:
+                msg = Message('Seller Application Approved', recipients=[user.email], sender=MAIL_DEFAULT_SENDER)
+                msg.body = 'Congratulations! Your seller application has been approved.'
+                mail.send(msg)
+        elif action == 'deny':
+            user.seller_application_status = 'denied'
+            user.is_seller = False
+            flash('Seller application denied.', 'info')
+            logger.info(f"Admin {current_user.id} denied seller application for user {user.id}")
+            if mail:
+                msg = Message('Seller Application Denied', recipients=[user.email], sender=MAIL_DEFAULT_SENDER)
+                msg.body = 'We regret to inform you that your seller application has been denied.'
+                mail.send(msg)
+    except Exception:
+        return redirect(request.url)
+    finally:
+        db.session.commit()
     return redirect(url_for('seller.applications'))
 
 @blueprint.route('/<int:seller_id>')
