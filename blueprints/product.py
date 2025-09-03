@@ -45,12 +45,6 @@ def category(category):
     products_query = Products.query.filter(Products.category == category)
 
     # Filtering
-    if brand:
-        products_query = products_query.filter(Products.brand == brand)
-    if color:
-        products_query = products_query.filter(Products.color == color)
-    if size:
-        products_query = products_query.filter(Products.size == size)
     if price_min is not None:
         products_query = products_query.filter(Products.price >= price_min)
     if price_max is not None:
@@ -70,9 +64,9 @@ def category(category):
 
     # For filter options, get distinct values from products in category
     all_products = Products.query.filter(Products.category == category).all()
-    brands = sorted({getattr(p, 'brand', None) for p in all_products if getattr(p, 'brand', None)})
-    colors = sorted({getattr(p, 'color', None) for p in all_products if getattr(p, 'color', None)})
-    sizes = sorted({getattr(p, 'size', None) for p in all_products if getattr(p, 'size', None)})
+    brands = sorted({getattr(p, 'brand', None) for p in all_products if getattr(p, 'brand', None)}) # type: ignore
+    colors = sorted({getattr(p, 'color', None) for p in all_products if getattr(p, 'color', None)}) # type: ignore
+    sizes = sorted({getattr(p, 'size', None) for p in all_products if getattr(p, 'size', None)}) #type: ignore
 
     return render_template(
         'category/category.html',

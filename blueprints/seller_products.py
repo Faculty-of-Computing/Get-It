@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from models.products import Products
 from forms.product_form import AddProductForm
 from core.database import db
+import cloudinary.uploader
 
 blueprint = Blueprint('seller_products', __name__, url_prefix='/seller/products')
 
@@ -21,14 +22,19 @@ def add_product():
         abort(403)
     form = AddProductForm()
     if form.validate_on_submit():
+        images = []
+        if form.images.data:
+            for image in form.images.data:
+                upload_result = cloudinary.uploader.upload(image)
+                images.append(upload_result['secure_url'])
         product = Products(
-            name=form.name.data,
-            price=form.price.data,
-            description=form.description.data,
-            stock=form.stock.data,
-            category=form.category.data,
-            images=[],  # handle images as needed
-            owner_id=current_user.id
+            name=form.name.data, # type: ignore
+            price=form.price.data, # type: ignore
+            description=form.description.data, # type: ignore
+            stock=form.stock.data, # type: ignore
+            category=form.category.data, # type: ignore
+            images=images, # type: ignore
+            owner_id=current_user.id # type: ignore
         )
         db.session.add(product)
         db.session.commit()

@@ -9,6 +9,8 @@ from core.configs import  (DATABASE_URL,
                            CLOUDINARY_API_SECRET,
                            CLOUDINARY_NAME,
                            CLOUDINARY_URL)
+from core.mail_config import MAIL_SERVER, MAIL_PORT, MAIL_USE_TLS, MAIL_USE_SSL, MAIL_USERNAME, MAIL_PASSWORD, MAIL_DEFAULT_SENDER
+from flask_mail import Mail
 from core.database import db
 from blueprints import account, auth,public,cart,product,order as order_bp,admin
 from core.configs import logger
@@ -41,6 +43,16 @@ def create_app():
     with app.app_context():
         db.create_all()
         logger.info("Models migrated")
+    # Flask-Mail SMTP config
+    app.config['MAIL_SERVER'] = MAIL_SERVER
+    app.config['MAIL_PORT'] = MAIL_PORT
+    app.config['MAIL_USE_TLS'] = MAIL_USE_TLS
+    app.config['MAIL_USE_SSL'] = MAIL_USE_SSL
+    app.config['MAIL_USERNAME'] = MAIL_USERNAME
+    app.config['MAIL_PASSWORD'] = MAIL_PASSWORD
+    app.config['MAIL_DEFAULT_SENDER'] = MAIL_DEFAULT_SENDER
+    mail = Mail(app)
+    app.mail = mail # type: ignore
     return app
 
 app = create_app()
@@ -73,6 +85,12 @@ app.register_blueprint(account.blueprint)
 app.register_blueprint(product.blueprint)
 app.register_blueprint(order_bp.blueprint)
 app.register_blueprint(admin.admin_bp)
+
+# Import and register missing blueprints
+from blueprints import seller, seller_products, wishlist
+app.register_blueprint(seller.blueprint)
+app.register_blueprint(seller_products.blueprint)
+app.register_blueprint(wishlist.blueprint)
 
 @app.route('/')  # type: ignore
 def home():

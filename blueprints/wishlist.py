@@ -18,7 +18,7 @@ def view_wishlist():
 def add_to_wishlist(product_id):
     existing = Wishlist.query.filter_by(user_id=current_user.id, product_id=product_id).first()
     if not existing:
-        entry = Wishlist(user_id=current_user.id, product_id=product_id)
+        entry = Wishlist(user_id=current_user.id, product_id=product_id) # type: ignore
         db.session.add(entry)
         db.session.commit()
         return jsonify({'success': True, 'message': 'Added to wishlist'})
