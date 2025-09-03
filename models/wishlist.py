@@ -12,6 +12,3 @@ class Wishlist(db.Model):
 
     user = relationship('User', back_populates='wishlist_items')
     product = relationship('Products', back_populates='wishlist_entries')
-
-from models.products import Products
-Products.wishlist_entries = relationship('Wishlist', back_populates='product', cascade="all, delete-orphan")
