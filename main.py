@@ -79,9 +79,13 @@ def home():
     categories = list(ProductCategory)  # If using Enum for categories
     #products = Products.query.limit(8).all()  # Load featured products (limit to 8 for performance/UI)
     products:List[Products] = db.session.execute(db.select(Products)).scalars().all() # type: ignore
+    # New Arrivals: latest 8 products
+    new_arrivals:List[Products] = db.session.execute(db.select(Products).order_by(Products.created_at.desc()).limit(8)).scalars().all() # type: ignore
+    # Best Sellers: products sorted by sold count (assuming Products.sold is an int count)
+    best_sellers:List[Products] = db.session.execute(db.select(Products).order_by(Products.sold.desc()).limit(8)).scalars().all() # type: ignore
     form = ReviewForm()
                 
-    return render_template('index.html', categories=categories, products=products, form=form)
+    return render_template('index.html', categories=categories, products=products, new_arrivals=new_arrivals, best_sellers=best_sellers, form=form)
 
 
 #NOTE - created a global variable which is current_year that is injected into the Copyright section

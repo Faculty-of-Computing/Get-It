@@ -2,75 +2,45 @@
 
 {% block content %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-<!--Hero Section -->
-<div class="swiper">
-    <div class="swiper-wrapper">
-        <section class="hero swiper-slide slide-one">
-            <div class="container overlay">
-                {% if category_name %}
-                <h1>{{ category_name.replace('_', ' ').title() }}</h1>
-                <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
-                {% else %}
-                <div class="text">
-                    <p class="tline">Shop 2025</p>
-                    <h1 class="title">Elevate Your
-                    </h1>
-                    <h1 class="title">
-
-                        Shopping Game
-                    </h1>
-
-                    <a href="#categories" class="explore">Explore Now</a>
+<div class="hero-carousel">
+    <div class="swiper hero-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="/static/k.jpg" alt="Featured 1" style="width:100%;height:400px;object-fit:cover;">
+                <div class="hero-caption">
+                    <h2>Big Sale: Up to 50% Off!</h2>
+                    <p>Shop our best deals of the season.</p>
                 </div>
             </div>
-            {% endif %}
-        </section>
-
-        <section class="hero swiper-slide slide-two">
-            <div class="container overlay">
-                {% if category_name %}
-                <h1>{{ category_name.replace('_', ' ').title() }}</h1>
-                <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
-                {% else %}
-                <div class="text">
-                    <p class="tline">Fashion That Fits You</p>
-                    <h1 class="title">Trendy outfits,
-                    </h1>
-                    <h1 class="title">
-
-                        timeless classics
-                    </h1>
-
-                    <a href="#categories" class="explore">Explore Now</a>
+            <div class="swiper-slide">
+                <img src="/static/j.jpg" alt="Featured 2" style="width:100%;height:400px;object-fit:cover;">
+                <div class="hero-caption">
+                    <h2>New Arrivals</h2>
+                    <p>Check out the latest products in store.</p>
                 </div>
             </div>
-            {% endif %}
-        </section>
-        <section class="hero swiper-slide slide-three">
-            <div class="container overlay">
-                {% if category_name %}
-                <h1>{{ category_name.replace('_', ' ').title() }}</h1>
-                <p>Explore products under the {{ category_name.replace('_', ' ').title() }} category.</p>
-                {% else %}
-                <div class="text">
-                    <p class="tline">Fashion That Fits You</p>
-                    <h1 class="title">Your Marketplace,
-                    </h1>
-                    <h1 class="title">
-
-                        Your Way
-                    </h1>
-
-                    <a href="#categories" class="explore">Explore Now</a>
+            <div class="swiper-slide">
+                <img src="/static/l.jpg" alt="Featured 3" style="width:100%;height:400px;object-fit:cover;">
+                <div class="hero-caption">
+                    <h2>Shop by Category</h2>
+                    <p>Find what you love, fast.</p>
                 </div>
             </div>
-            {% endif %}
-        </section>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
     </div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    var heroSwiper = new Swiper('.hero-swiper', {
+        loop: true,
+        autoplay: { delay: 4000 },
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+    });
+</script>
 
 <!-- Categories -->
 <section class="categories-section" id="categories">
@@ -194,6 +164,82 @@
             {% else %}
             <p>No products available in this category.</p>
             {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- New Arrivals Section -->
+<section class="new-arrivals-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>New Arrivals</h2>
+        </div>
+        <div class="products-grid">
+            {% for product in new_arrivals %}
+            <div class="product-card">
+                <div class="img-container">
+                    <img src="{{ product.images[0] }}" alt="{{ product.name }}">
+                </div>
+                <h3>{{ product.name }}</h3>
+                <div class="rating">
+                    {% set avg = product.average_rating %}
+                    {% for i in range(1, 6) %}
+                    {% if i <= avg %} <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-fill.svg"
+                        alt="star" style="width:20px;height:20px;">
+                        {% elif i - avg < 1 %} <img
+                            src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-half.svg"
+                            alt="half-star" style="width:20px;height:20px;">
+                            {% else %}
+                            <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star.svg"
+                                alt="empty-star" style="width:20px;height:20px;">
+                            {% endif %}
+                            {% endfor %}
+                            <span>({{ product.reviews|length }})</span>
+                </div>
+                <p>₦{{ "%.2f"|format(product.price) }}</p>
+                <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
+                    <button type="submit" class="btn-2">₦{{ "%.2f"|format(product.price) }}</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Best Sellers Section -->
+<section class="best-sellers-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Best Sellers</h2>
+        </div>
+        <div class="products-grid">
+            {% for product in best_sellers %}
+            <div class="product-card">
+                <div class="img-container">
+                    <img src="{{ product.images[0] }}" alt="{{ product.name }}">
+                </div>
+                <h3>{{ product.name }}</h3>
+                <div class="rating">
+                    {% set avg = product.average_rating %}
+                    {% for i in range(1, 6) %}
+                    {% if i <= avg %} <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-fill.svg"
+                        alt="star" style="width:20px;height:20px;">
+                        {% elif i - avg < 1 %} <img
+                            src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star-half.svg"
+                            alt="half-star" style="width:20px;height:20px;">
+                            {% else %}
+                            <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/star.svg"
+                                alt="empty-star" style="width:20px;height:20px;">
+                            {% endif %}
+                            {% endfor %}
+                            <span>({{ product.reviews|length }})</span>
+                </div>
+                <p>₦{{ "%.2f"|format(product.price) }}</p>
+                <form method="post" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}">
+                    <button type="submit" class="btn-2">₦{{ "%.2f"|format(product.price) }}</button>
+                </form>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
