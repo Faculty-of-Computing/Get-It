@@ -5,14 +5,14 @@
 <div class="hero-carousel">
     <div class="swiper hero-swiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
+            <div class="swiper-slide slide-one">
                 <img src="/static/k.jpg" alt="Featured 1" style="width:100%;height:400px;object-fit:cover;">
                 <div class="hero-caption">
                     <h2>Big Sale: Up to 50% Off!</h2>
                     <p>Shop our best deals of the season.</p>
                 </div>
             </div>
-            <div class="swiper-slide">
+            <div class="swiper-slide slide-two">
                 <img src="/static/j.jpg" alt="Featured 2" style="width:100%;height:400px;object-fit:cover;">
                 <div class="hero-caption">
                     <h2>New Arrivals</h2>
@@ -46,7 +46,7 @@
 <section class="categories-section" id="categories">
     <div class="container">
         <div class="section-header">
-            <h2>Shop by Category</h2>
+            <!-- <h2>Shop by Category</h2> -->
         </div>
         <div class="categories-grid">
             {% for category in categories %}
@@ -55,9 +55,10 @@
                 <a href="{{ url_for('product.category', category=category.value) }}">
                     <div class="category-name category-{{ category.name|lower|replace(' ', '-') }}">
                         <div class="img-con">
-                            <img src="{{ get_category_image_url(category.value)  }}" alt="">
+                            <!-- <img src="{{ get_category_image_url(category.value)  }}" alt=""> -->
+                             <img src="../static/{{category.name}}.png" alt="">
+                            <p> {{ category.name.replace('_', ' ').title() }}</p>
                         </div>
-                        <p> {{ category.name.replace('_', ' ').title() }}</p>
                     </div>
                 </a>
             </div>
