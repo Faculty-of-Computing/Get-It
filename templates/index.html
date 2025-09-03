@@ -76,7 +76,7 @@
 <section class="categories-section" id="categories">
     <div class="container">
         <div class="section-header">
-            <h2>Shop by Category</h2>
+            <!-- <h2>Shop by Category</h2> -->
         </div>
         <div class="categories-grid">
             {% for category in categories %}
@@ -85,9 +85,10 @@
                 <a href="{{ url_for('product.category', category=category.value) }}">
                     <div class="category-name category-{{ category.name|lower|replace(' ', '-') }}">
                         <div class="img-con">
-                            <img src="{{ get_category_image_url(category.value)  }}" alt="">
+                            <!-- <img src="{{ get_category_image_url(category.value)  }}" alt=""> -->
+                             <img src="../static/{{category.name}}.png" alt="">
+                            <p> {{ category.name.replace('_', ' ').title() }}</p>
                         </div>
-                        <p> {{ category.name.replace('_', ' ').title() }}</p>
                     </div>
                 </a>
             </div>
