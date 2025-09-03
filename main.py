@@ -27,6 +27,7 @@ from datetime import datetime
 import datetime as dt
 from forms.product_form import ReviewForm
 from flask_dance.contrib.google import make_google_blueprint, google
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 
 
@@ -44,6 +45,7 @@ def create_app():
     # CSRF protection
     csrf = CSRFProtect(app)
     app.csrf = csrf # type: ignore
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
     with app.app_context():
         db.create_all()
         logger.info("Models migrated")
@@ -70,15 +72,16 @@ cloudinary.config(
 
 
 # Set up Google OAuth
-GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
-GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
 google_bp = make_google_blueprint(
-    client_id=GOOGLE_CLIENT_ID,
-    client_secret=GOOGLE_CLIENT_SECRET,
-    scope=["profile", "email"],
-    redirect_url="/google_login/callback"
+    client_id=GOOGLE_CLIENT_ID, 
+    client_secret=GOOGLE_CLIENT_SECRET, 
+    scope=["profile", "email"], 
+    redirect_url="/google_login/callback" 
 )
+
 app.register_blueprint(google_bp, url_prefix="/google_login")
+
+from core.configs import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
 
 
 #NOTE - blueprints are registered here

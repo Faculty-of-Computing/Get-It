@@ -24,7 +24,10 @@
             {{ form.category.label }}
             {{ form.category(class="form-control") }}
         </div>
-        <!-- Add image upload if needed -->
+        <div class="form-group">
+            {{ form.images.label }}
+            {{ form.images(class="form-control", multiple=true) }}
+        </div>
         {{ form.submit(class="btn btn-primary") }}
     </form>
 </div>

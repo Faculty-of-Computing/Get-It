@@ -122,6 +122,6 @@ def add_review(product_id):
 @blueprint.route('/<int:product_id>')
 def product_detail(product_id):
     product = Products.query.get_or_404(product_id)
-    reviews = Review.query.filter_by(product_id=product_id).all()
+    reviews = Review.query.filter_by(product_id=product_id).all() # type: ignore
     categories = list(ProductCategory)
     return render_template('products/product_detail.html', product=product, reviews=reviews, categories=categories)

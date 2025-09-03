@@ -1,3 +1,18 @@
+# Google OAuth config
+import os
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+# Google OAuth config
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+# Mail/SMTP config
+SMTP_HOST = os.getenv("SMTP_HOST")
+SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
+SMTP_USE_TLS = os.getenv("SMTP_USE_TLS", "True") == "True"
+SMTP_USE_SSL = os.getenv("SMTP_USE_SSL", "False") == "True"
+SMTP_USERNAME = os.getenv("SMTP_USERNAME")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
+SMTP_SEND_FROM = os.getenv("SMTP_SEND_FROM")
 from dotenv import load_dotenv
 import os
 import logging

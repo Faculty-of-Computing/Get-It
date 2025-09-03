@@ -6,10 +6,11 @@ click==8.2.1
 cloudinary==1.44.1
 dnspython==2.7.0
 email_validator==2.2.0
-Flask==3.1.1
+Flask==3.1.2
 Flask-Bcrypt==1.0.1
 Flask-Dance==7.1.0
 Flask-Login==0.6.3
+Flask-Mail==0.10.0
 Flask-SQLAlchemy==3.1.1
 Flask-WTF==1.2.2
 greenlet==3.2.3
@@ -21,12 +22,12 @@ MarkupSafe==3.0.2
 oauthlib==3.3.1
 packaging==25.0
 psycopg2==2.9.10
-python-dotenv==1.1.0
+python-dotenv==1.1.1
 redis==6.0.0
 requests==2.32.4
 requests-oauthlib==2.0.0
 six==1.17.0
-SQLAlchemy==2.0.42
+SQLAlchemy==2.0.43
 typing_extensions==4.14.1
 urllib3==2.5.0
 URLObject==3.0.0
