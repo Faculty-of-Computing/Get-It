@@ -9,17 +9,24 @@
     <label for="username">{{ form.username.label }}</label> <br>
     {{ form.username(size=32, placeholder="Username", title="Enter your username", autofocus=form.username.errors) }}
     {% for error in form.username.errors %}
-        <span class="form-error">{{ error }}</span>
+    <span class="form-error">{{ error }}</span>
     {% endfor %}<br>
 
     <label for="password">{{ form.password.label }}</label> <br>
     {{ form.password(size=32, placeholder="Password", title="Enter your password") }}
     {% for error in form.password.errors %}
-        <span class="form-error">{{ error }}</span>
+    <span class="form-error">{{ error }}</span>
     {% endfor %}<br>
 
     <button type="submit" class="btn btn-primary">Login</button>
 </form>
+
+<div class="form-group">
+    <a href="{{ url_for('google.login') }}" class="btn btn-google">
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google"
+            style="width:20px;vertical-align:middle;margin-right:8px;"> Sign in with Google
+    </a>
+</div>
 
 <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
 {% endblock %}

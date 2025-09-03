@@ -20,6 +20,7 @@ class User(db.Model, UserMixin):
     is_admin: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     deleted: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
+    profile_image: Mapped[str] = mapped_column(String(255), nullable=True)
     cart: Mapped['Cart'] = relationship("Cart", back_populates="user", uselist=False,lazy='selectin') # type: ignore
 
     cart_items:Mapped[list['CartItem']] = relationship("CartItem", back_populates="user", cascade="all, delete-orphan",lazy='selectin') # type: ignore
@@ -35,4 +36,3 @@ class User(db.Model, UserMixin):
         return value
 
 
-    

@@ -9,6 +9,10 @@
     <div class="account-section">
         <h2>Account Details</h2>
         <div class="account-details">
+            <div class="profile-image">
+                <img src="{{ current_user.profile_image or url_for('static', filename='h.jpg') }}" alt="Profile Image"
+                    style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
+            </div>
             <p><strong>Username:</strong> {{ current_user.username }}</p>
             <p><strong>Email:</strong> {{ current_user.email }}</p>
             <p><strong>First Name</strong> {{ current_user.first_name }}</p>

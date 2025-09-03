@@ -14,6 +14,8 @@ from forms.loginform import LoginForm
 from flask_login import login_user,logout_user,login_required
 from flask import request, redirect, url_for, render_template, flash, abort
 from services.auth import url_has_allowed_host_and_scheme
+from flask_dance.contrib.google import google
+from core.database import db
 
 blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -63,4 +65,29 @@ def logout():
     logout_user()
     flash("You have been logged out.", "info")
     return redirect(url_for('auth.login'))
-    
+
+@blueprint.route('/google/callback')
+def google_callback():
+    if not google.authorized:
+        return redirect(url_for('google.login'))
+    resp = google.get('/oauth2/v2/userinfo')
+    if not resp.ok:
+        flash('Failed to fetch user info from Google.', 'error')
+        return redirect(url_for('auth.login'))
+    info = resp.json()
+    email = info['email']
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        user = User(
+            username=info.get('name', email), # type: ignore
+            email=email, # type: ignore
+            first_name=info.get('given_name', ''), # type: ignore
+            last_name=info.get('family_name', ''), # type: ignore
+            profile_image=info.get('picture', None), # type: ignore
+            is_active=True # type: ignore
+        )
+        db.session.add(user)
+        db.session.commit()
+    login_user(user)
+    flash('Logged in with Google!', 'success')
+    return redirect(url_for('account.account'))

@@ -23,6 +23,7 @@ import cloudinary
 from datetime import datetime
 import datetime as dt
 from forms.product_form import ReviewForm
+from flask_dance.contrib.google import make_google_blueprint, google
 
 
 
@@ -50,6 +51,18 @@ cloudinary.config(
     api_secret=CLOUDINARY_API_SECRET,
     secure=True
 )
+
+
+# Set up Google OAuth
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
+google_bp = make_google_blueprint(
+    client_id=GOOGLE_CLIENT_ID,
+    client_secret=GOOGLE_CLIENT_SECRET,
+    scope=["profile", "email"],
+    redirect_url="/google_login/callback"
+)
+app.register_blueprint(google_bp, url_prefix="/google_login")
 
 
 #NOTE - blueprints are registered here

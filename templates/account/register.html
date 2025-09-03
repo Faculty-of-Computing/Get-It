@@ -5,42 +5,51 @@
 
 
 {% if error %}
-  <p class="error-message">{{ error }}</p>
+<p class="error-message">{{ error }}</p>
 {% endif %}
 
 <form method="post">
   <div class="dflex">
-  <div>
-    <label for="email">Email:</label> <br>
-    <input type="email" id="email" name="email" required placeholder="Email" title="Enter your Email" autofocus><br>
-  </div>
+    <div>
+      <label for="email">Email:</label> <br>
+      <input type="email" id="email" name="email" required placeholder="Email" title="Enter your Email" autofocus><br>
+    </div>
 
-  <div>
-    <label for="first_name">First Name:</label> <br>
-    <input type="text" id="first_name" name="first_name" required placeholder="First Name" title="Enter your first name"><br>
-  </div>
+    <div>
+      <label for="first_name">First Name:</label> <br>
+      <input type="text" id="first_name" name="first_name" required placeholder="First Name"
+        title="Enter your first name"><br>
+    </div>
 
-  <div>
-    <label for="last_name">Last Name:</label> <br>
-    <input type="text" id="last_name" name="last_name" required placeholder="Last Name" title="Enter your last name"><br>
-  </div>
+    <div>
+      <label for="last_name">Last Name:</label> <br>
+      <input type="text" id="last_name" name="last_name" required placeholder="Last Name"
+        title="Enter your last name"><br>
+    </div>
 
-  <div>
-    <label for="username">Username:</label> <br>
-    <input type="text" id="username" name="username" required placeholder="Username" title="Enter your username"><br>
-  </div>
+    <div>
+      <label for="username">Username:</label> <br>
+      <input type="text" id="username" name="username" required placeholder="Username" title="Enter your username"><br>
+    </div>
 
-  <div>
-    <label for="password">Password:</label> <br>
-    <input type="password" id="password" name="password" required placeholder="Password" title="Enter your password"><br>
-  </div>
-  <div>
-    <label for="password">Confirm Password:</label> <br>
-    <input type="password" required placeholder="Confirm Password" title="Confirm your password"><br>
-  </div>
+    <div>
+      <label for="password">Password:</label> <br>
+      <input type="password" id="password" name="password" required placeholder="Password"
+        title="Enter your password"><br>
+    </div>
+    <div>
+      <label for="password">Confirm Password:</label> <br>
+      <input type="password" required placeholder="Confirm Password" title="Confirm your password"><br>
+    </div>
 
-</div>
+  </div>
   <button type="submit" class="btn btn-primary">Register</button>
 </form>
+<div class="form-group">
+  <a href="{{ url_for('google.login') }}" class="btn btn-google">
+    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google"
+      style="width:20px;vertical-align:middle;margin-right:8px;"> Sign up with Google
+  </a>
+</div>
 <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
 {% endblock %}
