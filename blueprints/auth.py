@@ -16,6 +16,9 @@ from flask import request, redirect, url_for, render_template, flash, abort
 from services.auth import url_has_allowed_host_and_scheme
 from flask_dance.contrib.google import google
 from core.database import db
+from flask_dance.contrib.google import make_google_blueprint, google
+from core.configs import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
+
 
 blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -66,7 +69,15 @@ def logout():
     flash("You have been logged out.", "info")
     return redirect(url_for('auth.login'))
 
-@blueprint.route('/google/callback')
+# Set up Google OAuth
+google_bp = make_google_blueprint(
+    client_id=GOOGLE_CLIENT_ID, 
+    client_secret=GOOGLE_CLIENT_SECRET, 
+    scope=["openid", "https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"],
+    redirect_url="callback" 
+)
+
+@google_bp.route('/google/callback')
 def google_callback():
     if not google.authorized:
         return redirect(url_for('google.login'))

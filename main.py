@@ -15,6 +15,7 @@ from core.mail_config import MAIL_SERVER, MAIL_PORT, MAIL_USE_TLS, MAIL_USE_SSL,
 from flask_mail import Mail
 from core.database import db
 from blueprints import account, auth,public,cart,product,order as order_bp,admin
+
 from core.configs import logger
 from models import users,products,cart as cart_model,order
 from models.products import Products
@@ -27,7 +28,7 @@ import cloudinary
 from datetime import datetime
 import datetime as dt
 from forms.product_form import ReviewForm
-from flask_dance.contrib.google import make_google_blueprint, google
+
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 
@@ -72,15 +73,9 @@ cloudinary.config(
 )
 
 
-# Set up Google OAuth
-google_bp = make_google_blueprint(
-    client_id=GOOGLE_CLIENT_ID, 
-    client_secret=GOOGLE_CLIENT_SECRET, 
-    scope=["profile", "email"], 
-    redirect_url="/google_login/callback" 
-)
 
-app.register_blueprint(google_bp, url_prefix="/google_login")
+
+app.register_blueprint(auth.google_bp, url_prefix="/google_login")
 
 
 
