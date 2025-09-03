@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" role="img" aria-label="Default profile icon">
+  <rect width="200" height="200" rx="20" fill="#F3F4F6"/>
+
+  <!-- Bold avatar: dark head, solid shoulders, strong outlines -->
+  <g transform="translate(0,0)">
+    <!-- Head -->
+    <circle cx="100" cy="66" r="40" fill="#111827" />
+    <!-- Shoulders/body -->
+    <path d="M34 162c0-46 36-76 66-76s66 30 66 76" fill="#374151" />
+
+    <!-- Outlines for stronger visual weight -->
+    <circle cx="100" cy="66" r="40" fill="none" stroke="#0f172a" stroke-width="6" />
+    <path d="M34 162c0-46 36-76 66-76s66 30 66 76" fill="none" stroke="#0f172a" stroke-width="6" stroke-linejoin="round" />
+
+    <!-- Subtle inner highlight to add depth -->
+    <circle cx="86" cy="56" r="8" fill="#ffffff" fill-opacity="0.06" />
+  </g>
+
+</svg>
