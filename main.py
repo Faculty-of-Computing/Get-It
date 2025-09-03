@@ -1,3 +1,4 @@
+from flask_wtf import CSRFProtect
 from flask import Flask, render_template, redirect, url_for
 
 import os
@@ -40,6 +41,9 @@ def create_app():
     login_manager.login_view = 'auth.login'  # type: ignore
     bycrypt.init_app(app)
     logger.info("App Binded to Bcrypt ")
+    # CSRF protection
+    csrf = CSRFProtect(app)
+    app.csrf = csrf # type: ignore
     with app.app_context():
         db.create_all()
         logger.info("Models migrated")

@@ -25,12 +25,12 @@
                     {% if user.seller_application_status == 'pending' %}
                     <form method="post" action="{{ url_for('seller.review', user_id=user.id, action='approve') }}"
                         style="display:inline;">
-                        {{ csrf_token() }}
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button type="submit" class="btn-small">Approve</button>
                     </form>
                     <form method="post" action="{{ url_for('seller.review', user_id=user.id, action='deny') }}"
                         style="display:inline;">
-                        {{ csrf_token() }}
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button type="submit" class="btn-small">Deny</button>
                     </form>
                     {% else %}
