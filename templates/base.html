@@ -22,6 +22,7 @@
                         <li><a href="{{ url_for('public.about') }}">About</a></li>
                         <li><a href="{{ url_for('public.contact') }}">Contact</a></li>
                         <li><a href="{{ url_for('cart.view_cart') }}">Cart</a></li>
+                        <li><a href="{{ url_for('wishlist.view_wishlist') }}">Wishlist</a></li>
                         <li><a href="{{ url_for('account.account') }}">Account</a></li>
                         {% if current_user.is_authenticated %}
                         {% if current_user.is_seller %}
@@ -33,7 +34,8 @@
                     </ul>
                 </div>
                 <div class="search">
-                    <form action="{{ url_for('product.search') }}" method="GET">
+                    <form action="{{ url_for('product.search') }}" method="GET"
+                        class="{% if request.endpoint == 'home' %}home-nav{% endif %}">
                         <input class="search" style="
                             width: 35px !important;
                             height: 40px !important;
@@ -62,7 +64,7 @@
                 </div>
                 <a href="{{ url_for('home') }}" class="logo">Get-It</a>
                 <form action="{{ url_for('product.search') }}" method="GET" style="display:inline;">
-                <input class="search" style="
+                    <input class="search" style="
             width: 35px !important;
             height: 40px !important;
             box-sizing: border-box !important;
@@ -76,10 +78,10 @@
             padding: 1px !important;
             transition: width 0.4s ease-in-out !important;
                 " onfocus="this.style.width='50%';this.style.borderColor='#4a85ac'; this.style.paddingLeft='2em';"
-                                onblur="this.style.width='35px';this.style.borderColor='#ccc'; this.style.paddingLeft='0';"
-                    type="text" name="search" required>
+                        onblur="this.style.width='35px';this.style.borderColor='#ccc'; this.style.paddingLeft='0';"
+                        type="text" name="search" required>
                 </form>
-            
+
             </div>
         </nav>
 
@@ -88,6 +90,7 @@
                 <li><a href="{{ url_for('public.about') }}">About</a></li>
                 <li><a href="{{ url_for('public.contact') }}">Contact</a></li>
                 <li><a href="{{ url_for('cart.view_cart') }}">Cart</a></li>
+                <li><a href="{{ url_for('wishlist.view_wishlist') }}">Wishlist</a></li>
                 <li><a href="{{ url_for('account.account') }}">Account</a></li>
                 {% if current_user.is_authenticated %}
                 {% if current_user.is_seller %}
@@ -165,19 +168,18 @@
             slidesPerView: 1,
         });
 
-        const header = document.querySelector(".navbar");
-        const scrollThreshold = 50;
+        // const header = document.querySelector(".navbar");
+        // const scrollThreshold = 50;
 
-        document.addEventListener('scroll', () => {
-            const top = document.documentElement.scrollTop;
-            if (top > scrollThreshold) {
-                header.classList.add("static");
-            }
-
-            else {
-                header.classList.remove("static");
-            }
-        });
+        // document.addEventListener('scroll', () => {
+        //     const top = document.documentElement.scrollTop;
+        //     if (top > scrollThreshold) {
+        //         header.classList.add("static");
+        //     }
+        //     else {
+        //         header.classList.remove("static");
+        //     }
+        // });
     </script>
 
     <script>

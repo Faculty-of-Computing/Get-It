@@ -17,7 +17,36 @@
             <button id="close-filters-btn">&times;</button>
         </div>
         <form id="filterForm" method="get">
-            <!-- The existing filter form content goes here -->
+            <div class="filter-group">
+                <label for="min_price">Min Price:</label>
+                <input type="number" id="min_price" name="min_price" min="0" placeholder="0"
+                    value="{{ min_price if min_price is not none else '' }}">
+            </div>
+            <div class="filter-group">
+                <label for="max_price">Max Price:</label>
+                <input type="number" id="max_price" name="max_price" min="0" placeholder="10000"
+                    value="{{ max_price if max_price is not none else '' }}">
+            </div>
+            <div class="filter-group">
+                <label for="sort">Sort By:</label>
+                <select id="sort" name="sort">
+                    <option value="" {% if not sort %}selected{% endif %}>Select</option>
+                    <option value="price_asc" {% if sort=='price_asc' %}selected{% endif %}>Price: Low to High</option>
+                    <option value="price_desc" {% if sort=='price_desc' %}selected{% endif %}>Price: High to Low
+                    </option>
+                    <option value="name_asc" {% if sort=='name_asc' %}selected{% endif %}>Name: A-Z</option>
+                    <option value="name_desc" {% if sort=='name_desc' %}selected{% endif %}>Name: Z-A</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>
+                    <input type="checkbox" name="in_stock" value="1" {% if in_stock %}checked{% endif %}>
+                    Only show products in stock
+                </label>
+            </div>
+            <div class="filter-group">
+                <button type="submit" class="btn">Apply Filters</button>
+            </div>
         </form>
     </aside>
 
@@ -27,10 +56,13 @@
         <div class="products-grid">
             {% for product in products %}
             <div class="product-card" onclick="openModal('{{ loop.index0 }}')">
-                <img src="{{ product.images[0] }}"
-                    alt="{{ product.name }}" class="product-img">
+                <img src="{{ product.images[0] }}" alt="{{ product.name }}" class="product-img">
                 <h4>{{ product.name }}</h4>
                 <p class="product-price">₦{{ '%.2f'|format(product.price) }}</p>
+                <button class="wishlist-btn" title="Add to Wishlist" data-product-id="{{ product.id }}"
+                    onclick="event.stopPropagation(); addToWishlist(event, '{{ product.id }}', this)">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
                 <button class="btn" onclick="event.stopPropagation(); openModal('{{ loop.index0 }}')">View
                     Details</button>
             </div>
@@ -66,6 +98,23 @@
     function closeModal(idx) {
         document.getElementById('modal-' + idx).style.display = 'none';
         document.body.style.overflow = '';
+    }
+    function addToWishlist(event, productId, btn) {
+        event.preventDefault();
+        fetch(`/wishlist/add/${productId}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Fill the heart icon
+                    const icon = btn.querySelector('i');
+                    icon.classList.remove('fa-regular');
+                    icon.classList.add('fa-solid', 'filled');
+                    btn.classList.add('added');
+                } else {
+                    alert(data.message || 'Already in wishlist');
+                }
+            })
+            .catch(() => alert('Error adding to wishlist'));
     }
     document.addEventListener('DOMContentLoaded', function () {
         const toggleBtn = document.getElementById('toggle-filters-btn');

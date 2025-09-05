@@ -1,3 +1,12 @@
+.navbar.home-nav {
+    background: transparent;
+}
+/* Prevent hero section from being blocked by fixed navbar */
+section.hero {
+    margin-top: 0;
+}
+/* Ensure navbar always has a background */
+
 /* CATEGORY PAGE CONSISTENCY FIXES */
 .category-page .filter-banner {
     display: flex;
@@ -19,20 +28,10 @@
 }
 
 .category-page .category-filters {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(255,255,255,0.98);
-    z-index: 100;
-    display: none;
-    flex-direction: column;
-    box-shadow: var(--box-shadow);
-    padding: 2em 1em;
+    /* Conflicting rules removed. Use .category-filters at the bottom of the file for sliding panel. */
 }
 .category-page .category-filters.open {
-    display: flex;
+    /* Conflicting rules removed. Use .category-filters.open at the bottom of the file for sliding panel. */
 }
 .category-page .category-filters .filter-header {
     display: flex;

@@ -33,20 +33,40 @@ def add_product():
 @blueprint.route('/category/<string:category>')
 def category(category):
     categories = list(ProductCategory)
-    
     products_query = Products.query.filter(Products.category == category)
 
+    # Filtering logic
+    min_price = request.args.get('min_price', type=float)
+    max_price = request.args.get('max_price', type=float)
+    sort = request.args.get('sort', '')
+    in_stock = request.args.get('in_stock', type=int)
+
+    if min_price is not None:
+        products_query = products_query.filter(Products.price >= min_price)
+    if max_price is not None:
+        products_query = products_query.filter(Products.price <= max_price)
+    if in_stock:
+        products_query = products_query.filter(Products.stock > 0)
+
+    if sort == 'price_asc':
+        products_query = products_query.order_by(Products.price.asc())
+    elif sort == 'price_desc':
+        products_query = products_query.order_by(Products.price.desc())
+    elif sort == 'name_asc':
+        products_query = products_query.order_by(Products.name.asc())
+    elif sort == 'name_desc':
+        products_query = products_query.order_by(Products.name.desc())
 
     products = products_query.all()
-
-
 
     return render_template(
         'category/category.html',
         products=products,
-
+        min_price=min_price,
+        max_price=max_price,
+        sort=sort,
+        in_stock=in_stock,
     )
-
 
 
 @blueprint.route('/search')
