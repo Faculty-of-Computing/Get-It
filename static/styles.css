@@ -1,4 +1,10 @@
 .navbar.home-nav {
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.navbar.home-nav {
     background: transparent;
 }
 /* Prevent hero section from being blocked by fixed navbar */
