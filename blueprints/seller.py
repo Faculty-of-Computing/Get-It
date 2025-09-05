@@ -56,16 +56,18 @@ def review(user_id, action):
         elif action == 'deny':
             user.seller_application_status = 'denied'
             user.is_seller = False
-            db.session.commit()
-            db.session.refresh(user)
+            
             flash('Seller application denied.', 'info')
             logger.info(f"Admin {current_user.id} denied seller application for user {user.id}")
             if mail:
                 msg = Message('Seller Application Denied', recipients=[user.email], sender=MAIL_DEFAULT_SENDER)
                 msg.body = 'We regret to inform you that your seller application has been denied.'
                 mail.send(msg)
+        db.session.commit()
+        db.session.refresh(user)
     except Exception:
         flash("Could Not Send mail but approved as seller","warning")
+        logger.warning("Could not send mail")
         return redirect(request.url)
     
     return redirect(url_for('seller.applications'))

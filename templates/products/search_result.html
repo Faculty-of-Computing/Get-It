@@ -5,12 +5,19 @@
     <h2>Search Results for "{{ query }}"</h2>
     <div class="products-grid">
         {% if products %}
-            {% for product in products %}
-                <div class="product-card">
-                    </div>
-            {% endfor %}
+        {% for product in products %}
+        <div class="product-card">
+            <div class="img-container">
+                <img src="{{ product.images[0] if product.images else '/static/placeholder.png' }}"
+                    alt="{{ product.name }}">
+            </div>
+            <h3>{{ product.name }}</h3>
+            <p>₦{{ "%.2f"|format(product.price) }}</p>
+            <a href="{{ url_for('product.product_detail', product_id=product.id) }}" class="btn">View Details</a>
+        </div>
+        {% endfor %}
         {% else %}
-            <p>No products found for your search query.</p>
+        <p>No products found for your search query.</p>
         {% endif %}
     </div>
 </div>

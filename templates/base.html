@@ -9,6 +9,7 @@
     <!-- Add your CSS links here -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -60,23 +61,25 @@
                     <span></span>
                 </div>
                 <a href="{{ url_for('home') }}" class="logo">Get-It</a>
-
+                <form action="{{ url_for('product.search') }}" method="GET" style="display:inline;">
                 <input class="search" style="
-      width: 35px !important;
-      height: 40px !important;
-  box-sizing: border-box !important;
-  border-radius: 4px !important;
-  font-size: 16px !important;
-  background-color: white !important;
-  background-image: url('../static/searchicon.png') !important;
-  background-position: 5px 10px !important; 
-  background-repeat: no-repeat !important;
-  background-size: 20px;
-  padding: 1px !important;
-  transition: width 0.4s ease-in-out !important;
-    " onfocus="this.style.width='50%';this.style.borderColor='#4a85ac'; this.style.paddingLeft='2em';"
-                    onblur="this.style.width='35px';this.style.borderColor='#ccc'; this.style.paddingLeft='0';"
-                    type="text" name="search">
+            width: 35px !important;
+            height: 40px !important;
+            box-sizing: border-box !important;
+            border-radius: 4px !important;
+            font-size: 16px !important;
+            background-color: white !important;
+            background-image: url('/static/searchicon.png');
+            background-position: 5px 10px !important; 
+            background-repeat: no-repeat !important;
+            background-size: 20px;
+            padding: 1px !important;
+            transition: width 0.4s ease-in-out !important;
+                " onfocus="this.style.width='50%';this.style.borderColor='#4a85ac'; this.style.paddingLeft='2em';"
+                                onblur="this.style.width='35px';this.style.borderColor='#ccc'; this.style.paddingLeft='0';"
+                    type="text" name="search" required>
+                </form>
+            
             </div>
         </nav>
 

@@ -146,7 +146,7 @@ def get_category_image_url(category_enum_value):
     }
 
     #NOTE Return the URL for the given category, or a default placeholder image if not found
-    logger.debug(f"Returned {image_map.get(category_enum_value,None)}")
+    #logger.debug(f"Returned {image_map.get(category_enum_value,None)}")
     
     return image_map.get(category_enum_value, None)
 

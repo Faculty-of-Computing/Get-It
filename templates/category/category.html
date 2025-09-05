@@ -27,14 +27,26 @@
         <div class="products-grid">
             {% for product in products %}
             <div class="product-card" onclick="openModal('{{ loop.index0 }}')">
-                <!-- ... product card content ... -->
+                <img src="{{ product.images[0] }}"
+                    alt="{{ product.name }}" class="product-img">
+                <h4>{{ product.name }}</h4>
+                <p class="product-price">₦{{ '%.2f'|format(product.price) }}</p>
+                <button class="btn" onclick="event.stopPropagation(); openModal('{{ loop.index0 }}')">View
+                    Details</button>
             </div>
             {% endfor %}
         </div>
         <!-- Product Modals -->
         {% for product in products %}
         <div class="modal" id="modal-{{ loop.index0 }}">
-            <!-- ... modal content ... -->
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('{{ loop.index0 }}')">&times;</span>
+                <img src="{{ product.images[0]|default(url_for('static', filename='default_profile.svg')) }}"
+                    alt="{{ product.name }}" class="modal-img">
+                <h2>{{ product.name }}</h2>
+                <p class="modal-price">₦{{ '%.2f'|format(product.price) }}</p>
+                <p class="modal-desc">{{ product.description }}</p>
+            </div>
         </div>
         {% endfor %}
         {% else %}
@@ -47,25 +59,40 @@
     </section>
 </div>
 <script>
+    function openModal(idx) {
+        document.getElementById('modal-' + idx).style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal(idx) {
+        document.getElementById('modal-' + idx).style.display = 'none';
+        document.body.style.overflow = '';
+    }
     document.addEventListener('DOMContentLoaded', function () {
         const toggleBtn = document.getElementById('toggle-filters-btn');
         const closeBtn = document.getElementById('close-filters-btn');
         const filtersMenu = document.querySelector('.category-filters');
         const body = document.body;
-
         if (toggleBtn) {
             toggleBtn.addEventListener('click', function () {
                 filtersMenu.classList.add('open');
                 body.style.overflow = 'hidden';
             });
         }
-
         if (closeBtn) {
             closeBtn.addEventListener('click', function () {
                 filtersMenu.classList.remove('open');
                 body.style.overflow = '';
             });
         }
+        // Close modals when clicking outside modal-content
+        document.querySelectorAll('.modal').forEach(function (modal) {
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+        });
     });
 </script>
 

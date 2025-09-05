@@ -33,49 +33,18 @@ def add_product():
 @blueprint.route('/category/<string:category>')
 def category(category):
     categories = list(ProductCategory)
-    # Get filter/sort params
-    brand = request.args.get('brand')
-    color = request.args.get('color')
-    size = request.args.get('size')
-    price_min = request.args.get('price_min', type=float)
-    price_max = request.args.get('price_max', type=float)
-    sort = request.args.get('sort')
-
-    # Get all products in category
+    
     products_query = Products.query.filter(Products.category == category)
 
-    # Filtering
-    if price_min is not None:
-        products_query = products_query.filter(Products.price >= price_min)
-    if price_max is not None:
-        products_query = products_query.filter(Products.price <= price_max)
-
-    # Sorting
-    if sort == 'price_asc':
-        products_query = products_query.order_by(Products.price.asc())
-    elif sort == 'price_desc':
-        products_query = products_query.order_by(Products.price.desc())
-    elif sort == 'newest':
-        products_query = products_query.order_by(Products.created_at.desc())
-    elif sort == 'best_rated':
-        products_query = products_query.order_by(Products.average_rating.desc())
 
     products = products_query.all()
 
-    # For filter options, get distinct values from products in category
-    all_products = Products.query.filter(Products.category == category).all()
-    brands = sorted({getattr(p, 'brand', None) for p in all_products if getattr(p, 'brand', None)}) # type: ignore
-    colors = sorted({getattr(p, 'color', None) for p in all_products if getattr(p, 'color', None)}) # type: ignore
-    sizes = sorted({getattr(p, 'size', None) for p in all_products if getattr(p, 'size', None)}) #type: ignore
+
 
     return render_template(
         'category/category.html',
-        categories=categories,
-        category_name=category,
         products=products,
-        brands=brands,
-        colors=colors,
-        sizes=sizes
+
     )
 
 
@@ -96,6 +65,8 @@ def search():
             Products.description.ilike(search_query)
         )
     ).all()
+    logger.info(products)
+    logger.info(f"Found {len(products)} products")
 
     return render_template('products/search_result.html', products=products, query=query)
 
